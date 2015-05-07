@@ -6,11 +6,11 @@ package com.peichong.observer.activities;
 
 
 
-import com.example.basicapp.R;
+import com.peichong.observer.R;
 import com.peichong.observer.slidingcurve.ControlActivity;
+import com.peichong.observer.tools.Base64Coder;
 import com.peichong.observer.tools.SharedPreferencesUtils;
 import com.peichong.observer.tools.UpdateUtil;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -30,6 +30,8 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+
 
 /** 
  * TODO:      登录
@@ -73,9 +75,9 @@ public class MainActivity extends Activity implements OnClickListener{
 			name=editText1.getText().toString().trim();
 			password=editText2.getText().toString().trim();
 			if (!name.equals("") && !password.equals("")){
-				//String dd = Base64.encode((name + ":" + password).getBytes());
+				String dd = Base64Coder.encode((name + ":" + password).getBytes()).toString();
 				SharedPreferencesUtils.saveUserPasword(this, password);
-				//SharedPreferencesUtils.saveData(this, "Base64N&P", dd);
+				SharedPreferencesUtils.saveData(this, "Base64N&P", dd);
 				SharedPreferencesUtils.saveUserName(this, name);
 				SharedPreferencesUtils.saveUserPasword(this, password);
 				login();

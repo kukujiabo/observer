@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.basicapp"
+    package="com.peichong.observer"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -43,7 +43,7 @@
         
         <!--控制台-->
          <activity 
-            android:name="com.jky.activity.ControlActivity"
+            android:name="com.peichong.observer.slidingcurve.ControlActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleInstance"
             android:label="@string/app_name" 
