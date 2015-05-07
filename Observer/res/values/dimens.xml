@@ -3,5 +3,13 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-
+	
+    <!--login图标上边距-->
+    <dimen name="login">30dp</dimen>
+    
+    <!-- 输入账号左间距-->
+    <dimen name="name">10dp</dimen>
+    
+    <!--  记住密码上边距-->
+    <dimen name="et">20dp</dimen>
 </resources>

@@ -5,4 +5,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    
+    <string name="name_show">\t\t账号</string>
+    <string name="name">用户名</string>
+    <string name="password_show">\t\t密码</string>
+    <string name="password">密码</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
+    <string name="dialog_title">温馨提示：</string>
+    
+    <string name="temperature_unit">`C</string>
 </resources>

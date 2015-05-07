@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--帐号字体颜色-->
+    <color name="black">#000000</color>
+    
+    <color name="graph_fill">#44c39a</color>
+	<color name="graph_separate">#dee5e8</color>
+	<color name="graph_text">#c1c8cb</color>
+</resources>
