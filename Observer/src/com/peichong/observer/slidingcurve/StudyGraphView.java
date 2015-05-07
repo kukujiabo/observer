@@ -2,7 +2,7 @@ package com.peichong.observer.slidingcurve;
 
 import java.util.ArrayList;
 
-import com.example.basicapp.R;
+import com.peichong.observer.R;
 import com.peichong.observer.tools.Utils;
 
 import android.annotation.SuppressLint;

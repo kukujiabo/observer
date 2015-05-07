@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.peichong.observer.slidingcurve;
 
 

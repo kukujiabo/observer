@@ -2,7 +2,8 @@ package com.peichong.observer.slidingcurve;
 
 import java.util.ArrayList;
 
-import com.example.basicapp.R;
+import com.peichong.observer.R;
+
 
 
 import android.content.Context;
