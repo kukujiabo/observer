@@ -52,6 +52,7 @@
 	        android:layout_alignRight="@+id/imageView2"
 	        android:layout_alignTop="@+id/imageView2"
 	        android:layout_alignBottom="@+id/imageView2"
+	        android:textColor="@color/text_black"
 	        android:hint="@string/name" >
 	    </EditText>
         
@@ -95,6 +96,7 @@
 	        android:layout_alignRight="@+id/imageView3"
 	        android:layout_alignTop="@+id/imageView3"
 	        android:layout_alignBottom="@+id/imageView3"
+	        android:textColor="@color/text_black"
 	        android:inputType="textPassword" >
     	</EditText>
 	    
