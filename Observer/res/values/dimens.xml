@@ -12,4 +12,20 @@
     
     <!--  记住密码上边距-->
     <dimen name="et">20dp</dimen>
+    
+     <!--  控制台字体大小-->
+    <dimen name="console_size">20sp</dimen>
+    
+     <!--  控制台上边距-->
+    <dimen name="console_top">30dp</dimen>
+    
+     <!--  控制台左边距-->
+    <dimen name="console_left">20dp</dimen>
+    
+     <!--  控制台右边距-->
+    <dimen name="console_right">10dp</dimen>
+    
+      <!--  咨询按钮右边距-->
+    <dimen name="consulting_right">5dp</dimen>
+    
 </resources>

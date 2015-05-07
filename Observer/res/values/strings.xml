@@ -13,6 +13,7 @@
     <string name="cancel">取消</string>
     <string name="ok">确定</string>
     <string name="dialog_title">温馨提示：</string>
+    <string name="console">控制台</string>
     
-    <string name="temperature_unit">`C</string>
+    <string name="temperature_unit">°C</string>
 </resources>

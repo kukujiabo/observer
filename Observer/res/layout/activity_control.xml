@@ -1,21 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="#E2EAED"
+    android:background="@color/bj"
     >
+    <RelativeLayout
+        android:id="@+id/ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/console" 
+        android:textColor="@color/text_black"
+        android:layout_alignParentLeft="true"
+        android:textSize="@dimen/console_size"
+        android:layout_marginTop="@dimen/console_top"
+        android:layout_marginLeft="@dimen/console_left"
+        />
+
+
+    <ImageButton
+        android:id="@+id/ib3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ib2"
+        android:layout_toLeftOf="@+id/ib2"
+        android:layout_marginRight="@dimen/consulting_right"
+        android:background="@drawable/ic_launcher" />
     
-	<com.wy.slidingcurve.MyHorizontalScrollView
+    <ImageButton
+        android:id="@+id/ib2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ib1"
+        android:layout_marginRight="@dimen/consulting_right"
+        android:layout_toLeftOf="@+id/ib1"
+        android:background="@drawable/ic_launcher" />
+
+    <ImageButton
+        android:id="@+id/ib1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/console_right"
+        android:background="@drawable/ic_launcher" />
+    
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/ll"
+        >
+        
+	<com.peichong.observer.slidingcurve.MyHorizontalScrollView
         android:id="@+id/study_graph_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scrollbars="none" >
 
-        <com.wy.slidingcurve.StudyGraphView
+        <com.peichong.observer.slidingcurve.StudyGraphView
             android:id="@+id/study_graph"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </com.wy.slidingcurve.MyHorizontalScrollView>
+    </com.peichong.observer.slidingcurve.MyHorizontalScrollView>
+     
+	</LinearLayout>
+	
     
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/ll2"
+        >
+	
+		<ImageButton 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_launcher"
+        android:layout_weight="1"
+        />
+		
+		<ImageButton 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_launcher"
+        android:layout_weight="1"
+        />
+		
+		<ImageButton 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_launcher"
+        android:layout_weight="1"
+        />
+		
+	</LinearLayout>
+	
+</RelativeLayout>

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.peichong.observer.R;
 import com.peichong.observer.tools.Utils;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,58 +14,57 @@ import android.graphics.Paint.Align;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 
 /**
  * TODO: 曲线图
  * 
- * @author:  wy
+ * @author: wy
  * @version: V1.0
  */
 public class StudyGraphView extends View {
 
-	//public static final float INTERVAL_X_DP=45f; //x坐标的单元间距
-	/**y坐标总的高度*/
-	public static final float TOTAL_Y_DP = 250f; 
-
-	/**坐标系距离顶部的高度*/
-	public static final float COORDINATE_MARGIN_TOP_DP = 30f; 
+	// public static final float INTERVAL_X_DP=45f; //x坐标的单元间距
+	/** y坐标总的高度 */
+	public static float TOTAL_Y_DP;
+	
+	/** 坐标系距离顶部的高度 */
+	public static final float COORDINATE_MARGIN_TOP_DP = 30f;
 	// public static final float COORDINATE_MARGIN_LEFT_DP = INTERVAL_X_DP;
 	// 坐标系距离左边的间距
 	// public static final float COORDINATE_MARGIN_RIGHT_DP = INTERVAL_X_DP;
-	/**坐标系距离上边的间距*/
+	/** 坐标系距离上边的间距 */
 	public static final float COORDINATE_MARGIN_BOTTOM_DP = 30f;
 
-	/**X轴分成几份*/
-	public static final int SHOW_NUM = 6;
+	/** X轴分成几份 */
+	public static final int SHOW_NUM = 3;
 
+	/** X轴长度（只是数据的宽度，不包括左边和右边的留空） */
+	private float mTotalWidth;
+	/** Y轴的长度（只是数据的高度，不包括上方和下方的留空） */
+	private float mTotalHeight;
+	/** x坐标的单元间距(px) */
+	private float spacingOfX;
+	/** y坐标的单元间距(px) */
+	private float spacingOfY;
+	/** 坐标系距离顶部的距离(px) */
+	private float coordinateMarginTop;
+	/** 坐标系距离左边的距离(px) */
+	private float coordinateMarginLeft;
+	/** 坐标系距离右边的距离(px) */
+	private float coordinateMarginRight;
+	/** 坐标系距离下方的高度(px) */
+	private float coordinateMarginBottom;
 
+	/** 曲线交点的小图标 */
+	private Bitmap mPointImage;
+	/** 上方文字说明背景 */
+	private Bitmap mLevelShowImage;
 
-	/**X轴长度（只是数据的宽度，不包括左边和右边的留空）*/
-	private float mTotalWidth; 
-	/**Y轴的长度（只是数据的高度，不包括上方和下方的留空）*/
-	private float mTotalHeight; 
-	/**x坐标的单元间距(px)*/
-	private float spacingOfX; 
-	/**y坐标的单元间距(px)*/
-	private float spacingOfY; 
-	/**坐标系距离顶部的距离(px)*/
-	private float coordinateMarginTop; 
-	/**坐标系距离左边的距离(px)*/
-	private float coordinateMarginLeft; 
-	/**坐标系距离右边的距离(px)*/
-	private float coordinateMarginRight; 
-	/**坐标系距离下方的高度(px)*/
-	private float coordinateMarginBottom; 
-
-	/**曲线交点的小图标*/
-	private Bitmap mPointImage; 
-	/**上方文字说明背景*/
-	private Bitmap mLevelShowImage; 
-
-	/**各个点*/
-	private ArrayList<PointF> points; 
+	/** 各个点 */
+	private ArrayList<PointF> points;
 	private ArrayList<StudyGraphItem> studyGraphItems;
 
 	private StudyGraphItem maxEnergy;
@@ -75,13 +73,20 @@ public class StudyGraphView extends View {
 
 	private int currentIndex;
 
+	@SuppressWarnings("deprecation")
 	public StudyGraphView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
 		mContext = context;
-
+		
+		//拿到屏幕的高
+		WindowManager manager = (WindowManager) context .getSystemService(Context.WINDOW_SERVICE); 
+		Display display = manager.getDefaultDisplay(); 
+		TOTAL_Y_DP= display.getHeight()/2; 
+		
 		initParam();
 		
+
 	}
 
 	/**
@@ -94,10 +99,10 @@ public class StudyGraphView extends View {
 		// x坐标间隔为定值，屏幕不够就左右滑动
 		// spacingOfX = Utils.dip2px(mContext, INTERVAL_X_DP);
 
-		//Y坐标总高度设为定值，单位间距动态计算
+		// Y坐标总高度设为定值，单位间距动态计算
 		mTotalHeight = Utils.dip2px(mContext, TOTAL_Y_DP);
 
-		//X坐标的间距
+		// X坐标的间距
 		spacingOfX = getResources().getDisplayMetrics().widthPixels / SHOW_NUM;
 
 		coordinateMarginTop = Utils.dip2px(mContext, COORDINATE_MARGIN_TOP_DP);
@@ -105,7 +110,6 @@ public class StudyGraphView extends View {
 		coordinateMarginRight = spacingOfX;
 		coordinateMarginBottom = Utils.dip2px(mContext,
 				COORDINATE_MARGIN_BOTTOM_DP);
-		
 	}
 
 	@Override
@@ -119,7 +123,7 @@ public class StudyGraphView extends View {
 		paint.setStrokeWidth(3);
 		paint.setTextSize(Utils.sp2px(mContext, 13));
 
-		//绘制底部的横线、文字、以及向上的线条 
+		// 绘制底部的横线、文字、以及向上的线条
 		canvas.drawLine(coordinateMarginLeft, mTotalHeight
 				+ coordinateMarginTop, mTotalWidth + coordinateMarginLeft
 				+ coordinateMarginRight, mTotalHeight + coordinateMarginTop,
@@ -136,42 +140,41 @@ public class StudyGraphView extends View {
 			}
 			paint.setColor(getResources().getColor(R.color.graph_separate));
 			canvas.drawLine(textPoint.x, mTotalHeight + coordinateMarginTop,
-					textPoint.x, coordinateMarginTop+3, paint);
+					textPoint.x, coordinateMarginTop + 3, paint);
 
 			if (i == currentIndex) {
 				// 画上方的文字说明
 				canvas.drawBitmap(mLevelShowImage, textPoint.x
-						- mLevelShowImage.getWidth() / 2, coordinateMarginTop
-						- mLevelShowImage.getHeight() / 2, paint);
+						- mLevelShowImage.getWidth() / 2, textPoint.y
+						- mLevelShowImage.getHeight(), paint);
 
 				paint.setStrokeWidth(1);
 				paint.setTextAlign(Align.CENTER);
 				canvas.drawText(
 						studyGraphItems.get(i).temperature
-								+ getResources().getString(R.string.temperature_unit),
-						textPoint.x,
-						coordinateMarginTop - mLevelShowImage.getHeight() / 2
+								+ getResources().getString(
+										R.string.temperature_unit),
+						textPoint.x - mLevelShowImage.getWidth() / 15,
+						textPoint.y - mLevelShowImage.getHeight()
 								+ Utils.dip2px(mContext, 3)
 								+ Utils.sp2px(mContext, 13), paint);
 			}
 			paint.setStrokeWidth(1);
 			paint.setColor(getResources().getColor(R.color.graph_text));
 			// 绘制底部的 文字
-			canvas.drawText(
-					energy.date,
+			canvas.drawText(energy.date,
 					textPoint.x - Utils.sp2px(mContext, 10),
-					mTotalHeight+ coordinateMarginTop
-							+ Utils.sp2px(mContext, 13 + 5), paint);
+					coordinateMarginTop + Utils.sp2px(mContext, 13 + 5), paint);
 
 		}
 		Paint pathPaint = new Paint();
 		pathPaint.setColor(getResources().getColor(R.color.graph_fill));
 		pathPaint.setAlpha(51);
-		//裁剪出一个需要的矩阵图 
+		// 裁剪出一个需要的矩阵图
 		Path path = new Path();
 		PointF point = null;
 		// 原点
-		path.moveTo(coordinateMarginLeft, mTotalHeight + coordinateMarginTop); 
+		path.moveTo(coordinateMarginLeft, mTotalHeight + coordinateMarginTop);
 		for (int i = 0; i < points.size(); i++) {
 			point = points.get(i);
 			path.lineTo(point.x, point.y);
@@ -183,8 +186,8 @@ public class StudyGraphView extends View {
 
 		int halfPointImageWidth = mPointImage.getWidth() / 2;
 		int halfPointImageHeight = mPointImage.getHeight() / 2;
-		
-		//绘制曲线 覆盖 剪切后的锯齿
+
+		// 绘制曲线 覆盖 剪切后的锯齿
 		for (int i = 0; i < points.size(); i++) {
 			paint.setStrokeWidth(6);
 			paint.setColor(getResources().getColor(R.color.graph_fill));
@@ -200,7 +203,7 @@ public class StudyGraphView extends View {
 				// 绘制曲线，并且覆盖剪切后的锯齿
 				canvas.drawLine(startPoint.x, startPoint.y, endPoint.x,
 						endPoint.y, paint);
-				
+
 			}
 
 			// 绘制节点小icon
