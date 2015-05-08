@@ -11,18 +11,29 @@ public class StudyGraphItem {
 	/**时间*/
 	public String date;	
 	/**温度*/
-	public float temperature;	
+	public float temperature;
+	/**湿度*/
+	public float humidity;
 
 	public StudyGraphItem() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	
+	/**
+	 * @param date
+	 * @param temperature
+	 * @param humidity
+	 */
 	public StudyGraphItem(String date, float temperature) {
 		super();
 		this.date = date;
 		this.temperature = temperature;
 	}
+
+
 
 	public String getDate() {
 		return date;
@@ -37,6 +48,20 @@ public class StudyGraphItem {
 
 	public void setTemperature(float temperature) {
 		this.temperature = temperature;
+	}
+
+	/**
+	 * @return the humidity
+	 */
+	public float getHumidity() {
+		return humidity;
+	}
+
+	/**
+	 * @param humidity the humidity to set
+	 */
+	public void setHumidity(float humidity) {
+		this.humidity = humidity;
 	}
 	
 }

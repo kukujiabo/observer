@@ -12,7 +12,7 @@ import android.util.AttributeSet;
 import android.widget.HorizontalScrollView;
 
 /**
- * TODO: 滑动
+ * TODO: 	滑动
  * 
  * @author:	 wy
  * @version: V1.0

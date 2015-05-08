@@ -28,4 +28,22 @@
       <!--  咨询按钮右边距-->
     <dimen name="consulting_right">5dp</dimen>
     
+     <!--  控制台温度字体大小-->
+    <dimen name="temperature_size">15sp</dimen>
+    
+         <!--  控制台时间字体左边距-->
+    <dimen name="time_left">5sp</dimen>
+    
+     <!--  左边距-->
+    <dimen name="left">20dp</dimen>
+    
+     <!--  左边距-->
+    <dimen name="left_two">5dp</dimen>
+    
+     <!--  右边距-->
+    <dimen name="right">20dp</dimen>
+    
+     <!--  上边距-->
+    <dimen name="top">15dp</dimen>
+    
 </resources>
