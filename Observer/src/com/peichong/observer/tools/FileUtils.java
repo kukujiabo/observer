@@ -1,22 +1,302 @@
 package com.peichong.observer.tools;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
+import android.util.Log;
 
 public class FileUtils {
 
+	public static final String FILENAME = "filename";
+
+	private static FileUtils fileUtil = null;
+
+	// 手机存储机制
+	private SharedPreferences sp = null;
+
+	public static FileUtils getFileUtil() {
+
+		if (fileUtil == null) {
+			return new FileUtils();
+		}
+		return fileUtil;
+	}
+	
+	/**
+	 * 创建文件目录，并且返回该文件目录 如果该目录已经存在，则返回该目录
+	 * 
+	 * @param dirPath
+	 * @return File
+	 */
+	public static File createDir(String dirPath) {
+		File file = new File(dirPath);
+		if (file.exists())
+			return file;
+		boolean b = file.mkdirs();
+		if (b)
+			return file;
+		else
+			return null;
+	}
+
+	/**
+	 * 创建文件并且返回该新创建的文件
+	 * 
+	 * @param filePath
+	 * @return
+	 * @throws IOException
+	 */
+	public static File createFile(String filePath) throws IOException {
+		File file = new File(filePath);
+		if (file.exists() && file.isFile())
+			return file;
+		boolean b = file.createNewFile();
+		if (b)
+			return file;
+		else
+			return null;
+	}
+
+	/**
+	 * 删除文件夹或者文件
+	 * 
+	 * @param filePath
+	 * @return boolean
+	 */
+	public static boolean delete(String filePath) {
+		Log.d("DeleteFile", filePath);
+		File file = new File(filePath);
+		boolean b = false;
+		if (file.exists()) {
+			b = true;
+			deleteFileOrDir(filePath);
+		}
+		return b;
+	}
+
+	/**
+	 * 递归删除文件夹和文件
+	 * 
+	 * @param path
+	 */
+	private static void deleteFileOrDir(String path) {
+		File file = new File(path);
+		if (file.isFile())
+			file.delete();
+		else {
+			File[] files = file.listFiles();
+			for (File f : files) {
+				deleteFileOrDir(f.getAbsolutePath());
+			}
+			file.delete();
+		}
+	}
+
+	/**
+	 * 判断文件是否存在
+	 * 
+	 * @param filePath
+	 * @return
+	 */
+	public static boolean isExist(String filePath) {
+		return new File(filePath).exists();
+	}
+
+	/**
+	 * 根据InputStream和编码，返回String类型的字符串
+	 * 
+	 * @param iStream
+	 * @param encoding
+	 * @return String
+	 */
+	public static String getStringFromInputStream(InputStream iStream,
+			String encoding) throws IOException {
+		StringBuffer sb = new StringBuffer();
+		InputStreamReader isr = null;
+		if (encoding == null)
+			isr = new InputStreamReader(iStream);
+		else
+			isr = new InputStreamReader(iStream, encoding);
+		BufferedReader br = new BufferedReader(isr);
+		String line;
+		while ((line = br.readLine()) != null)
+			sb.append(line + "\r\n");
+		br.close();
+		isr.close();
+		iStream.close();
+		return sb.toString();
+	}
+
+	/**
+	 * 根据InputStream和编码，返回String类型的字符串
+	 * 
+	 * @param iStream
+	 * @return String
+	 */
+	public static String getStringFromInputStream(InputStream iStream)
+			throws IOException {
+		return getStringFromInputStream(iStream, null);
+	}
+
+	/**
+	 * 文件检测, 没有就创建
+	 * 
+	 * @param filePath
+	 *            文件的父路径
+	 * @param fileName
+	 *            文件的名称
+	 * @return 检测的文件, 如果失败返回null.
+	 * */
+	public static File detectPath(String filePath, String fileName)
+			throws IOException {
+
+		if (null == filePath || null == fileName)
+			return null;
+
+		File file = new File(filePath);
+		if (!file.exists())
+			file.mkdirs();
+
+		file = new File(filePath + File.separator + fileName);
+		if (!file.exists())
+			file.createNewFile();
+
+		return file;
+	}
+
+	// /**
+	// * 文件检测, 没有就创建
+	// * @param context 环境
+	// * @param filePath 文件的绝对路径
+	// * @return 检测的文件, 如果失败返回null.
+	// * */
+	// public static File detectPath(Context context, String filePath) throws
+	// IOException, RuntimeException {
+	//
+	// if(!DeviceUtils.checkSDCard())
+	// throw new
+	// RuntimeException(context.getString(R.string.exc_sdcard_unavailable));
+	//
+	// if(!isFilePath(filePath))
+	// throw new
+	// RuntimeException(context.getString(R.string.exc_error_filepath));
+	//
+	// int divide = filePath.lastIndexOf(File.separator);
+	// String name = filePath.substring(divide + File.separator.length());
+	// String path = filePath.substring(0, divide);
+	//
+	// return detectPath(path, name);
+	// }
+
+	/**
+	 * 文件路径验证
+	 * 
+	 * @param filePath
+	 *            需要验证的文件路径
+	 * @return 验证成功返回true, 否则返回false.
+	 * */
+	public static boolean isFilePath(String filePath) {
+
+		if (TextUtils.isEmpty(filePath))
+			return false;
+
+		filePath = filePath.replaceAll("//", "/").trim();
+		Pattern pattern = Pattern.compile("(^//.|^/|^[a-zA-Z])?:?/.+(/$)?");
+		Matcher matcher = pattern.matcher(filePath);
+
+		return matcher.matches();
+	}
+
+	
+	
+	/**
+	 * 获取路径
+	 * @param context
+	 * @param uri
+	 * @return
+	 */
+	public static String getPath(Context context, Uri uri) {
+		if ("content".equalsIgnoreCase(uri.getScheme())) {
+			String[] projection = { "_data" };
+			Cursor cursor = null;
+			try {
+				cursor = context.getContentResolver().query(uri, projection,
+						null, null, null);
+				int column_index = cursor.getColumnIndexOrThrow("_data");
+				if (cursor.moveToFirst()) {
+					return cursor.getString(column_index);
+				}
+			} catch (Exception e) {
+			}
+		}
+		else if ("file".equalsIgnoreCase(uri.getScheme())) {
+			return uri.getPath();
+		}
+		return null;
+
+	}
+    
+ // 保存数据
+ 	public void setSharedPreferencesData(String key, String value,
+ 			String fileName, Context context) {
+
+ 		// 当前应用可访问
+ 		sp = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
+ 		// 获得编辑器
+ 		Editor edit = sp.edit();
+ 		// 存入数据
+ 		edit.putString(key, value);
+ 		// 提交数据
+ 		edit.commit();
+ 	}
+
+ 	// 获取数据
+ 	public String getSharedPreferencesData(String key, String fileName,
+ 			Context context) {
+
+ 		String value = null;
+
+ 		sp = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
+ 		// 获得数据
+ 		value = sp.getString(key, null);
+
+ 		return value;
+ 	}
+
+ 	// 删除数据
+ 	public void deleteSharedPreferencesData(String fileName, Context context) {
+
+ 		// 当前应用可访问
+ 		sp = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
+ 		// 获得编辑器
+ 		Editor edit = sp.edit();
+ 		// 存入数据
+ 		edit.clear();
+ 		// 提交数据
+ 		edit.commit();
+ 	}
+	
+	
 	/*
 	 * function: SDReady
 	 * params: 

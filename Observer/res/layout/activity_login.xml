@@ -101,23 +101,14 @@
     	</EditText>
 	    
     </RelativeLayout>
-    
-    <CheckBox
-        android:id="@+id/checkBox1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ll2"
-        android:layout_alignRight="@+id/ll2"
-        android:layout_below="@+id/ll2"
-        android:layout_marginTop="@dimen/et"
-        android:button="@drawable/login_rememberpass" />
 
     <ImageButton
         android:id="@+id/ib_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBox1"
-        android:layout_below="@+id/checkBox1"
-        android:layout_marginTop="@dimen/et"
+        android:layout_alignLeft="@+id/ll2"
+        android:layout_below="@+id/ll2"
+        android:layout_marginTop="20dp"
         android:background="@drawable/denglu05" />
+
 </RelativeLayout>

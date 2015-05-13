@@ -5,14 +5,17 @@ package com.peichong.observer.activities;
 
 
 
-
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.peichong.observer.R;
+import com.peichong.observer.configure.Constants;
 import com.peichong.observer.slidingcurve.ControlActivity;
 import com.peichong.observer.tools.Base64Coder;
+import com.peichong.observer.tools.BaseStringRequest;
+import com.peichong.observer.tools.JsonUtil;
 import com.peichong.observer.tools.SharedPreferencesUtils;
 import com.peichong.observer.tools.UpdateUtil;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.AlertDialog.Builder;
@@ -38,13 +41,16 @@ import android.widget.Toast;
  * @author:   wy 
  * @version:  V1.0 
  */
-public class MainActivity extends Activity implements OnClickListener{
+@SuppressLint({ "NewApi", "InlinedApi" })
+public class MainActivity extends BaseActivity implements OnClickListener{
 
 	private String name = "";
 	private String password = "";
 	private EditText editText1;
 	private EditText editText2;
 	private ImageButton ib_register;
+	
+	private BaseStringRequest mStringRequest;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +144,6 @@ public class MainActivity extends Activity implements OnClickListener{
 			myBuilder.setPositiveButton(R.string.ok,
 					new DialogInterface.OnClickListener() {
 
-						@SuppressLint("NewApi")
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
@@ -163,6 +168,35 @@ public class MainActivity extends Activity implements OnClickListener{
 
 		}
 	}
+	
+	
+	/**
+	 * 获取版本消息
+	 */
+	@SuppressWarnings("unused")
+	private void getVersionData() {
+		// mRequestQueue = Volley.newRequestQueue(this);
+		// 2 创建StringRequest对象
+		mStringRequest = new BaseStringRequest(Constants.RequestUrl.VERSION,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+
+						JsonUtil.data = response;
+						checkUpdate(JsonUtil.getJsonString("downloadURL"),
+								JsonUtil.getJsonString("version"));
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						// text.setText("get请求错误:" + error.toString());
+					}
+				}) {
+		};
+		mStringRequest.setTag("version");
+		mRequestQueue.add(mStringRequest);
+	}
+	
 	
 	/**
 	 * 获取本地版本号，版本号必须为三位

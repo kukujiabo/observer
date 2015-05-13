@@ -96,7 +96,7 @@ public class TimeActivity extends Activity implements OnClickListener {
 		 //初始化
 		time_seekbar.setProgress(1);
 		//最大值
-		time_seekbar.setMax(60);
+		time_seekbar.setMax(61);
 		time_seekbar.setOnSeekBarChangeListener(seekListener);
 		//初始化为一分钟
 		time_show.setText("1");

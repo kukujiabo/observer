@@ -3,14 +3,33 @@ package com.peichong.observer.slidingcurve;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+
+
+
+import com.android.volley.Request.Method;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.peichong.observer.R;
+import com.peichong.observer.about.AboutActivity;
+import com.peichong.observer.activities.BaseActivity;
+import com.peichong.observer.analysislog.AnalysisLogActivity;
+import com.peichong.observer.configure.Constants;
+import com.peichong.observer.equipmentmgm.EquipmentMgmActivity;
 import com.peichong.observer.information.InformationActivity;
+import com.peichong.observer.personalcenter.PersonalCenterActivity;
+import com.peichong.observer.set.SetActivity;
 import com.peichong.observer.slidingcurve.CustomMenu.OnScrollListener;
+import com.peichong.observer.tools.BaseStringRequest;
+import com.peichong.observer.tools.LogUtil;
+import com.peichong.observer.versionupdate.VersionUpdateActivity;
 import com.peichong.observer.warning.WarningActivity;
 import com.readystatesoftware.viewbadger.BadgeView;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.AsyncTask;
@@ -22,12 +41,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -41,13 +60,15 @@ import android.widget.AdapterView.OnItemClickListener;
  * @author: wy
  * @version: V1.0
  */
-public class ControlActivity extends Activity implements OnClickListener,OnTouchListener,
-GestureDetector.OnGestureListener, OnItemClickListener{
+public class ControlActivity extends BaseActivity implements OnClickListener,
+		OnTouchListener, GestureDetector.OnGestureListener, OnItemClickListener{
+	@SuppressWarnings("unused")
 	private MyHorizontalScrollView studyGraphLayout;
 	private StudyGraphView studyGraph;
 	private ArrayList<StudyGraphItem> studyGraphItems;
+	@SuppressWarnings("unused")
 	private ArrayList<PointF> pointList;
-	
+
 	private boolean hasMeasured = false;// 是否Measured.
 	private LinearLayout layout_left;// 左边布局
 	private LinearLayout layout_right;// 右边布局
@@ -66,14 +87,10 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 	private int window_width;// 屏幕的宽度
 	private View view = null;// 点击的view
 
-	private String title[] = { 
-			"控制台", "资讯", "警告", "设置","分析日志","设备管理","版本更新","关于我们"};
-
 	private CustomMenu custom;
-	
-	
+
 	/** 菜单 */
-	private ImageButton menu;
+	private ImageView menu;
 	/** 警告 */
 	private ImageButton warning;
 	/** 资讯 */
@@ -105,13 +122,45 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 
 	/** 时间 */
 	private String time_string = "";
+	
+	/** 个人中心*/
+	private ImageButton user_icon;
+	
+	private BaseStringRequest mStringRequest;
+	
+	/**用户的ID  从用户登录数据中取的*/
+	private String uid="";
+	
+	/**仪器id*/
+	private String mid="";
+	
+	/**页码*/
+	private String page="";
+	
+	/**设置id*/
+	private String sid="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_control);
 		initUi();
+		
+		getConsoleGraphTemperature();
+		
+		getNewestTemperature();
+		
+		getConsoleGraphHumidity();
+		
+		getNewestHumidity();
+		
+		getUserInstrumentInformation();
+		
+		getIdInstrumentInformation();
+		
+		getUserConfigurationInformation();
+		
+		getUserSpecifiedConfigurationInformation();
 	}
 
 	/**
@@ -126,7 +175,7 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 
 		studyGraphLayout = (MyHorizontalScrollView) findViewById(R.id.study_graph_layout);
 		studyGraph = (StudyGraphView) findViewById(R.id.study_graph);
-		menu = (ImageButton) findViewById(R.id.menu);
+		
 		warning = (ImageButton) findViewById(R.id.warning);
 		information = (ImageButton) findViewById(R.id.information);
 
@@ -138,7 +187,7 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 		tv_humidity = (TextView) findViewById(R.id.tv_humidity);
 		tv_time = (TextView) findViewById(R.id.tv_time);
 
-		
+		user_icon=(ImageButton) findViewById(R.id.user_icon);
 		
 		warning.setOnClickListener(this);
 		information.setOnClickListener(this);
@@ -146,6 +195,8 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 		temperature.setOnClickListener(this);
 		humidity.setOnClickListener(this);
 		time.setOnClickListener(this);
+		
+		user_icon.setOnClickListener(this);
 
 		// 拿到温度
 		temperature_string = tv_temperature.getText().toString().trim();
@@ -161,7 +212,7 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 		BadgeView badge = new BadgeView(this, target);
 		badge.setText("!");
 		badge.show();
-             
+
 		// 湿度曲线图按钮加提示
 		View targetTwo = findViewById(R.id.humidity);
 		BadgeView badgeTwo = new BadgeView(this, targetTwo);
@@ -170,16 +221,17 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 
 		// 温度曲线图
 		TemperatureCurve();
-		
+
 		layout_left = (LinearLayout) findViewById(R.id.layout_left);
 		layout_right = (LinearLayout) findViewById(R.id.layout_right);
+		menu = (ImageView) findViewById(R.id.menu);
 		lv_set = (ListView) findViewById(R.id.lv_set);
 		custom = (CustomMenu) findViewById(R.id.mylaout);
-		
-		List<MenuInfo> list=initRightMenus();
-		adapter=new MenuAdapter(this, list);
+
+		List<MenuInfo> list = initRightMenus();
+		adapter = new MenuAdapter(this, list);
 		lv_set.setAdapter(adapter);
-		
+
 		/***
 		 * 实现该接口
 		 */
@@ -224,9 +276,9 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 		void optionScrollEvent(int currentIndex);
 	}
 
-	/**菜单抽屉实体类*/
-	private List<MenuInfo> initRightMenus(){
-		List<MenuInfo> templist=new ArrayList<MenuInfo>();
+	/** 菜单抽屉实体类 */
+	private List<MenuInfo> initRightMenus() {
+		List<MenuInfo> templist = new ArrayList<MenuInfo>();
 		templist.add(new MenuInfo("控制台"));
 		templist.add(new MenuInfo("资讯"));
 		templist.add(new MenuInfo("警告"));
@@ -237,11 +289,11 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 		templist.add(new MenuInfo("关于我们"));
 		return templist;
 	}
-	
+
 	/***
 	 * listview 正在滑动时执行.
 	 */
-	void doScrolling(float distanceX) {
+	public void doScrolling(float distanceX) {
 		isScrolling = true;
 		mScrollX += distanceX;// distanceX:向左为正，右为负
 
@@ -268,11 +320,11 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 		layout_left.setLayoutParams(layoutParams);
 		layout_right.setLayoutParams(layoutParams_1);
 	}
-	
+
 	/***
 	 * 获取移动距离 移动的距离其实就是layout_left的宽度
 	 */
-	void getMAX_WIDTH() {
+	public void getMAX_WIDTH() {
 		ViewTreeObserver viewTreeObserver = layout_left.getViewTreeObserver();
 		// 获取控件宽度
 		viewTreeObserver.addOnPreDrawListener(new OnPreDrawListener() {
@@ -322,8 +374,7 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
-	
+
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 
@@ -343,8 +394,7 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 
 		return mGestureDetector.onTouchEvent(event);
 	}
-	
-	
+
 	@Override
 	public boolean onDown(MotionEvent e) {
 
@@ -361,20 +411,19 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 		// 将之改为true，才会传递给onSingleTapUp,不然事件不会向下传递.
 		return true;
 	}
-	
+
 	@Override
 	public void onShowPress(MotionEvent e) {
 
 	}
 
-	
 	/***
 	 * 点击松开执行
 	 */
 	@Override
 	public boolean onSingleTapUp(MotionEvent e) {
 		// 点击的不是layout_left
-		if (view != null && view == custom) {
+		if (view != null && view == menu) {
 			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) layout_left
 					.getLayoutParams();
 			// 左移动
@@ -397,7 +446,7 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 
 		return true;
 	}
-	
+
 	/***
 	 * 滑动监听 就是一个点移动到另外一个点. distanceX=后面点x-前面点x，如果大于0，说明后面点在前面点的右边及向右滑动
 	 */
@@ -475,17 +524,65 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 
 	}
 
+	/** 条目点击 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) layout_left
 				.getLayoutParams();
+		Intent intent = null;
 		// 只要没有滑动则都属于点击
 		if (layoutParams.leftMargin == -MAX_WIDTH)
-			Toast.makeText(ControlActivity.this, title[position], 1).show();
+			switch (position) {
+			
+			//曲线图页面
+			case 0:
+				intent = new Intent(view.getContext(), ControlActivity.class);
+				break;
+				
+			//资讯页面
+			case 1:
+				intent = new Intent(view.getContext(), InformationActivity.class);
+				break;
+				
+			//警告页面
+			case 2:
+				intent = new Intent(view.getContext(), WarningActivity.class);
+				break;
+				
+			//设置页面
+			case 3:
+				intent = new Intent(view.getContext(), SetActivity.class);
+				break;
+				
+			//分析日志页面
+			case 4:
+				intent = new Intent(view.getContext(), AnalysisLogActivity.class);
+				break;
+				
+			//设备管理页面
+			case 5:
+				intent = new Intent(view.getContext(), EquipmentMgmActivity.class);
+				break;
+				
+			//版本更新页面
+			case 6:
+				intent = new Intent(view.getContext(), VersionUpdateActivity.class);
+				break;
+				
+			//关于页面
+			case 7:
+				intent = new Intent(view.getContext(), AboutActivity.class);
+				break;
+			}
+		
+		//页面跳转
+		if (intent != null) {
+			// intent.putExtra("lv_item_id", id);
+			startActivity(intent);
+		}
 	}
-	
-	
+
 	/** 温度曲线图 */
 	public void TemperatureCurve() {
 		studyGraphItems = new ArrayList<StudyGraphItem>();
@@ -538,11 +635,8 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 	/** 按钮点击 */
 	@Override
 	public void onClick(View v) {
-		if (v == menu) {
-			// 侧滑菜单
-			Toast.makeText(ControlActivity.this, "侧滑菜单:", Toast.LENGTH_LONG)
-					.show();
-		} else if (v == warning) {
+		
+		if (v == warning) {
 			// 警告页面
 			startActivity(new Intent(ControlActivity.this,
 					WarningActivity.class));
@@ -563,6 +657,327 @@ GestureDetector.OnGestureListener, OnItemClickListener{
 		} else if (v == time) {
 			// 设置时间界面
 			startActivity(new Intent(ControlActivity.this, TimeActivity.class));
+		}else if(v== user_icon){
+			//个人中心
+			startActivity(new Intent(ControlActivity.this, PersonalCenterActivity.class));
 		}
+	}
+	
+	
+	
+	/**控制台曲线图温度获取接口*/
+	public void getConsoleGraphTemperature() {
+		
+		uid	= "0";
+		mid = "0";
+		page = "2";
+		
+		String url = "uid =" + uid + "&" + "mid =" + mid + "&" + "page =" + page;
+
+ 
+		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
+				Constants.RequestUrl.GET_CONSOLE_GRAPH_TEMPERATURE + url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						
+						LogUtil.showLog("========请求控制台曲线图温度获取接口数据========", "response:" + response);
+						try {
+							JSONObject comJson = new JSONObject(response);
+
+							if (comJson.has("code")) {
+								String msg = comJson.getString("msg");
+								LogUtil.showLog("========控制台曲线图温度获取接口数据========", "msg:" + msg);
+							
+							}
+
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						
+						LogUtil.showLog("==========控制台曲线图温度获取接口错误:====", "获取的数据：" + error.toString());
+					}
+				});
+		mRequestQueue.add(mStringRequest);
+	}
+	
+	
+	/**获取最新温度的接口*/
+	public void getNewestTemperature() {
+		
+		uid	= "0";
+		mid = "0";
+		
+		String url = "uid =" + uid + "&" + "mid =" + mid;
+
+ 
+		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
+				Constants.RequestUrl.GET_NEWEST_TEMPERATURE + url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						
+						LogUtil.showLog("========请求获取最新温度的接口数据========", "response:" + response);
+						try {
+							JSONObject comJson = new JSONObject(response);
+
+							if (comJson.has("code")) {
+								String msg = comJson.getString("msg");
+								LogUtil.showLog("========获取最新温度的接口数据========", "msg:" + msg);
+							
+							}
+
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						
+						LogUtil.showLog("==========获取最新温度的接口错误:====", "获取的数据：" + error.toString());
+					}
+				});
+		mRequestQueue.add(mStringRequest);
+	}
+	
+	
+	/**控制台湿度获取接口*/
+	public void getConsoleGraphHumidity() {
+		
+		uid	= "0";
+		mid = "0";
+		page = "2";
+		
+		String url = "uid =" + uid + "&" + "mid =" + mid + "&" + "page =" + page;
+
+
+ 
+		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
+				Constants.RequestUrl.GET_CONSOLE_GRAPH_HUMIDITY + url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						
+						LogUtil.showLog("========请求控制台湿度获取接口数据========", "response:" + response);
+						try {
+							JSONObject comJson = new JSONObject(response);
+
+							if (comJson.has("code")) {
+								String msg = comJson.getString("msg");
+								LogUtil.showLog("========控制台湿度获取接口数据========", "msg:" + msg);
+							
+							}
+
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						
+						LogUtil.showLog("==========控制台湿度获取接口错误:====", "获取的数据：" + error.toString());
+					}
+				});
+		mRequestQueue.add(mStringRequest);
+	}
+	
+	
+	/**获取最新湿度的接口*/
+	public void getNewestHumidity() {
+		
+		uid	= "0";
+		mid = "0";
+		
+		String url = "uid =" + uid + "&" + "mid =" + mid;
+
+ 
+		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
+				Constants.RequestUrl.GET_NEWEST_HUMIDITY + url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						
+						LogUtil.showLog("========请求获取最新湿度的接口数据========", "response:" + response);
+						try {
+							JSONObject comJson = new JSONObject(response);
+
+							if (comJson.has("code")) {
+								String msg = comJson.getString("msg");
+								LogUtil.showLog("========获取最新湿度的接口数据========", "msg:" + msg);
+							
+							}
+
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						
+						LogUtil.showLog("==========获取最新湿度的接口错误:====", "获取的数据：" + error.toString());
+					}
+				});
+		mRequestQueue.add(mStringRequest);
+	}
+	
+	
+	/**获取用户仪器的信息*/
+	public void getUserInstrumentInformation() {
+		
+		uid	= "0";
+		String url = "uid =" + uid;
+ 
+		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
+				Constants.RequestUrl.USER_INSTRUMENT_INFROMATION + url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						
+						LogUtil.showLog("========请求获取用户仪器的信息数据========", "response:" + response);
+						try {
+							JSONObject comJson = new JSONObject(response);
+
+							if (comJson.has("code")) {
+								String msg = comJson.getString("msg");
+								LogUtil.showLog("========获取用户仪器的信息数据========", "msg:" + msg);
+
+							}
+							
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						
+						LogUtil.showLog("==========获取用户仪器的信息错误:====", "获取的数据：" + error.toString());
+					}
+				});
+		mRequestQueue.add(mStringRequest);
+	}
+	
+	
+	/**根据仪器id获取仪器信息*/
+	public void getIdInstrumentInformation() {
+		
+		uid	= "0";
+		mid = "0";
+		
+		String url = "uid =" + uid + "&" + "mid =" + mid;
+
+ 
+		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
+				Constants.RequestUrl.IN_INSTRUMENT_INFROMATION + url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						
+						LogUtil.showLog("========请求根据仪器id获取仪器信息数据========", "response:" + response);
+						try {
+							JSONObject comJson = new JSONObject(response);
+
+							if (comJson.has("code")) {
+								String msg = comJson.getString("msg");
+								LogUtil.showLog("========根据仪器id获取仪器信息数据========", "msg:" + msg);
+							
+							}
+
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						
+						LogUtil.showLog("==========根据仪器id获取仪器信息错误:====", "获取的数据：" + error.toString());
+					}
+				});
+		mRequestQueue.add(mStringRequest);
+	}
+	
+	/**获取用户的配置信息*/
+	public void getUserConfigurationInformation() {
+		
+		uid	= "1";
+		String url = "uid =" + uid;
+ 
+		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
+				Constants.RequestUrl.USER_CONFIGURATION_INFROMATION + url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						
+						LogUtil.showLog("========请求获取用户的配置信息数据========", "response:" + response);
+						try {
+							JSONObject comJson = new JSONObject(response);
+
+							if (comJson.has("code")) {
+								String msg = comJson.getString("msg");
+								LogUtil.showLog("========获取用户的配置信息数据========", "msg:" + msg);
+
+							}
+							
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						
+						LogUtil.showLog("==========获取用户的配置信息错误:====", "获取的数据：" + error.toString());
+					}
+				});
+		mRequestQueue.add(mStringRequest);
+	}
+	
+	/**获取用户指定的配置信息*/
+	public void getUserSpecifiedConfigurationInformation() {
+		
+		uid	= "1";
+		sid = "12";
+		
+		String url = "uid =" + uid + "&" + "sid =" + sid;
+ 
+		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
+				Constants.RequestUrl.USER_SPECIFIED_CONFIGURATION_INFROMATION + url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						
+						LogUtil.showLog("========请求获取用户指定的配置信息数据========", "response:" + response);
+						try {
+							JSONObject comJson = new JSONObject(response);
+
+							if (comJson.has("code")) {
+								String msg = comJson.getString("msg");
+								LogUtil.showLog("========获取获取用户指定的配置信息数据========", "msg:" + msg);
+
+							}
+							
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						
+						LogUtil.showLog("==========获取获取用户指定的配置信息错误:====", "获取的数据：" + error.toString());
+					}
+				});
+		mRequestQueue.add(mStringRequest);
 	}
 }
