@@ -14,31 +14,31 @@ public class Constants {
 	public static class RequestUrl {
 		
 		/** 控制台曲线图温度获取接口*/                                  
-		public static final String GET_CONSOLE_GRAPH_TEMPERATURE="http://192.168.1.149/temperature/tpage?";
+		public static final String GET_CONSOLE_GRAPH_TEMPERATURE="http://218.244.135.148:8080/temperature/tpage?";
 		
 		/**获取最新温度的接口*/
-		public static final String GET_NEWEST_TEMPERATURE="http://192.168.1.149/temperature/tnew?";
+		public static final String GET_NEWEST_TEMPERATURE="http://218.244.135.148:8080/temperature/tnew?";
 		
 		
 		/**控制台湿度获取接口*/
-		public static final String GET_CONSOLE_GRAPH_HUMIDITY="http://192.168.1.149/humidity/hpage?";
+		public static final String GET_CONSOLE_GRAPH_HUMIDITY="http://218.244.135.148:8080/humidity/hpage?";
 		
 		/**获取最新湿度的接口*/
-		public static final String GET_NEWEST_HUMIDITY="http://192.168.1.149/humidity/hnew?";
+		public static final String GET_NEWEST_HUMIDITY="http://218.244.135.148:8080/humidity/hnew?";
 	
 		
 		/**获取用户仪器的信息*/                                  
-		public static final String USER_INSTRUMENT_INFROMATION="http://192.168.1.149/mechine/getInfoByUser?";
+		public static final String USER_INSTRUMENT_INFROMATION="http://218.244.135.148:8080/mechine/getInfoByUser?";
 		
 		/**根据仪器id获取仪器信息*/                                  
-		public static final String IN_INSTRUMENT_INFROMATION="http://192.168.1.149/mechine/getInfoById?";
+		public static final String IN_INSTRUMENT_INFROMATION="http://218.244.135.148:8080/mechine/getInfoById?";
 		
 		
 		/**获取用户的配置信息*/                                  
-		public static final String USER_CONFIGURATION_INFROMATION="http://192.168.1.149/userconfig/getConfigByUser?";
+		public static final String USER_CONFIGURATION_INFROMATION="http://218.244.135.148:8080/userconfig/getConfigByUser?";
 	
 		/**获取用户指定的配置信息*/                                  
-		public static final String USER_SPECIFIED_CONFIGURATION_INFROMATION="http://192.168.1.149/userconfig/getConfigBySid?";
+		public static final String USER_SPECIFIED_CONFIGURATION_INFROMATION="http://218.244.135.148:8080/userconfig/getConfigBySid?";
 	
 		
 		/** 版本消息  */

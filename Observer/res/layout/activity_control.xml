@@ -154,7 +154,7 @@
         android:layout_marginTop="@dimen/top"
         android:textColor="@color/text_black"
         android:textSize="@dimen/temperature_size"
-        android:text="20.0" />
+        android:text="20.00" />
 
     <TextView
         android:id="@+id/text"

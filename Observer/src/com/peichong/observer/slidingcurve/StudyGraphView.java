@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.peichong.observer.R;
 import com.peichong.observer.tools.Utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -91,7 +92,7 @@ public class StudyGraphView extends View {
 
 	/**
 	 * TODO :初始化
-	 * 
+	 * ss
 	 * @throw
 	 * @return :void
 	 */
@@ -112,6 +113,7 @@ public class StudyGraphView extends View {
 				COORDINATE_MARGIN_BOTTOM_DP);
 	}
 
+	@SuppressLint("DrawAllocation")
 	@Override
 	protected void onDraw(Canvas canvas) {
 
@@ -128,6 +130,7 @@ public class StudyGraphView extends View {
 				+ coordinateMarginTop, mTotalWidth + coordinateMarginLeft
 				+ coordinateMarginRight, mTotalHeight + coordinateMarginTop,
 				paint);
+		
 		for (int i = 0; i < studyGraphItems.size(); i++) {
 			StudyGraphItem energy = studyGraphItems.get(i);
 			PointF textPoint = points.get(i);

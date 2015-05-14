@@ -1,14 +1,14 @@
 package com.peichong.observer.slidingcurve;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-
-
-
 
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
@@ -61,7 +61,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * @version: V1.0
  */
 public class ControlActivity extends BaseActivity implements OnClickListener,
-		OnTouchListener, GestureDetector.OnGestureListener, OnItemClickListener{
+		OnTouchListener, GestureDetector.OnGestureListener, OnItemClickListener {
 	@SuppressWarnings("unused")
 	private MyHorizontalScrollView studyGraphLayout;
 	private StudyGraphView studyGraph;
@@ -122,45 +122,45 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 	/** 时间 */
 	private String time_string = "";
-	
-	/** 个人中心*/
+
+	/** 个人中心 */
 	private ImageButton user_icon;
-	
+
 	private BaseStringRequest mStringRequest;
-	
-	/**用户的ID  从用户登录数据中取的*/
-	private String uid="";
-	
-	/**仪器id*/
-	private String mid="";
-	
-	/**页码*/
-	private String page="";
-	
-	/**设置id*/
-	private String sid="";
+
+	/** 用户的ID 从用户登录数据中取的 */
+	private String uid = "";
+
+	/** 仪器id */
+	private String mid = "";
+
+	/** 页码 */
+	private String page = "";
+
+	/** 设置id */
+	private String sid = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_control);
 		initUi();
-		
-		getConsoleGraphTemperature();
-		
-		getNewestTemperature();
-		
-		getConsoleGraphHumidity();
-		
-		getNewestHumidity();
-		
-		getUserInstrumentInformation();
-		
-		getIdInstrumentInformation();
-		
-		getUserConfigurationInformation();
-		
-		getUserSpecifiedConfigurationInformation();
+
+		//getConsoleGraphTemperature();
+
+		//getNewestTemperature();
+
+		//getConsoleGraphHumidity();
+
+		//getNewestHumidity();
+
+		//getUserInstrumentInformation();
+
+		//getIdInstrumentInformation();
+
+		//getUserConfigurationInformation();
+
+		//getUserSpecifiedConfigurationInformation();
 	}
 
 	/**
@@ -187,15 +187,15 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		tv_humidity = (TextView) findViewById(R.id.tv_humidity);
 		tv_time = (TextView) findViewById(R.id.tv_time);
 
-		user_icon=(ImageButton) findViewById(R.id.user_icon);
-		
+		user_icon = (ImageButton) findViewById(R.id.user_icon);
+
 		warning.setOnClickListener(this);
 		information.setOnClickListener(this);
 
 		temperature.setOnClickListener(this);
 		humidity.setOnClickListener(this);
 		time.setOnClickListener(this);
-		
+
 		user_icon.setOnClickListener(this);
 
 		// 拿到温度
@@ -221,6 +221,8 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 		// 温度曲线图
 		TemperatureCurve();
+		
+		getConsoleGraphTemperature();
 
 		layout_left = (LinearLayout) findViewById(R.id.layout_left);
 		layout_right = (LinearLayout) findViewById(R.id.layout_right);
@@ -534,49 +536,53 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		// 只要没有滑动则都属于点击
 		if (layoutParams.leftMargin == -MAX_WIDTH)
 			switch (position) {
-			
-			//曲线图页面
+
+			// 曲线图页面
 			case 0:
 				intent = new Intent(view.getContext(), ControlActivity.class);
 				break;
-				
-			//资讯页面
+
+			// 资讯页面
 			case 1:
-				intent = new Intent(view.getContext(), InformationActivity.class);
+				intent = new Intent(view.getContext(),
+						InformationActivity.class);
 				break;
-				
-			//警告页面
+
+			// 警告页面
 			case 2:
 				intent = new Intent(view.getContext(), WarningActivity.class);
 				break;
-				
-			//设置页面
+
+			// 设置页面
 			case 3:
 				intent = new Intent(view.getContext(), SetActivity.class);
 				break;
-				
-			//分析日志页面
+
+			// 分析日志页面
 			case 4:
-				intent = new Intent(view.getContext(), AnalysisLogActivity.class);
+				intent = new Intent(view.getContext(),
+						AnalysisLogActivity.class);
 				break;
-				
-			//设备管理页面
+
+			// 设备管理页面
 			case 5:
-				intent = new Intent(view.getContext(), EquipmentMgmActivity.class);
+				intent = new Intent(view.getContext(),
+						EquipmentMgmActivity.class);
 				break;
-				
-			//版本更新页面
+
+			// 版本更新页面
 			case 6:
-				intent = new Intent(view.getContext(), VersionUpdateActivity.class);
+				intent = new Intent(view.getContext(),
+						VersionUpdateActivity.class);
 				break;
-				
-			//关于页面
+
+			// 关于页面
 			case 7:
 				intent = new Intent(view.getContext(), AboutActivity.class);
 				break;
 			}
-		
-		//页面跳转
+
+		// 页面跳转
 		if (intent != null) {
 			// intent.putExtra("lv_item_id", id);
 			startActivity(intent);
@@ -611,7 +617,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		studyGraphItems.add(new StudyGraphItem("22:00", 4));
 		studyGraphItems.add(new StudyGraphItem("23:00", 17));
 		studyGraphItems.add(new StudyGraphItem("24:00", 2));
-
+		
 		studyGraph.setData(studyGraphItems);
 
 		pointList = studyGraph.getPoints();
@@ -635,7 +641,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	/** 按钮点击 */
 	@Override
 	public void onClick(View v) {
-		
+
 		if (v == warning) {
 			// 警告页面
 			startActivity(new Intent(ControlActivity.this,
@@ -657,80 +663,168 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		} else if (v == time) {
 			// 设置时间界面
 			startActivity(new Intent(ControlActivity.this, TimeActivity.class));
-		}else if(v== user_icon){
-			//个人中心
-			startActivity(new Intent(ControlActivity.this, PersonalCenterActivity.class));
+		} else if (v == user_icon) {
+			// 个人中心
+			startActivity(new Intent(ControlActivity.this,
+					PersonalCenterActivity.class));
 		}
 	}
-	
-	
-	
-	/**控制台曲线图温度获取接口*/
-	public void getConsoleGraphTemperature() {
-		
-		uid	= "0";
-		mid = "0";
-		page = "2";
-		
-		String url = "uid =" + uid + "&" + "mid =" + mid + "&" + "page =" + page;
 
- 
+	/** 控制台曲线图温度获取接口 */
+	public void getConsoleGraphTemperature() {
+
+		uid = "0";
+		mid = "0";
+		page = "1";
+
+		String url = "uid=" + uid + "&" + "mid=" + mid + "&" + "page=" + page;
+
 		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
 				Constants.RequestUrl.GET_CONSOLE_GRAPH_TEMPERATURE + url,
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
-						
-						LogUtil.showLog("========请求控制台曲线图温度获取接口数据========", "response:" + response);
+
+						LogUtil.showLog("========请求控制台曲线图温度获取接口数据========",
+								"response:" + response);
 						try {
+							//接口返回的数据
 							JSONObject comJson = new JSONObject(response);
-
-							if (comJson.has("code")) {
-								String msg = comJson.getString("msg");
-								LogUtil.showLog("========控制台曲线图温度获取接口数据========", "msg:" + msg);
 							
-							}
+							//JSONObject中的字段
+							if (comJson.has("code")) {
 
+								int code = comJson.getInt("code");
+
+								// 请求成功
+								if (code == 1) {
+									
+									//JSONObject中的字段
+									JSONArray array = comJson
+											.getJSONArray("data"); 	
+									
+									
+									//studyGraphItems = new ArrayList<StudyGraphItem>();
+									for (int i = 0; i < array.length(); i++) {
+										//JSONArray中的字段
+										 	JSONObject jo = array.optJSONObject(i);
+										    Float data = (float) jo.getDouble("data");
+										    String created_at = jo.getString("created_at");
+
+										    //温度曲线图
+										    //studyGraphItems.add(new StudyGraphItem(created_at, data));
+											//studyGraph.setData(studyGraphItems);
+											
+										    LogUtil.showLog(
+													"++++++++++++++++++++++++++++++++++:",
+													"获取的数据：" + data);
+										    LogUtil.showLog(
+													"++++++++++++++++++++++++++++++++++:",
+													"获取的数据：" + created_at);
+										    
+									}	
+									//pointList = studyGraph.getPoints();
+									
+									LogUtil.showLog(
+											"==========控制台曲线图温度获取接口请求成功:====",
+											"获取的数据：" + array);
+									// todo: parse data.
+								}
+								// 请求失败
+								else if (code == 0) {
+
+									String msg = comJson.getString("msg");
+
+									LogUtil.showLog(
+											"==========控制台曲线图温度获取接口请求失败:====",
+											"失败原因：" + msg);
+
+								} else {
+
+									try {
+										throw new Exception();
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							} else {
+								try {
+									throw new Exception();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
 						} catch (JSONException e) {
 							e.printStackTrace();
-						}
+						} 
 					}
 				}, new Response.ErrorListener() {
-					@Override
 					public void onErrorResponse(VolleyError error) {
-						
-						LogUtil.showLog("==========控制台曲线图温度获取接口错误:====", "获取的数据：" + error.toString());
+						LogUtil.showLog("==========控制台曲线图温度获取接口错误:====",
+								"失败原因：" + error.toString());
 					}
 				});
 		mRequestQueue.add(mStringRequest);
 	}
-	
-	
-	/**获取最新温度的接口*/
-	public void getNewestTemperature() {
-		
-		uid	= "0";
-		mid = "0";
-		
-		String url = "uid =" + uid + "&" + "mid =" + mid;
 
- 
+	/** 获取最新温度的接口 */
+	public void getNewestTemperature() {
+
+		uid = "0";
+		mid = "0";
+
+		String url = "uid=" + uid + "&" + "mid=" + mid;
+
 		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
 				Constants.RequestUrl.GET_NEWEST_TEMPERATURE + url,
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
-						
-						LogUtil.showLog("========请求获取最新温度的接口数据========", "response:" + response);
+
+						LogUtil.showLog("========请求获取最新温度的接口数据========",
+								"response:" + response);
 						try {
 							JSONObject comJson = new JSONObject(response);
 
 							if (comJson.has("code")) {
-								String msg = comJson.getString("msg");
-								LogUtil.showLog("========获取最新温度的接口数据========", "msg:" + msg);
-							
-							}
 
+								int code = comJson.getInt("code");
+
+								// 请求成功
+								if (code == 1) {
+									JSONArray array = comJson
+											.getJSONArray("data");
+									// JSONArray jarray = (JSONArray)
+									// comJson.get("data");
+									LogUtil.showLog(
+											"==========请求获取最新温度接口请求成功:====",
+											"获取的数据：" + array);
+									// todo: parse data.
+								}
+								// 请求失败
+								else if (code == 0) {
+
+									String msg = comJson.getString("msg");
+
+									LogUtil.showLog(
+											"==========请求获取最新温度请求失败:====",
+											"失败原因：" + msg);
+
+								} else {
+
+									try {
+										throw new Exception();
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							} else {
+								try {
+									throw new Exception();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -738,41 +832,73 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						
-						LogUtil.showLog("==========获取最新温度的接口错误:====", "获取的数据：" + error.toString());
+
+						LogUtil.showLog("==========请求获取最新温度的接口错误:====",
+								"获取的数据：" + error.toString());
 					}
 				});
 		mRequestQueue.add(mStringRequest);
 	}
-	
-	
-	/**控制台湿度获取接口*/
+
+	/** 控制台湿度获取接口 */
 	public void getConsoleGraphHumidity() {
-		
-		uid	= "0";
+
+		uid = "0";
 		mid = "0";
 		page = "2";
-		
-		String url = "uid =" + uid + "&" + "mid =" + mid + "&" + "page =" + page;
 
+		String url = "uid=" + uid + "&" + "mid=" + mid + "&" + "page=" + page;
 
- 
 		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
 				Constants.RequestUrl.GET_CONSOLE_GRAPH_HUMIDITY + url,
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
-						
-						LogUtil.showLog("========请求控制台湿度获取接口数据========", "response:" + response);
+
+						LogUtil.showLog("========请求控制台湿度获取接口数据========",
+								"response:" + response);
 						try {
 							JSONObject comJson = new JSONObject(response);
 
 							if (comJson.has("code")) {
-								String msg = comJson.getString("msg");
-								LogUtil.showLog("========控制台湿度获取接口数据========", "msg:" + msg);
-							
-							}
 
+								int code = comJson.getInt("code");
+
+								// 请求成功
+								if (code == 1) {
+									JSONArray array = comJson
+											.getJSONArray("data");
+									// JSONArray jarray = (JSONArray)
+									// comJson.get("data");
+									LogUtil.showLog(
+											"==========请求控制台湿度接口请求成功:====",
+											"获取的数据：" + array);
+									// todo: parse data.
+								}
+								// 请求失败
+								else if (code == 0) {
+
+									String msg = comJson.getString("msg");
+
+									LogUtil.showLog(
+											"==========请求控制台湿度接口请求失败:====",
+											"失败原因：" + msg);
+
+								} else {
+
+									try {
+										throw new Exception();
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							} else {
+								try {
+									throw new Exception();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -780,39 +906,71 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						
-						LogUtil.showLog("==========控制台湿度获取接口错误:====", "获取的数据：" + error.toString());
+
+						LogUtil.showLog("==========控制台湿度获取接口错误:====", "获取的数据："
+								+ error.toString());
 					}
 				});
 		mRequestQueue.add(mStringRequest);
 	}
-	
-	
-	/**获取最新湿度的接口*/
-	public void getNewestHumidity() {
-		
-		uid	= "0";
-		mid = "0";
-		
-		String url = "uid =" + uid + "&" + "mid =" + mid;
 
- 
+	/** 获取最新湿度的接口 */
+	public void getNewestHumidity() {
+
+		uid = "0";
+		mid = "0";
+
+		String url = "uid=" + uid + "&" + "mid=" + mid;
+
 		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
 				Constants.RequestUrl.GET_NEWEST_HUMIDITY + url,
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
-						
-						LogUtil.showLog("========请求获取最新湿度的接口数据========", "response:" + response);
+
+						LogUtil.showLog("========请求获取最新湿度的接口数据========",
+								"response:" + response);
 						try {
 							JSONObject comJson = new JSONObject(response);
 
 							if (comJson.has("code")) {
-								String msg = comJson.getString("msg");
-								LogUtil.showLog("========获取最新湿度的接口数据========", "msg:" + msg);
-							
-							}
+								int code = comJson.getInt("code");
 
+								// 请求成功
+								if (code == 1) {
+									JSONArray array = comJson
+											.getJSONArray("data");
+									// JSONArray jarray = (JSONArray)
+									// comJson.get("data");
+									LogUtil.showLog(
+											"==========请求获取最新湿度接口请求成功:====",
+											"获取的数据：" + array);
+									// todo: parse data.
+								}
+								// 请求失败
+								else if (code == 0) {
+
+									String msg = comJson.getString("msg");
+
+									LogUtil.showLog(
+											"==========请求获取最新湿度接口请求失败:====",
+											"失败原因：" + msg);
+
+								} else {
+
+									try {
+										throw new Exception();
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							} else {
+								try {
+									throw new Exception();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -820,77 +978,141 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						
-						LogUtil.showLog("==========获取最新湿度的接口错误:====", "获取的数据：" + error.toString());
+
+						LogUtil.showLog("==========获取最新湿度的接口错误:====", "获取的数据："
+								+ error.toString());
 					}
 				});
 		mRequestQueue.add(mStringRequest);
 	}
-	
-	
-	/**获取用户仪器的信息*/
+
+	/** 获取用户仪器的信息 */
 	public void getUserInstrumentInformation() {
-		
-		uid	= "0";
-		String url = "uid =" + uid;
- 
+
+		uid = "0";
+		String url = "uid=" + uid;
+
 		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
 				Constants.RequestUrl.USER_INSTRUMENT_INFROMATION + url,
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
-						
-						LogUtil.showLog("========请求获取用户仪器的信息数据========", "response:" + response);
+
+						LogUtil.showLog("========请求获取用户仪器的信息数据========",
+								"response:" + response);
 						try {
 							JSONObject comJson = new JSONObject(response);
 
 							if (comJson.has("code")) {
-								String msg = comJson.getString("msg");
-								LogUtil.showLog("========获取用户仪器的信息数据========", "msg:" + msg);
+								int code = comJson.getInt("code");
 
+								// 请求成功
+								if (code == 1) {
+									JSONArray array = comJson
+											.getJSONArray("data");
+									// JSONArray jarray = (JSONArray)
+									// comJson.get("data");
+									LogUtil.showLog(
+											"==========请求获取用户仪器的信息接口请求成功:====",
+											"获取的数据：" + array);
+									// todo: parse data.
+								}
+								// 请求失败
+								else if (code == 0) {
+
+									String msg = comJson.getString("msg");
+
+									LogUtil.showLog(
+											"==========请求获取用户仪器的信息接口请求失败:====",
+											"失败原因：" + msg);
+
+								} else {
+
+									try {
+										throw new Exception();
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							} else {
+								try {
+									throw new Exception();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 							}
-							
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
-
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						
-						LogUtil.showLog("==========获取用户仪器的信息错误:====", "获取的数据：" + error.toString());
+
+						LogUtil.showLog("==========获取用户仪器的信息错误:====", "获取的数据："
+								+ error.toString());
 					}
 				});
 		mRequestQueue.add(mStringRequest);
 	}
-	
-	
-	/**根据仪器id获取仪器信息*/
-	public void getIdInstrumentInformation() {
-		
-		uid	= "0";
-		mid = "0";
-		
-		String url = "uid =" + uid + "&" + "mid =" + mid;
 
- 
+	/** 根据仪器id获取仪器信息 */
+	public void getIdInstrumentInformation() {
+
+		uid = "0";
+		mid = "0";
+
+		String url = "uid=" + uid + "&" + "mid=" + mid;
+
 		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
 				Constants.RequestUrl.IN_INSTRUMENT_INFROMATION + url,
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
-						
-						LogUtil.showLog("========请求根据仪器id获取仪器信息数据========", "response:" + response);
+
+						LogUtil.showLog("========请求根据仪器id获取仪器信息数据========",
+								"response:" + response);
 						try {
 							JSONObject comJson = new JSONObject(response);
 
 							if (comJson.has("code")) {
-								String msg = comJson.getString("msg");
-								LogUtil.showLog("========根据仪器id获取仪器信息数据========", "msg:" + msg);
-							
-							}
+								int code = comJson.getInt("code");
 
+								// 请求成功
+								if (code == 1) {
+									JSONArray array = comJson
+											.getJSONArray("data");
+									// JSONArray jarray = (JSONArray)
+									// comJson.get("data");
+									LogUtil.showLog(
+											"==========请求根据仪器id获取仪器信息接口请求成功:====",
+											"获取的数据：" + array);
+									// todo: parse data.
+								}
+								// 请求失败
+								else if (code == 0) {
+
+									String msg = comJson.getString("msg");
+
+									LogUtil.showLog(
+											"==========请求根据仪器id获取仪器信息接口请求失败:====",
+											"失败原因：" + msg);
+
+								} else {
+
+									try {
+										throw new Exception();
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							} else {
+								try {
+									throw new Exception();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -898,86 +1120,159 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						
-						LogUtil.showLog("==========根据仪器id获取仪器信息错误:====", "获取的数据：" + error.toString());
+
+						LogUtil.showLog("==========根据仪器id获取仪器信息错误:====",
+								"获取的数据：" + error.toString());
 					}
 				});
 		mRequestQueue.add(mStringRequest);
 	}
-	
-	/**获取用户的配置信息*/
+
+	/** 获取用户的配置信息 */
 	public void getUserConfigurationInformation() {
-		
-		uid	= "1";
-		String url = "uid =" + uid;
- 
+
+		uid = "1";
+		String url = "uid=" + uid;
+
 		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
 				Constants.RequestUrl.USER_CONFIGURATION_INFROMATION + url,
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
-						
-						LogUtil.showLog("========请求获取用户的配置信息数据========", "response:" + response);
+
+						LogUtil.showLog("========请求获取用户的配置信息数据========",
+								"response:" + response);
 						try {
 							JSONObject comJson = new JSONObject(response);
 
 							if (comJson.has("code")) {
-								String msg = comJson.getString("msg");
-								LogUtil.showLog("========获取用户的配置信息数据========", "msg:" + msg);
+								int code = comJson.getInt("code");
 
+								// 请求成功
+								if (code == 1) {
+									JSONArray array = comJson
+											.getJSONArray("data");
+									// JSONArray jarray = (JSONArray)
+									// comJson.get("data");
+									LogUtil.showLog(
+											"==========请求获取用户的配置信息接口请求成功:====",
+											"获取的数据：" + array);
+									// todo: parse data.
+								}
+								// 请求失败
+								else if (code == 0) {
+
+									String msg = comJson.getString("msg");
+
+									LogUtil.showLog(
+											"==========请求获取用户的配置信息接口请求失败:====",
+											"失败原因：" + msg);
+
+								} else {
+
+									try {
+										throw new Exception();
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							} else {
+								try {
+									throw new Exception();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 							}
-							
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
-
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						
-						LogUtil.showLog("==========获取用户的配置信息错误:====", "获取的数据：" + error.toString());
+
+						LogUtil.showLog("==========获取用户的配置信息错误:====", "获取的数据："
+								+ error.toString());
 					}
 				});
 		mRequestQueue.add(mStringRequest);
 	}
-	
-	/**获取用户指定的配置信息*/
+
+	/** 获取用户指定的配置信息 */
 	public void getUserSpecifiedConfigurationInformation() {
-		
-		uid	= "1";
+
+		uid = "1";
 		sid = "12";
-		
-		String url = "uid =" + uid + "&" + "sid =" + sid;
- 
+
+		String url = "uid=" + uid + "&" + "sid=" + sid;
+
 		BaseStringRequest mStringRequest = new BaseStringRequest(Method.GET,
-				Constants.RequestUrl.USER_SPECIFIED_CONFIGURATION_INFROMATION + url,
-				new Response.Listener<String>() {
+				Constants.RequestUrl.USER_SPECIFIED_CONFIGURATION_INFROMATION
+						+ url, new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
-						
-						LogUtil.showLog("========请求获取用户指定的配置信息数据========", "response:" + response);
+
+						LogUtil.showLog("========请求获取用户指定的配置信息数据========",
+								"response:" + response);
 						try {
 							JSONObject comJson = new JSONObject(response);
 
 							if (comJson.has("code")) {
-								String msg = comJson.getString("msg");
-								LogUtil.showLog("========获取获取用户指定的配置信息数据========", "msg:" + msg);
+								int code = comJson.getInt("code");
 
+								// 请求成功
+								if (code == 1) {
+									JSONArray array = comJson
+											.getJSONArray("data");
+									// JSONArray jarray = (JSONArray)
+									// comJson.get("data");
+									LogUtil.showLog(
+											"==========请求获取用户指定的配置信息接口请求成功:====",
+											"获取的数据：" + array);
+									// todo: parse data.
+								}
+								// 请求失败
+								else if (code == 0) {
+
+									String msg = comJson.getString("msg");
+
+									LogUtil.showLog(
+											"==========请求获取用户指定的配置信息接口请求失败:====",
+											"失败原因：" + msg);
+
+								} else {
+
+									try {
+										throw new Exception();
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							} else {
+								try {
+									throw new Exception();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 							}
-							
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
-
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						
-						LogUtil.showLog("==========获取获取用户指定的配置信息错误:====", "获取的数据：" + error.toString());
+
+						LogUtil.showLog("==========获取用户指定的配置信息错误:====",
+								"获取的数据：" + error.toString());
 					}
 				});
 		mRequestQueue.add(mStringRequest);
 	}
+	@SuppressLint("SimpleDateFormat")
+	public static String dateToStrLong(java.util.Date dateDate) {
+		   SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		   String dateString = formatter.format(dateDate);
+		   return dateString;
+		}
 }
