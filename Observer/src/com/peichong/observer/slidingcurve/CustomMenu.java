@@ -37,7 +37,6 @@ public class CustomMenu extends RelativeLayout{
 	public CustomMenu(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mGestureDetector = new GestureDetector(new MySimpleGesture());
-
 	}
 
 	/***

@@ -2,22 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bj" >
+    android:background="@color/white" >
     
 	    <RelativeLayout
         android:id="@+id/ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/bj"
         >
         
-    <TextView
+    <ImageView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/console" 
-        android:textColor="@color/text_black"
         android:layout_alignParentLeft="true"
-        android:textSize="@dimen/console_size"
+        android:background="@drawable/yemianzi"
         android:layout_marginTop="@dimen/console_top"
         android:layout_marginLeft="@dimen/console_left"
         />
@@ -30,7 +29,7 @@
         android:layout_alignTop="@+id/warning"
         android:layout_toLeftOf="@+id/warning"
         android:layout_marginRight="@dimen/consulting_right"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/shanganniu" />
     
     <ImageButton
         android:id="@+id/warning"
@@ -39,7 +38,7 @@
         android:layout_alignTop="@+id/menu"
         android:layout_marginRight="@dimen/consulting_right"
         android:layout_toLeftOf="@+id/menu"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/jingshianniu" />
 
     <ImageButton
         android:id="@+id/menu"
@@ -48,7 +47,7 @@
         android:layout_alignBottom="@+id/tv"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/console_right"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/caidan" />
     
     </RelativeLayout>
 
@@ -60,7 +59,7 @@
 	     android:layout_below="@+id/ll"
 	     android:layout_centerHorizontal="true"
 	     android:layout_marginTop="@dimen/top_two"
-	     android:background="@drawable/bj" />
+	     android:background="@drawable/zhong" />
 
 	 <TextView
 	     android:id="@+id/textView1"
@@ -69,6 +68,8 @@
 	     android:layout_alignBaseline="@+id/time_show"
 	     android:layout_alignBottom="@+id/time_show"
 	     android:layout_toRightOf="@+id/time_show"
+	     android:layout_marginLeft="10dp"
+	     android:layout_marginRight="25dp"
 	     android:textSize="@dimen/time_size"
 	     android:textColor="@color/black"
 	     android:layout_centerInParent="true"
@@ -90,8 +91,8 @@
 	     android:layout_alignLeft="@+id/imageButton1"
 	     android:layout_marginBottom="@dimen/left"
 	     android:layout_centerInParent="true"
-	     android:layout_marginLeft="@dimen/right"
-	     android:text="60"
+	     android:layout_marginLeft="25dp"
+	     android:text="10"
 	     android:textColor="@color/black"
 	     android:textSize="@dimen/time_size" />
 
@@ -131,7 +132,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/left"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/qiehuananniu" />
 
     <TextView
         android:id="@+id/tv_temperature"
@@ -161,7 +162,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/qiehuananniu" />
 
     <TextView
         android:id="@+id/tv_humidity"
@@ -194,7 +195,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="@dimen/right"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/anniu" />
 
     <TextView
         android:id="@+id/tv_time"

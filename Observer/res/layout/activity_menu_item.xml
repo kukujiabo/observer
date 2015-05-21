@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:background="@color/white"
+    android:background="#69B1D7"
     >
 
     <TextView
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:textSize="@dimen/console_size"
+        android:textSize="@dimen/menu_size"
         android:textColor="@color/black"
         android:layout_marginLeft="@dimen/left"
         android:layout_marginTop="@dimen/top_two"

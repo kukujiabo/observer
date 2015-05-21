@@ -7,9 +7,9 @@
     <LinearLayout
         android:id="@+id/layout_right"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white" >
+        android:background="#69B1D7" >
         
          <com.peichong.observer.slidingcurve.CustomMenu
             android:id="@+id/mylaout"
@@ -26,7 +26,7 @@
 			   	 android:layout_height="wrap_content"
 			   	 android:layout_toLeftOf  ="@+id/user_icon"
 			   	 android:textColor="@color/black"
-			   	 android:layout_marginTop="@dimen/top_two"
+			   	 android:layout_marginTop="40dp"
 			   	 android:layout_marginRight="@dimen/right_three"
 			   	 android:text="蔚蓝的枫叶"
 			        />
@@ -34,8 +34,9 @@
 			     android:id="@+id/user_icon"
 			     android:layout_width="wrap_content"
 			   	 android:layout_height="wrap_content"
-			   	 android:background="@drawable/ic_launcher"
+			   	 android:background="@drawable/touxiangtwo"
 			   	 android:layout_alignParentRight="true"
+			   	 android:layout_marginTop="@dimen/top_two"
 			   	 android:layout_marginRight="@dimen/right"
 			   	 
 			     />
@@ -57,7 +58,6 @@
         android:layout_height="fill_parent"
         android:background="@color/bj"
         android:orientation="vertical" 
-        
         >
     
     <RelativeLayout
@@ -66,14 +66,12 @@
         android:layout_height="wrap_content"
         >
         
-    <TextView
+    <ImageView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/console" 
-        android:textColor="@color/text_black"
+        android:background="@drawable/yemianzi"
         android:layout_alignParentLeft="true"
-        android:textSize="@dimen/console_size"
         android:layout_marginTop="@dimen/console_top"
         android:layout_marginLeft="@dimen/console_left"
         />
@@ -86,7 +84,7 @@
         android:layout_alignTop="@+id/warning"
         android:layout_toLeftOf="@+id/warning"
         android:layout_marginRight="@dimen/consulting_right"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/shanganniu" />
     
     <ImageButton
         android:id="@+id/warning"
@@ -95,7 +93,7 @@
         android:layout_alignTop="@+id/menu"
         android:layout_marginRight="@dimen/consulting_right"
         android:layout_toLeftOf="@+id/menu"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/jingshianniu" />
 
     <ImageView
         android:id="@+id/menu"
@@ -104,18 +102,44 @@
         android:layout_alignBottom="@+id/tv"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/console_right"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/caidan" />
     
     </RelativeLayout>
     
     <LinearLayout
         android:id="@+id/ll2"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        android:background="@color/white"
         android:layout_below="@id/ll"
         >
-        
+        <ImageView
+            android:id="@+id/iv_pre"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/ic_pre" />
+
+    <com.peichong.observer.slidingcurve.TemperatureHorizontalScrollView
+        android:id="@+id/horizontal_scrollview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:paddingBottom="50dp"
+        android:layout_marginBottom="20dp"
+        android:paddingTop="50dp"
+        android:scrollbars="none" />
+
+    <ImageView
+        android:id="@+id/iv_next"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/ic_next" />
+	<!-- 曲线图
 	<com.peichong.observer.slidingcurve.MyHorizontalScrollView
         android:id="@+id/study_graph_layout"
         android:layout_width="wrap_content"
@@ -126,23 +150,24 @@
             android:id="@+id/study_graph"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </com.peichong.observer.slidingcurve.MyHorizontalScrollView>
+    </com.peichong.observer.slidingcurve.MyHorizontalScrollView> -->
+    
+    
      
 	</LinearLayout>
 	
-    
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll2"
-        >
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_below="@id/ll2" >
 	
 		<ImageButton
         android:id="@+id/temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/left"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/anniu" />
 
     <TextView
         android:id="@+id/tv_temperature"
@@ -150,9 +175,10 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/temperature"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/left"
         android:layout_marginTop="@dimen/top"
         android:textColor="@color/text_black"
+        android:gravity="center"
+        android:layout_marginLeft="10dp"
         android:textSize="@dimen/temperature_size"
         android:text="20.00" />
 
@@ -173,7 +199,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/qiehuananniu" />
 
     <TextView
         android:id="@+id/tv_humidity"
@@ -186,6 +212,7 @@
         android:textColor="@color/text_black"
         android:textSize="@dimen/temperature_size"
         android:layout_centerInParent="true"
+        android:gravity="center"
         android:text="20.0" />
 
     <TextView
@@ -206,7 +233,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="@dimen/right"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/qiehuananniu" />
 
     <TextView
         android:id="@+id/tv_time"
@@ -218,8 +245,9 @@
         android:layout_marginLeft="@dimen/time_left"
         android:textColor="@color/text_black"
         android:layout_centerInParent="true"
+        android:gravity="center"
         android:textSize="@dimen/temperature_size"
-        android:text="120" />
+        android:text="50" />
 
     <TextView
         android:id="@+id/text3"

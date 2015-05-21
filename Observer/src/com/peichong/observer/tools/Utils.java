@@ -1,5 +1,9 @@
 package com.peichong.observer.tools;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 
@@ -26,5 +30,15 @@ public class Utils {
 	public static int dip2px(Context context, float dpValue) {
 		final float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (dpValue * scale + 0.5f);
+	}
+	
+	/**年月日 时分秒 日期格式 转变成时分*/
+	@SuppressLint("SimpleDateFormat")
+	public static String date(String s)throws Exception{
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date d=formatter.parse(s);
+		SimpleDateFormat format=new SimpleDateFormat("HH:mm");
+		String dd = format.format(d);
+		return dd;
 	}
 }

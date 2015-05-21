@@ -2,12 +2,67 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bj" >
+     >
     
-	    <RelativeLayout
-        android:id="@+id/ll"
+     <LinearLayout
+        android:id="@+id/layout_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#69B1D7" >
+        
+        <com.peichong.observer.slidingcurve.CustomMenu
+            android:id="@+id/mylaout"
+            android:layout_width="@dimen/wide"
+            android:layout_height="fill_parent"
+             >
+			<RelativeLayout 
+			    android:layout_width="wrap_content"
+			    android:layout_height="fill_parent"
+			    >
+			 <TextView 
+			     android:id="@+id/uese_name"
+			     android:layout_width="wrap_content"
+			   	 android:layout_height="wrap_content"
+			   	 android:layout_toLeftOf  ="@+id/user_icon"
+			   	 android:textColor="@color/black"
+			   	 android:layout_marginTop="40dp"
+			   	 android:layout_marginRight="@dimen/right_three"
+			   	 android:text="蔚蓝的枫叶"
+			        />
+			 <ImageButton 
+			     android:id="@+id/user_icon"
+			     android:layout_width="wrap_content"
+			   	 android:layout_height="wrap_content"
+			   	 android:background="@drawable/touxiangtwo"
+			   	 android:layout_alignParentRight="true"
+			   	 android:layout_marginTop="@dimen/top_two"
+			   	 android:layout_marginRight="@dimen/right"
+			   	 
+			     />
+            <ListView
+                android:id="@+id/lv_set"
+                android:layout_alignParentBottom="true"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:divider="@null"
+                android:layout_marginBottom="@dimen/bottom"/>
+            </RelativeLayout>
+        </com.peichong.observer.slidingcurve.CustomMenu>
+    </LinearLayout>
+    
+      <LinearLayout
+        android:id="@+id/layout_left"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:orientation="vertical" 
+        >
+	    <RelativeLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bj" 
         >
         
     <TextView
@@ -15,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/set" 
-        android:textColor="@color/text_black"
+        android:textColor="@color/white"
         android:layout_alignParentLeft="true"
         android:textSize="@dimen/console_size"
         android:layout_marginTop="@dimen/console_top"
@@ -30,7 +85,7 @@
         android:layout_alignTop="@+id/warning"
         android:layout_toLeftOf="@+id/warning"
         android:layout_marginRight="@dimen/consulting_right"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/shanganniu" />
     
     <ImageButton
         android:id="@+id/warning"
@@ -39,7 +94,7 @@
         android:layout_alignTop="@+id/menu"
         android:layout_marginRight="@dimen/consulting_right"
         android:layout_toLeftOf="@+id/menu"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/jingshianniu" />
 
     <ImageButton
         android:id="@+id/menu"
@@ -48,8 +103,225 @@
         android:layout_alignBottom="@+id/tv"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/console_right"
-        android:background="@drawable/ic_launcher" />
-    
+        android:background="@drawable/caidan" />
     </RelativeLayout>
     
+	    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        >
+
+	        <ImageButton
+	            android:id="@+id/ib1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_alignParentTop="true"
+	            android:background="@drawable/liebiao" />
+
+	        <ImageButton
+	            android:id="@+id/sethyperthermia"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_alignParentTop="true"
+	            android:layout_marginTop="10dp"
+	            android:layout_marginRight="20dp"
+	            android:background="@drawable/shezhishuanganniu" />
+
+	        <ImageButton
+	            android:id="@+id/ib2"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@+id/ib1"
+	            android:background="@drawable/shezhi_03" />
+
+	        <TextView
+	            android:id="@+id/gethtem"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignTop="@+id/ib2"
+	            android:layout_toLeftOf="@+id/gethtem_two"
+	            android:layout_marginTop="15dp"
+	            android:visibility="invisible"
+	            android:text="15"
+	            android:textColor="@color/black"
+	            android:textSize="20sp" />
+	        
+	        <TextView
+	            android:id="@+id/gethtem_two"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBaseline="@+id/gethtem"
+	            android:layout_alignBottom="@+id/gethtem"
+	            android:layout_alignRight="@+id/sethyperthermia"
+	            android:textColor="@color/black"
+	            android:textSize="20sp"
+	            android:text="°C" />
+
+	        <EditText
+	            android:id="@+id/sethtem"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBottom="@+id/gethtem"
+	            android:layout_alignLeft="@+id/gethtem"
+	            android:layout_alignTop="@+id/gethtem"
+	            android:layout_toLeftOf="@+id/gethtem_two"
+	            android:background="@null"
+	            android:ems="2"
+	            android:inputType="number" >
+	        </EditText>
+
+	        <ImageButton
+	            android:id="@+id/ib3"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@+id/ib2"
+	            android:background="@drawable/shezhi_05" />
+
+	        <TextView
+	            android:id="@+id/getltem"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBottom="@+id/ib3"
+	            android:layout_alignLeft="@+id/gethtem"
+	            android:layout_marginBottom="15dp"
+	            android:text="15"
+	            android:visibility="invisible"
+	            android:textColor="@color/black"
+	            android:textSize="20sp"
+	            />
+
+	        <TextView
+	            android:id="@+id/getltem_two"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBottom="@+id/getltem"
+	            android:layout_alignLeft="@+id/gethtem_two"
+	            android:layout_alignParentRight="true"
+	             android:textColor="@color/black"
+	            android:textSize="20sp"
+	            android:text="°C" />
+
+	        <EditText
+	            android:id="@+id/setltem"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBaseline="@+id/getltem"
+	            android:layout_alignBottom="@+id/getltem"
+	            android:layout_alignLeft="@+id/getltem"
+	            android:layout_toLeftOf="@+id/getltem_two"
+	            android:background="@null"
+	            android:ems="2"
+	            android:inputType="number" >
+	        </EditText>
+
+	        <ImageButton
+	            android:id="@+id/ib4"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@+id/ib3"
+	            android:background="@drawable/liebiaoc" />
+
+	        <ImageButton
+	            android:id="@+id/sethumidity"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignRight="@+id/gethtem_two"
+	            android:layout_alignTop="@+id/ib4"
+	            android:layout_marginTop="10dp"
+	            android:background="@drawable/shezhishuanganniu" />
+
+	        <ImageButton
+	            android:id="@+id/ib5"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@+id/ib4"
+	            android:background="@drawable/liebiaod" />
+
+	        <TextView
+	            android:id="@+id/gethhum"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignLeft="@+id/getltem"
+	            android:layout_alignTop="@+id/ib5"
+	            android:layout_marginTop="15dp"
+	            android:text="15"
+	            android:visibility="invisible"
+	            android:textColor="@color/black"
+	            android:textSize="20sp" />
+
+	        <TextView
+	            android:id="@+id/gethhum_two"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBaseline="@+id/gethhum"
+	            android:layout_alignBottom="@+id/gethhum"
+	            android:layout_toRightOf="@+id/gethhum"
+	            android:text="%"
+	            android:textColor="@color/black"
+	            android:textSize="20sp" />
+
+	        <EditText
+	            android:id="@+id/sethhum"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignLeft="@+id/gethhum"
+	            android:layout_alignTop="@+id/gethhum"
+	            android:layout_toLeftOf="@+id/gethhum_two"
+	            android:background="@null"
+	            android:ems="2"
+	            android:inputType="number" >
+	        </EditText>
+
+	        <ImageButton
+	            android:id="@+id/ib6"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@+id/ib5"
+	            android:background="@drawable/liebiaoe" />
+
+	        <TextView
+	            android:id="@+id/getlhum"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBottom="@+id/ib6"
+	            android:layout_marginBottom="15dp"
+	            android:layout_toLeftOf="@+id/gethhum_two"
+	            android:text="15"
+	            android:visibility="invisible"
+	            android:textColor="@color/black"
+	            android:textSize="20sp" />
+
+	        <TextView
+	            android:id="@+id/getlhum_two"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBaseline="@+id/getlhum"
+	            android:layout_alignBottom="@+id/getlhum"
+	            android:layout_toRightOf="@+id/gethhum"
+	            android:text="%"
+	            android:textColor="@color/black"
+	            android:textSize="20sp" />
+
+	        <EditText
+	            android:id="@+id/setlhum"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignLeft="@+id/getlhum"
+	            android:layout_alignTop="@+id/getlhum"
+	            android:layout_toLeftOf="@+id/getlhum_two"
+	            android:background="@null"
+	            android:ems="2"
+	            android:inputType="number" >
+	        </EditText>
+	        
+    </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>

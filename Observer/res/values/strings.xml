@@ -3,7 +3,8 @@
 
     <string name="app_name">BasicApp</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">ControlActivity</string>
 
     
     <string name="name_show">\t\t账号</string>

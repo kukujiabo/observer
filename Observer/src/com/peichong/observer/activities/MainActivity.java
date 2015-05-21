@@ -1,20 +1,25 @@
 package com.peichong.observer.activities;
 
+import java.util.HashMap;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
-
-
-
+import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
 import com.peichong.observer.R;
+import com.peichong.observer.application.ObserverApplication;
 import com.peichong.observer.configure.Constants;
 import com.peichong.observer.slidingcurve.ControlActivity;
 import com.peichong.observer.tools.Base64Coder;
 import com.peichong.observer.tools.BaseStringRequest;
 import com.peichong.observer.tools.JsonUtil;
+import com.peichong.observer.tools.LogUtil;
 import com.peichong.observer.tools.SharedPreferencesUtils;
 import com.peichong.observer.tools.UpdateUtil;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
@@ -34,90 +39,211 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-
-
-/** 
- * TODO:      登录
- * @author:   wy 
- * @version:  V1.0 
+/**
+ * TODO: 登录
+ * 
+ * @author: wy
+ * @version: V1.0
  */
 @SuppressLint({ "NewApi", "InlinedApi" })
-public class MainActivity extends BaseActivity implements OnClickListener{
+public class MainActivity extends BaseActivity implements OnClickListener {
 
 	private String name = "";
 	private String password = "";
-	private EditText editText1;
-	private EditText editText2;
+	private EditText et_name;
+	private EditText et_password;
 	private ImageButton ib_register;
-	
+
 	private BaseStringRequest mStringRequest;
+
+	/**应用程序全局属性*/
+	private ObserverApplication app;
 	
+	/** 温度Y */
+	private Float data;
+
+	/** 时间X */
+	private String created_at;
+
+	/** 转换后的时间Y */
+	private String s;
+
+	/** 用户的ID 从用户登录数据中取的 */
+	private String uid = "";
+
+	/** 邮箱 */
+	private String email = "";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		//拿到Application对象
+		app= (ObserverApplication) getApplication();
 		init();
-		
+		et_name.setText("testuser1");
+		et_password.setText("123");
 	}
 
-	/**  
+	/**
 	 * TODO : 初始化
-	 * @throw 
-	 * @return :void 
-	 */ 
+	 * 
+	 * @throw
+	 * @return :void
+	 */
 	private void init() {
-		editText1 = (EditText) findViewById(R.id.name);
-		editText2 = (EditText) findViewById(R.id.password);
+		et_name = (EditText) findViewById(R.id.name);
+		et_password = (EditText) findViewById(R.id.password);
 		ib_register = (ImageButton) findViewById(R.id.ib_register);
 		ib_register.setOnClickListener(this);
 	}
 
 	/**
-	 *	按钮点击事件 
+	 * 按钮点击事件
 	 **/
 	@Override
 	public void onClick(View v) {
-		if (v == ib_register){
-			name=editText1.getText().toString().trim();
-			password=editText2.getText().toString().trim();
-			//帐号和密码不为空
-			if (!name.equals("") && !password.equals("")){
-				//base64转码
-				String dd = Base64Coder.encode((name + ":" + password).getBytes()).toString();
+		if (v == ib_register) {
+			name = et_name.getText().toString().trim();
+			password = et_password.getText().toString().trim();
+			// 帐号和密码不为空
+			if (!name.equals("") && !password.equals("")) {
+				// base64转码
+				String dd = Base64Coder.encode(
+						(name + ":" + password).getBytes()).toString();
 				SharedPreferencesUtils.saveUserPasword(this, password);
 				SharedPreferencesUtils.saveData(this, "Base64N&P", dd);
 				SharedPreferencesUtils.saveUserName(this, name);
 				SharedPreferencesUtils.saveUserPasword(this, password);
-				//登入请求
+				// 登入请求
 				login();
+			} else {
+				// 帐号和密码为空
+				Toast.makeText(MainActivity.this, "请输入帐号和密码！",
+						Toast.LENGTH_LONG).show();
 			}
-			else{
-				//帐号和密码为空
-				Toast.makeText(MainActivity.this,
-						"请输入帐号和密码！", Toast.LENGTH_LONG)
-						.show();			}
 		}
 	}
-	
-	/**  
-	 * TODO : 登录
-	 * @throw 
-	 * @return :void 
-	 */ 
-	private void login() {
-		if (name.equals("123") && password.equals("123")) {
 
-			// 登录成功
-			startActivity(new Intent(MainActivity.this,
-					ControlActivity.class));
-			finish();
-		} else {
-			// 登录失败
-			Toast.makeText(MainActivity.this,
-					"登录失败:", Toast.LENGTH_LONG)
-					.show();
-			
-		}
+	/**
+	 * TODO : 登录
+	 * 
+	 * @throw
+	 * @return :void
+	 */
+	private void login() {
+
+		 /* if (name.equals("testuser1") && password.equals("123")) {
+		 
+		 // 登录成功 
+		Intent intent = new Intent();
+		  intent.setClass(MainActivity.this, ControlActivity.class); 
+		  //把温度Y传过去
+		  
+		  //intent.putExtra("data", data); 
+		  //把转换后的时间X传过去 
+		  //intent.putExtra("s", s); 
+		  startActivity(intent); 
+		  //获取温度曲线图接口 getConsoleGraphTemperature();
+		  finish(); 
+		  } else { 
+			  // 登录失败
+			  Toast.makeText(MainActivity.this, "登录失败:",Toast.LENGTH_LONG) .show();
+		 
+		  }*/
+		 
+		showProgressDialog();
+		String url = "name=" + name + "&" + "password=" + password;
+		mStringRequest = new BaseStringRequest(Method.GET,
+				Constants.RequestUrl.LOGIN + url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+
+						LogUtil.showLog("+++++++获取登录接口数据+++++++:", "登录接口数据："
+								+ response);
+						dismissProgressDialog();
+
+						try {
+							// 接口返回的数据
+							JSONObject comJson = new JSONObject(response);
+
+							// JSONObject中的字段
+							if (comJson.has("code")) {
+								int code = comJson.getInt("code");
+								// 请求成功
+								if (code == 1) {
+
+									// JSONObject中的字段
+									JSONObject jo = comJson
+											.getJSONObject("info");
+									if (comJson.has("info")) {
+										// JSONObject中的字段
+										uid = jo.getString("id");
+										email = jo.getString("email");
+										//把id缓存到Application,可供所有activity使用
+										app.setUid(uid);
+										//把email缓存到Application,可供所有activity使用
+										app.setEmail(email);
+
+										LogUtil.showLog(
+												"+++++++++++id+++++++++", "id:"
+														+ app.getUid());
+										LogUtil.showLog(
+												"+++++++++++email+++++++++",
+												"email:" + app.getEmail());
+
+										LogUtil.showLog(
+												"==========获取登录接口数据接口请求成功:====",
+												"获取的数据：" + jo);
+										// 登录成功
+										startActivity(new Intent(
+												MainActivity.this,
+												ControlActivity.class));
+										finish();
+									}
+								}
+								// 请求失败
+								else if (code == 0) {
+									// 登录失败
+									Toast.makeText(MainActivity.this,
+											"登录失败:" + response,
+											Toast.LENGTH_LONG).show();
+									String msg = comJson.getString("msg");
+
+									LogUtil.showLog("==========登录失败:====",
+											"失败原因：" + msg);
+								} else {
+
+								}
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						dismissProgressDialog();
+						Toast.makeText(MainActivity.this,
+								"请求错误:" + error.toString(), Toast.LENGTH_LONG)
+								.show();
+					}
+				}) {
+
+			@Override
+			protected HashMap<String, String> getParams()
+					throws AuthFailureError {
+				HashMap<String, String> hashMap = new HashMap<String, String>();
+				hashMap.put("action", "checkflag");
+				hashMap.put("username", name);
+				hashMap.put("pwd", password); 
+				return hashMap;
+			}
+		};
+
+		mStringRequest.setTag("Login");
+		mRequestQueue.add(mStringRequest);
 	}
 
 	public static void doCall(Context context, String number) {
@@ -126,7 +252,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(it);
 	}
-	
+
 	/**
 	 * 检查更新
 	 * 
@@ -168,8 +294,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 
 		}
 	}
-	
-	
+
 	/**
 	 * 获取版本消息
 	 */
@@ -196,8 +321,7 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		mStringRequest.setTag("version");
 		mRequestQueue.add(mStringRequest);
 	}
-	
-	
+
 	/**
 	 * 获取本地版本号，版本号必须为三位
 	 * 
@@ -215,4 +339,5 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		}
 		return ver;
 	}
+
 }

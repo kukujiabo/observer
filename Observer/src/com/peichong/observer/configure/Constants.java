@@ -13,6 +13,9 @@ public class Constants {
 	public static String BASE64NP = "";
 	public static class RequestUrl {
 		
+		/** 登录*/    
+		public static final String LOGIN="http://218.244.135.148:8080/login?";
+		
 		/** 控制台曲线图温度获取接口*/                                  
 		public static final String GET_CONSOLE_GRAPH_TEMPERATURE="http://218.244.135.148:8080/temperature/tpage?";
 		

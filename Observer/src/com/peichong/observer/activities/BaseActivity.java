@@ -20,6 +20,7 @@ import android.os.Bundle;
  * @author:   wy 
  * @version:  V1.0 
  */
+
 public class BaseActivity extends SwipeBackActivity{
 	private ProgressDialog mProgressDialog;
 	public RequestQueue mRequestQueue;

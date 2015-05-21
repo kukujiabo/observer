@@ -16,6 +16,8 @@
      <!--  控制台字体大小-->
     <dimen name="console_size">20sp</dimen>
     
+     <dimen name="menu_size">15sp</dimen>
+    
      <!--  控制台上边距-->
     <dimen name="console_top">30dp</dimen>
     

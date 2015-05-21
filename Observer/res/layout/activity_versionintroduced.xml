@@ -2,12 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bj" >
+    android:background="@color/white" >
     
 	    <RelativeLayout
         android:id="@+id/ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+         android:background="@color/bj" 
         >
         
     <TextView
@@ -15,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/versionupdate" 
-        android:textColor="@color/text_black"
+        android:textColor="@color/white"
         android:layout_alignParentLeft="true"
         android:textSize="@dimen/console_size"
         android:layout_marginTop="@dimen/console_top"
@@ -30,7 +31,7 @@
         android:layout_alignTop="@+id/warning"
         android:layout_toLeftOf="@+id/warning"
         android:layout_marginRight="@dimen/consulting_right"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/shanganniu" />
     
     <ImageButton
         android:id="@+id/warning"
@@ -39,7 +40,7 @@
         android:layout_alignTop="@+id/menu"
         android:layout_marginRight="@dimen/consulting_right"
         android:layout_toLeftOf="@+id/menu"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/jingshianniu" />
 
     <ImageButton
         android:id="@+id/menu"
@@ -48,7 +49,7 @@
         android:layout_alignBottom="@+id/tv"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/console_right"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/caidan" />
     
     </RelativeLayout>
     
