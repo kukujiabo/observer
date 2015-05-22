@@ -71,7 +71,8 @@ public class TemperatureAdapter extends BaseAdapter{
 		//}else{
 			viewhold=(Viewhold) convertView.getTag();
 		//}
-			viewhold.temperatures.setText(item.getTemperature().toString());
+			viewhold.temperatures.setText(item.getTemperature()+"");
+	
 			viewhold.times.setText(item.getTime().toString());
 		return convertView;
 	}

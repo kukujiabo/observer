@@ -10,7 +10,7 @@ package com.peichong.observer.slidingcurve;
  * @version:  V1.0 
  */
 public class HumidityInfo {
-	private Float humidity;
+	private float humidity;
 	private String time;
 	/**
 	 * 
@@ -23,7 +23,7 @@ public class HumidityInfo {
 	 * @param humidity
 	 * @param time
 	 */
-	public HumidityInfo(Float humidity, String time) {
+	public HumidityInfo(float humidity, String time) {
 		super();
 		this.humidity = humidity;
 		this.time = time;
@@ -31,13 +31,13 @@ public class HumidityInfo {
 	/**
 	 * @return the humidity
 	 */
-	public Float getHumidity() {
+	public float getHumidity() {
 		return humidity;
 	}
 	/**
 	 * @param humidity the humidity to set
 	 */
-	public void setHumidity(Float humidity) {
+	public void setHumidity(float humidity) {
 		this.humidity = humidity;
 	}
 	/**

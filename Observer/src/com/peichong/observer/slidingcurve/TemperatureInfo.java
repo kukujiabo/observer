@@ -8,7 +8,7 @@ package com.peichong.observer.slidingcurve;
  */
 
 public class TemperatureInfo {
-	private Float temperature;
+	private float temperature;
 	private String time;
 	/**
 	 * 
@@ -21,7 +21,7 @@ public class TemperatureInfo {
 	 * @param temperature
 	 * @param time
 	 */
-	public TemperatureInfo(Float temperature, String time) {
+	public TemperatureInfo(float temperature, String time) {
 		super();
 		this.temperature = temperature;
 		this.time = time;
@@ -29,13 +29,13 @@ public class TemperatureInfo {
 	/**
 	 * @return the temperature
 	 */
-	public Float getTemperature() {
+	public float getTemperature() {
 		return temperature;
 	}
 	/**
 	 * @param temperature the temperature to set
 	 */
-	public void setTemperature(Float temperature) {
+	public void setTemperature(float temperature) {
 		this.temperature = temperature;
 	}
 	/**

@@ -11,10 +11,12 @@ import com.peichong.observer.tools.LogUtil;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -37,7 +39,7 @@ import android.widget.TextView;
  * @version: V1.0
  */
 public class TemperatureHorizontalScrollView extends HorizontalScrollView
-		implements OnClickListener {
+		implements OnClickListener{
 
 	private FrameLayout mFrameLayout;
 	private BaseAdapter mBaseAdapter;
@@ -97,14 +99,12 @@ public class TemperatureHorizontalScrollView extends HorizontalScrollView
 		if (curScrollLoc == ScrollExtent) {
 			if (preImage != null)
 				preImage.setVisibility(View.INVISIBLE);
-			//ControlActivity.wy();
 			return;
 		}
 		/* 如果滚动到最右边 */
 		if (curScrollLoc >= ScrollRange) {
 			if (nextImage != null)
 				nextImage.setVisibility(View.INVISIBLE);
-			//ControlActivity.wy2();
 			return;
 		}
 
@@ -254,5 +254,66 @@ public class TemperatureHorizontalScrollView extends HorizontalScrollView
 			nextImage.setOnClickListener(this);
 		}
 	}
+	
+	/* (non-Javadoc)
+	 * @see android.widget.HorizontalScrollView#onTouchEvent(android.view.MotionEvent)
+	 */
+	@Override
+	public boolean onTouchEvent(MotionEvent ev) {
+		/* 计算水平方向滚动条的滑块的偏移值。 */
+		int ScrollOffset = computeHorizontalScrollOffset();
+		/* 滚动条长度 */
+		int ScrollExtent = computeHorizontalScrollExtent();
+		/* 滚动条当前位置 */
+		int curScrollLoc = ScrollOffset + ScrollExtent;
+		/* scrollView 的可滚动水平范围是所有子视图的宽度总合。 */
+		int ScrollRange = computeHorizontalScrollRange();
+		
+		switch (ev.getAction()) {
+		
+		case MotionEvent.ACTION_DOWN:
+			
+			break;
+		case MotionEvent.ACTION_MOVE:
+			
+			break;
+		case MotionEvent.ACTION_UP:
+			/* 如果滚动到最左边 */
+			if (curScrollLoc == ScrollExtent) {
+				if (preImage != null)
+				{
+					preImage.setVisibility(View.INVISIBLE);
+					LogUtil.showLog("left" + String.valueOf(curScrollLoc));
+				}
+				
+				//获取旧数据
+				Message msg = new Message();
+				
+				msg.what = 0;
+				
+				_scrollHandler.sendMessage(msg);
+				
+			}
+			/* 如果滚动到最右边 */
+			if (curScrollLoc >= ScrollRange) {
+				if (nextImage != null)
+				{	
+					nextImage.setVisibility(View.INVISIBLE);
+					LogUtil.showLog("right" + String.valueOf(curScrollLoc));
+				}
+				
+				//获取新数据
+				Message msg = new Message();
+				
+				msg.what = 1;
+				
+				_scrollHandler.sendMessage(msg);
+			}
+			break;
 
+		default:
+			break;
+		}
+		return super.onTouchEvent(ev);
+	}
 }

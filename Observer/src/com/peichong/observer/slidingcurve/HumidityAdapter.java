@@ -69,7 +69,7 @@ public class HumidityAdapter extends BaseAdapter{
 		//}else{
 			viewhold=(Viewhold) convertView.getTag();
 		//}
-			viewhold.humiditys.setText(item.getHumidity().toString());
+			viewhold.humiditys.setText(item.getHumidity()+"");
 			viewhold.times.setText(item.getTime().toString());
 		return convertView;
 	}

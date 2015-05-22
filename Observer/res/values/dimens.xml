@@ -3,6 +3,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="slidingmenu_offset">50dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
 	
     <!--login图标上边距-->
     <dimen name="login">30dp</dimen>
@@ -55,7 +57,7 @@
     <dimen name="right_three">10dp</dimen>
     
      <!--  上边距-->
-    <dimen name="top">15dp</dimen>
+    <dimen name="top">10dp</dimen>
     
      <!--  上边距-->
     <dimen name="top_two">20dp</dimen>
@@ -67,6 +69,6 @@
     <dimen name="time_size">50sp</dimen>
     
      <!--  滑动抽屉的宽-->
-    <dimen name="wide">250dp</dimen>
+    <dimen name="wide">280dp</dimen>
     
 </resources>

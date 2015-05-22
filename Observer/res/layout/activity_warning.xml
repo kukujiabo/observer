@@ -7,50 +7,50 @@
     
 	<RelativeLayout
         android:id="@+id/ll"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/bj"
         >
         
-    <TextView
+  <TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/warning" 
-        android:textColor="@color/white"
         android:layout_alignParentLeft="true"
-        android:textSize="@dimen/console_size"
+        android:layout_marginBottom="20dp"
+         android:textColor="@color/white"
+          android:textSize="@dimen/console_size"
+         android:text="@string/warning"
         android:layout_marginTop="@dimen/console_top"
         android:layout_marginLeft="@dimen/console_left"
         />
-
-
-    <ImageButton
-        android:id="@+id/information"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/warning"
-        android:layout_toLeftOf="@+id/warning"
-        android:layout_marginRight="@dimen/consulting_right"
-        android:background="@drawable/shanganniu" />
-    
-    <ImageButton
-        android:id="@+id/warning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/menu"
-        android:layout_marginRight="@dimen/consulting_right"
-        android:layout_toLeftOf="@+id/menu"
-        android:background="@drawable/jingshianniu" />
 
     <ImageButton
         android:id="@+id/menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/console_right"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
         android:background="@drawable/caidan" />
+
+    <ImageButton
+        android:id="@+id/warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/menu"
+        android:background="@drawable/jingshianniu" />
+
+    <ImageButton
+        android:id="@+id/information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/warning"
+        android:background="@drawable/shanganniu" />
     
     </RelativeLayout>
     

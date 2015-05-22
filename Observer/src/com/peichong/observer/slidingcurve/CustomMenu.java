@@ -78,7 +78,7 @@ public class CustomMenu extends RelativeLayout{
 	/***
 	 * 自定义手势执行
 	 * 
-	 * @author zhangyj
+	 * @author wy
 	 * 
 	 * 
 	 */

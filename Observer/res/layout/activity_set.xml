@@ -4,111 +4,59 @@
     android:layout_height="match_parent"
      >
     
-     <LinearLayout
-        android:id="@+id/layout_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#69B1D7" >
-        
-        <com.peichong.observer.slidingcurve.CustomMenu
-            android:id="@+id/mylaout"
-            android:layout_width="@dimen/wide"
-            android:layout_height="fill_parent"
-             >
-			<RelativeLayout 
-			    android:layout_width="wrap_content"
-			    android:layout_height="fill_parent"
-			    >
-			 <TextView 
-			     android:id="@+id/uese_name"
-			     android:layout_width="wrap_content"
-			   	 android:layout_height="wrap_content"
-			   	 android:layout_toLeftOf  ="@+id/user_icon"
-			   	 android:textColor="@color/black"
-			   	 android:layout_marginTop="40dp"
-			   	 android:layout_marginRight="@dimen/right_three"
-			   	 android:text="蔚蓝的枫叶"
-			        />
-			 <ImageButton 
-			     android:id="@+id/user_icon"
-			     android:layout_width="wrap_content"
-			   	 android:layout_height="wrap_content"
-			   	 android:background="@drawable/touxiangtwo"
-			   	 android:layout_alignParentRight="true"
-			   	 android:layout_marginTop="@dimen/top_two"
-			   	 android:layout_marginRight="@dimen/right"
-			   	 
-			     />
-            <ListView
-                android:id="@+id/lv_set"
-                android:layout_alignParentBottom="true"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" 
-                android:divider="@null"
-                android:layout_marginBottom="@dimen/bottom"/>
-            </RelativeLayout>
-        </com.peichong.observer.slidingcurve.CustomMenu>
-    </LinearLayout>
-    
-      <LinearLayout
-        android:id="@+id/layout_left"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/white"
-        android:orientation="vertical" 
-        >
-	    <RelativeLayout
+	<RelativeLayout
         android:id="@+id/ll"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bj" 
+        android:background="@color/bj"
         >
         
-    <TextView
+  <TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/set" 
-        android:textColor="@color/white"
         android:layout_alignParentLeft="true"
-        android:textSize="@dimen/console_size"
+        android:layout_marginBottom="20dp"
+         android:textColor="@color/white"
+          android:textSize="@dimen/console_size"
+         android:text="@string/set"
         android:layout_marginTop="@dimen/console_top"
         android:layout_marginLeft="@dimen/console_left"
         />
-
-
-    <ImageButton
-        android:id="@+id/information"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/warning"
-        android:layout_toLeftOf="@+id/warning"
-        android:layout_marginRight="@dimen/consulting_right"
-        android:background="@drawable/shanganniu" />
-    
-    <ImageButton
-        android:id="@+id/warning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/menu"
-        android:layout_marginRight="@dimen/consulting_right"
-        android:layout_toLeftOf="@+id/menu"
-        android:background="@drawable/jingshianniu" />
 
     <ImageButton
         android:id="@+id/menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/console_right"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
         android:background="@drawable/caidan" />
+
+    <ImageButton
+        android:id="@+id/warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/menu"
+        android:background="@drawable/jingshianniu" />
+
+    <ImageButton
+        android:id="@+id/information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/warning"
+        android:background="@drawable/shanganniu" />
+    
     </RelativeLayout>
     
 	    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@+id/ll"
         android:background="@color/white"
         >
 
@@ -323,5 +271,4 @@
 	        </EditText>
 	        
     </RelativeLayout>
-    </LinearLayout>
 </RelativeLayout>

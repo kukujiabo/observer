@@ -1,5 +1,7 @@
 package com.peichong.observer.application;
 
+import java.util.ArrayList;
+
 import android.app.Application;
 import android.content.Context;
 
