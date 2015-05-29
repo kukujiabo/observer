@@ -8,5 +8,9 @@
 
     <!-- Application theme. -->
 	<style name="AppTheme" parent="android:Theme.Light" />
-
+	
+ <!-- Activity主题 -->     
+ 	<style name="activityTheme" parent="@android:style/Theme">         
+ 	<item name="android:windowIsTranslucent">true</item>     
+ 	</style> 
 </resources>

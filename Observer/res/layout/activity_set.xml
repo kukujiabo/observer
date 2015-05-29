@@ -8,18 +8,36 @@
         android:id="@+id/ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bj"
+        android:background="@drawable/oio"
         >
         
-  <TextView
+	     <ImageButton
+	            android:id="@+id/fanhui"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_centerVertical="true"
+	            android:layout_marginLeft="20dp"
+	            android:background="@drawable/a" />
+
+	        <ImageView
+	            android:id="@+id/tv"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:layout_centerHorizontal="true"
+	            android:background="@drawable/shezhishezhi"
+	            />
+	        
+   <!--  <ImageView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/shezhishezhi"
         android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginBottom="20dp"
-         android:textColor="@color/white"
-          android:textSize="@dimen/console_size"
-         android:text="@string/set"
         android:layout_marginTop="@dimen/console_top"
         android:layout_marginLeft="@dimen/console_left"
         />
@@ -49,7 +67,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="20dp"
         android:layout_toLeftOf="@+id/warning"
-        android:background="@drawable/shanganniu" />
+        android:background="@drawable/shanganniu" /> -->
     
     </RelativeLayout>
     
@@ -84,7 +102,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_alignParentLeft="true"
 	            android:layout_below="@+id/ib1"
-	            android:background="@drawable/shezhi_03" />
+	            android:background="@drawable/shezhi" />
 
 	        <TextView
 	            android:id="@+id/gethtem"
@@ -128,7 +146,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_alignParentLeft="true"
 	            android:layout_below="@+id/ib2"
-	            android:background="@drawable/shezhi_05" />
+	            android:background="@drawable/shezhii" />
 
 	        <TextView
 	            android:id="@+id/getltem"

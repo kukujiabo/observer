@@ -13,8 +13,8 @@
         android:layout_alignParentTop="true"
         android:textSize="@dimen/menu_size"
         android:textColor="@color/black"
-        android:layout_marginLeft="@dimen/left"
-        android:layout_marginTop="@dimen/top_two"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
         android:text="控制台" />
 	
 </RelativeLayout>

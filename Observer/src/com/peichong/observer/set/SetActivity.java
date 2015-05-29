@@ -1,7 +1,5 @@
 package com.peichong.observer.set;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,35 +8,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-//import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.peichong.observer.R;
-import com.peichong.observer.about.AboutActivity;
 import com.peichong.observer.activities.BaseActivity;
-import com.peichong.observer.analysislog.AnalysisLogActivity;
 import com.peichong.observer.application.ObserverApplication;
 import com.peichong.observer.configure.Constants;
-import com.peichong.observer.equipmentmgm.EquipmentMgmActivity;
-import com.peichong.observer.information.InformationActivity;
-import com.peichong.observer.personalcenter.PersonalCenterActivity;
 import com.peichong.observer.slidingcurve.ControlActivity;
-import com.peichong.observer.slidingcurve.MenuAdapter;
-import com.peichong.observer.slidingcurve.MenuInfo;
 import com.peichong.observer.tools.BaseStringRequest;
 import com.peichong.observer.tools.LogUtil;
-import com.peichong.observer.versionupdate.VersionUpdateActivity;
-import com.peichong.observer.warning.WarningActivity;
 
 /**
  * TODO: 设置页面
@@ -46,18 +29,17 @@ import com.peichong.observer.warning.WarningActivity;
  * @author: wy
  * @version: V1.0
  */
-public class SetActivity extends BaseActivity implements OnClickListener,
-		OnItemClickListener {
+public class SetActivity extends BaseActivity implements OnClickListener {
 
-	/** 菜单 */
+	/** 菜单 *//*
 	private ImageButton menu;
-	/** 警告 */
+	*//** 警告 *//*
 	private ImageButton warning;
-	/** 资讯 */
+	*//** 资讯 *//*
 	private ImageButton information;
 
-	/** 个人中心 */
-	private ImageButton user_icon;
+	*//** 个人中心 *//*
+	private ImageButton user_icon;*/
 
 	/** 应用程序全局属性 */
 	private ObserverApplication app;
@@ -65,10 +47,12 @@ public class SetActivity extends BaseActivity implements OnClickListener,
 	/** 用户的ID 从用户登录数据中取的 */
 	private String uid = "";
 
-	/******* 侧滑菜单 *******/
+/*	*//******* 侧滑菜单 *******//*
 	private ListView lv_set;// 设置菜单
 
-	private MenuAdapter Menuadapter;
+	/**侧滑菜单
+	private SlidingMenu menus;
+	private MenuAdapter Menuadapter;*/
 
 	/** 温度警告 */
 	private ImageButton sethyperthermia;
@@ -100,9 +84,9 @@ public class SetActivity extends BaseActivity implements OnClickListener,
 	/** 修改低湿警告 */
 	private EditText setlhum;
 	
-	/**侧滑菜单*/
-	//private SlidingMenu menus;
-
+	/**返回*/
+	private ImageButton ib_return;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -120,11 +104,11 @@ public class SetActivity extends BaseActivity implements OnClickListener,
 	 * @return :void
 	 */
 	private void initUi() {
-		warning = (ImageButton) findViewById(R.id.warning);
+		/*warning = (ImageButton) findViewById(R.id.warning);
 		information = (ImageButton) findViewById(R.id.information);
 
 		warning.setOnClickListener(this);
-		information.setOnClickListener(this);
+		information.setOnClickListener(this);*/
 		
 		sethyperthermia = (ImageButton) findViewById(R.id.sethyperthermia);
 		gethtem = (TextView) findViewById(R.id.gethtem);
@@ -137,16 +121,20 @@ public class SetActivity extends BaseActivity implements OnClickListener,
 		getlhum = (TextView) findViewById(R.id.getlhum);
 		setlhum = (EditText) findViewById(R.id.setlhum);
 
-		menu = (ImageButton) findViewById(R.id.menu);
+		
+		ib_return=(ImageButton) findViewById(R.id.fanhui);
+		ib_return.setOnClickListener(this);
+		
+	/*	menu = (ImageButton) findViewById(R.id.menu);
 		menu.setOnClickListener(this);
 
 		// configure the SlidingMenu
-		SlidingMenu menus = new SlidingMenu(this);
+		menus = new SlidingMenu(this);
 		menus.setMode(SlidingMenu.RIGHT);
 		 //设置触摸屏幕的模式
 		menus.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		menus.setShadowWidthRes(R.dimen.shadow_width);
-		menus.setShadowDrawable(R.drawable.shadow);
+		//menus.setShadowWidthRes(R.dimen.shadow_width);
+		//menus.setShadowDrawable(R.drawable.shadow);
 
 		 //设置滑动菜单视图的宽度
 		menus.setBehindOffsetRes(R.dimen.slidingmenu_offset);
@@ -164,10 +152,10 @@ public class SetActivity extends BaseActivity implements OnClickListener,
 		List<MenuInfo> list = initRightMenus();
 		Menuadapter = new MenuAdapter(this, list);
 		lv_set.setAdapter(Menuadapter);
-		lv_set.setOnItemClickListener(this);
+		lv_set.setOnItemClickListener(this);*/
 	}
 
-	/** 菜单抽屉实体类 */
+	/** 菜单抽屉实体类 *//*
 	private List<MenuInfo> initRightMenus() {
 		List<MenuInfo> templist = new ArrayList<MenuInfo>();
 		templist.add(new MenuInfo("控制台"));
@@ -180,8 +168,8 @@ public class SetActivity extends BaseActivity implements OnClickListener,
 		templist.add(new MenuInfo("关于我们"));
 		return templist;
 	}
-
-	/** 条目点击 */
+*/
+	/** 条目点击 *//*
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
@@ -191,42 +179,51 @@ public class SetActivity extends BaseActivity implements OnClickListener,
 		// 曲线图页面
 		case 0:
 			intent = new Intent(view.getContext(), ControlActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 资讯页面
 		case 1:
 			intent = new Intent(view.getContext(), InformationActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 警告页面
 		case 2:
 			intent = new Intent(view.getContext(), WarningActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 设置页面
 		case 3:
 			intent = new Intent(view.getContext(), SetActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 分析日志页面
 		case 4:
 			intent = new Intent(view.getContext(), AnalysisLogActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 设备管理页面
 		case 5:
 			intent = new Intent(view.getContext(), EquipmentMgmActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 版本更新页面
 		case 6:
 			intent = new Intent(view.getContext(), VersionUpdateActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 关于页面
 		case 7:
 			intent = new Intent(view.getContext(), AboutActivity.class);
+			menus.toggle(true);
 			break;
+			
 		}
 
 		// 页面跳转
@@ -234,14 +231,21 @@ public class SetActivity extends BaseActivity implements OnClickListener,
 			// intent.putExtra("lv_item_id", id);
 			startActivity(intent);
 		}
-	}
+	}*/
 
 	/** 按钮点击 */
 	@Override
 	public void onClick(View v) {
-		if (v == menu) {
+		
+		if (v==ib_return) {
+			//主界面控制台
+			startActivity(new Intent(SetActivity.this, ControlActivity.class));
+			finish();
+		}
+		
+		/*if (v == menu) {
 			// 侧滑菜单
-			Toast.makeText(SetActivity.this, "侧滑菜单:", Toast.LENGTH_LONG).show();
+			menus.toggle(true);
 		}
 		if (v == warning) {
 			// 警告页面
@@ -254,7 +258,7 @@ public class SetActivity extends BaseActivity implements OnClickListener,
 			// 个人中心
 			startActivity(new Intent(SetActivity.this,
 					PersonalCenterActivity.class));
-		}
+		}*/
 	}
 
 	

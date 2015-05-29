@@ -9,22 +9,38 @@
         android:id="@+id/ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bj"
+        android:background="@drawable/oio"
         >
         
-  <TextView
+	      <ImageButton
+	            android:id="@+id/fanhui"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_centerVertical="true"
+	            android:layout_marginLeft="20dp"
+	            android:background="@drawable/a" />
+
+	        <ImageView
+	            android:id="@+id/tv"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:layout_centerHorizontal="true"
+	            android:background="@drawable/zixunxu"
+	            />
+  <!-- <ImageView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/zixunxu"
         android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginBottom="20dp"
-         android:textColor="@color/white"
-          android:textSize="@dimen/console_size"
-         android:text="@string/information"
         android:layout_marginTop="@dimen/console_top"
         android:layout_marginLeft="@dimen/console_left"
         />
-
     <ImageButton
         android:id="@+id/menu"
         android:layout_width="wrap_content"
@@ -50,7 +66,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="20dp"
         android:layout_toLeftOf="@+id/warning"
-        android:background="@drawable/shanganniu" />
+        android:background="@drawable/shanganniu" /> -->
     
     </RelativeLayout>
 </RelativeLayout>

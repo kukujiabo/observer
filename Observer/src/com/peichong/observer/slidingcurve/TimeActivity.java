@@ -1,35 +1,18 @@
 package com.peichong.observer.slidingcurve;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.peichong.observer.R;
-import com.peichong.observer.about.AboutActivity;
 import com.peichong.observer.activities.BaseActivity;
-import com.peichong.observer.analysislog.AnalysisLogActivity;
 import com.peichong.observer.application.ObserverApplication;
-import com.peichong.observer.equipmentmgm.EquipmentMgmActivity;
-import com.peichong.observer.information.InformationActivity;
-import com.peichong.observer.personalcenter.PersonalCenterActivity;
-import com.peichong.observer.set.SetActivity;
-import com.peichong.observer.versionupdate.VersionUpdateActivity;
-import com.peichong.observer.warning.WarningActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.SeekBar;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * TODO: 设置时间
@@ -37,58 +20,54 @@ import android.widget.Toast;
  * @author: wy
  * @version: V1.0
  */
-public class TimeActivity extends BaseActivity implements OnClickListener,OnItemClickListener {
+public class TimeActivity extends BaseActivity implements OnClickListener{
 
-	/** 菜单 */
+	/** 菜单 *//*
 	private ImageButton menu;
-	/** 警告 */
+	*//** 警告 *//*
 	private ImageButton warning;
-	/** 资讯 */
+	*//** 资讯 *//*
 	private ImageButton information;
+	/** 个人中心 
+	private ImageButton user_icon;
+	*/
 
 	/** 温度曲线图按钮 */
-	private ImageButton temperature;
+	//private ImageButton temperature;
 
 	/** 湿度曲线图按钮 */
-	private ImageButton humidity;
+	//private ImageButton humidity;
 	
-	/**设置时间按钮*/
+/*	*//**设置时间按钮*//*
 	private ImageButton time;
 
-	/** 设置温度 */
+	*//** 设置温度 *//*
 	private TextView tv_temperature;
 
-	/** 设置湿度 */
-	private TextView tv_humidity;
+	*//** 设置湿度 *//*
+	private TextView tv_humidity;*/
 
 	/** 设置时间 */
 	private TextView time_show;
 	
 	/** 获取时间 */
-	private TextView tv_time;
+	//private TextView tv_time;
 
-	/** 温度 */
-	private String temperature_string = "";
-
-	/** 湿度 */
-	private String humidity_string = "";
-
-	/** 时间 */
-	private String time_string = "";
-	
 	/**时间设置条*/
 	private SeekBar time_seekbar;
 	
 	/** 应用程序全局属性 */
 	private ObserverApplication app;
 	
-	/** 个人中心 */
-	private ImageButton user_icon;
+	/**返回*/
+	private ImageButton ib_return;
 	
-	/******* 侧滑菜单 *******/
+/*	*//******* 侧滑菜单 *******//*
 	private ListView lv_set;// 设置菜单
 
 	private MenuAdapter Menuadapter;
+	
+	private SlidingMenu menus;*/
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +78,8 @@ public class TimeActivity extends BaseActivity implements OnClickListener,OnItem
 		initUi();
 		
 		//把滑动的时间设置进去
-		time_string=(String) time_show.getText();
-		tv_time.setText(time_string);
+		//time_string=(String) time_show.getText();
+		//tv_time.setText(time_string+"");
 	}
 
 	/**
@@ -110,17 +89,22 @@ public class TimeActivity extends BaseActivity implements OnClickListener,OnItem
 	 * @return :void
 	 */
 	private void initUi() {
-		warning = (ImageButton) findViewById(R.id.warning);
-		information = (ImageButton) findViewById(R.id.information);
+		
+		ib_return=(ImageButton) findViewById(R.id.fanhui);
+		ib_return.setOnClickListener(this);
+		
+		/*warning = (ImageButton) findViewById(R.id.warning);
+		information = (ImageButton) findViewById(R.id.information);*/
 
-		temperature = (ImageButton) findViewById(R.id.temperature);
+		/*temperature = (ImageButton) findViewById(R.id.temperature);
 		humidity = (ImageButton) findViewById(R.id.humidity);
 		time=(ImageButton) findViewById(R.id.time);
 
 		tv_temperature = (TextView) findViewById(R.id.tv_temperature);
 		tv_humidity = (TextView) findViewById(R.id.tv_humidity);
+		
+		tv_time=(TextView) findViewById(R.id.tv_time);*/
 		time_show = (TextView) findViewById(R.id.time_show);
-		tv_time=(TextView) findViewById(R.id.tv_time);
 		
 		time_seekbar=(SeekBar) findViewById(R.id.time_seekbar);
 		
@@ -132,31 +116,20 @@ public class TimeActivity extends BaseActivity implements OnClickListener,OnItem
 		//初始化为一分钟
 		time_show.setText("1");
 
-		warning.setOnClickListener(this);
+	/*	warning.setOnClickListener(this);
 		information.setOnClickListener(this);
+*/
+		//temperature.setOnClickListener(this);
+		//humidity.setOnClickListener(this);
 
-		temperature.setOnClickListener(this);
-		humidity.setOnClickListener(this);
-
-		// 拿到温度
-		//temperature_string = tv_temperature.getText().toString().trim();
-
-		// 拿到湿度
-		//humidity_string = tv_humidity.getText().toString().trim();
-
-		// 拿到时间
-		//time_string = time_show.getText().toString().trim();
-		
-		menu = (ImageButton) findViewById(R.id.menu);
+		/*menu = (ImageButton) findViewById(R.id.menu);
 		menu.setOnClickListener(this);
 
 		// configure the SlidingMenu
-		SlidingMenu menus = new SlidingMenu(this);
+		menus = new SlidingMenu(this);
 		menus.setMode(SlidingMenu.RIGHT);
 		 //设置触摸屏幕的模式
 		menus.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		menus.setShadowWidthRes(R.dimen.shadow_width);
-		menus.setShadowDrawable(R.drawable.shadow);
 
 		 //设置滑动菜单视图的宽度
 		menus.setBehindOffsetRes(R.dimen.slidingmenu_offset);
@@ -174,14 +147,15 @@ public class TimeActivity extends BaseActivity implements OnClickListener,OnItem
 		List<MenuInfo> list = initRightMenus();
 		Menuadapter = new MenuAdapter(this, list);
 		lv_set.setAdapter(Menuadapter);
-		lv_set.setOnItemClickListener(this);
+		lv_set.setOnItemClickListener(this);*/
 		
 	}
 	
-	/** 菜单抽屉实体类 */
+	/** 菜单抽屉实体类 *//*
 	private List<MenuInfo> initRightMenus() {
 		List<MenuInfo> templist = new ArrayList<MenuInfo>();
 		templist.add(new MenuInfo("控制台"));
+		templist.add(new MenuInfo("设置时间"));
 		templist.add(new MenuInfo("资讯"));
 		templist.add(new MenuInfo("警告"));
 		templist.add(new MenuInfo("设置"));
@@ -190,7 +164,7 @@ public class TimeActivity extends BaseActivity implements OnClickListener,OnItem
 		templist.add(new MenuInfo("版本更新"));
 		templist.add(new MenuInfo("关于我们"));
 		return templist;
-	}
+	}*/
 	
 	/**时间设置拖动条*/
 	 private OnSeekBarChangeListener seekListener = new OnSeekBarChangeListener() {
@@ -212,12 +186,12 @@ public class TimeActivity extends BaseActivity implements OnClickListener,OnItem
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 			Log.i("wy:","改变数值..."); 
 			time_show.setText(progress+"");
-			tv_time.setText(progress+"");
+			//tv_time.setText(progress+"");
 		}
 	};
 
 	
-	/** 条目点击 */
+/*	*//** 条目点击 *//*
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
@@ -227,41 +201,49 @@ public class TimeActivity extends BaseActivity implements OnClickListener,OnItem
 		// 曲线图页面
 		case 0:
 			intent = new Intent(view.getContext(), ControlActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 资讯页面
 		case 1:
 			intent = new Intent(view.getContext(), InformationActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 警告页面
 		case 2:
 			intent = new Intent(view.getContext(), WarningActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 设置页面
 		case 3:
 			intent = new Intent(view.getContext(), SetActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 分析日志页面
 		case 4:
 			intent = new Intent(view.getContext(), AnalysisLogActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 设备管理页面
 		case 5:
 			intent = new Intent(view.getContext(), EquipmentMgmActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 版本更新页面
 		case 6:
 			intent = new Intent(view.getContext(), VersionUpdateActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 关于页面
 		case 7:
 			intent = new Intent(view.getContext(), AboutActivity.class);
+			menus.toggle(true);
 			break;
 		}
 
@@ -270,35 +252,55 @@ public class TimeActivity extends BaseActivity implements OnClickListener,OnItem
 			// intent.putExtra("lv_item_id", id);
 			startActivity(intent);
 		}
-	}
+	}*/
 	
 	/** 按钮点击 */
 	@Override
 	public void onClick(View v) {
-		if (v == menu) {
+		
+		if (v==ib_return) {
+			//主界面控制台
+			startActivity(new Intent(TimeActivity.this, ControlActivity.class));
+			finish();
+		}
+		
+		/*if (v == menu) {
 			// 侧滑菜单
-			Toast.makeText(TimeActivity.this, "侧滑菜单:", Toast.LENGTH_LONG)
-					.show();
-		} else if (v == warning) {
+			menus.toggle(true);
+		} 
+		else if (v == user_icon) {
+			// 个人中心
+			startActivity(new Intent(TimeActivity.this,
+					PersonalCenterActivity.class));
+		}
+		else if (v == warning) {
 			// 警告页面
 			startActivity(new Intent(TimeActivity.this, WarningActivity.class));
 		} else if (v == information) {
 			// 资讯页面
 			startActivity(new Intent(TimeActivity.this,
 					InformationActivity.class));
-		}else if (v == temperature) {
+		}*/
+		/*else if (v == temperature) {
 			// 温度曲线图
-			Toast.makeText(TimeActivity.this, "温度曲线图:", Toast.LENGTH_LONG)
-					.show();
+			Intent i = new  Intent(TimeActivity.this,ControlActivity.class);  
+		    Bundle extras = new Bundle();  
+		    extras.putInt("thType",1); 
+		    extras.putString("set_time",tv_time.getText().toString());
+		    i.putExtras(extras) ;  
+		    startActivityForResult(i, 1); 
+		    LogUtil.showLog(extras.toString());
+			
 		} else if (v == humidity) {
 			// 湿度曲线图
-			Toast.makeText(TimeActivity.this, "湿度曲线图:", Toast.LENGTH_LONG)
-					.show();
-		}else if (v == user_icon) {
-			// 个人中心
-			startActivity(new Intent(TimeActivity.this,
-					PersonalCenterActivity.class));
-		}
+			Intent i = new  Intent(TimeActivity.this,ControlActivity.class);  
+		    Bundle extras = new Bundle();  
+		    extras.putInt("thType",2);
+		    extras.putString("set_time",tv_time.getText().toString());
+		    i.putExtras(extras) ;  
+		    startActivityForResult(i, 1); 
+		    LogUtil.showLog(extras.toString());
+		}*/
 	}
 	
 }

@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.peichong.observer.R;
 import com.peichong.observer.about.AboutActivity;
+import com.peichong.observer.activities.ActivityUtil;
 import com.peichong.observer.activities.BaseActivity;
 import com.peichong.observer.analysislog.AnalysisLogActivity;
 import com.peichong.observer.application.ObserverApplication;
@@ -29,7 +30,9 @@ import com.peichong.observer.warning.WarningActivity;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,6 +54,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * @author: wy
  * @version: V1.0
  */
+@SuppressLint("NewApi")
 public class ControlActivity extends BaseActivity implements OnClickListener,
 		OnItemClickListener {
 
@@ -95,7 +99,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	private ImageButton humidity;
 
 	/** 时间设置按钮 */
-	private ImageButton time;
+	//private ImageButton time;
 
 	/** 设置温度 */
 	private TextView tv_temperature;
@@ -104,28 +108,23 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	private TextView tv_humidity;
 
 	/** 设置时间 */
-	private TextView tv_time;
-
-	/** 温度 */
-	private String temperature_string = "";
-
-	/** 湿度 */
-	private String humidity_string = "";
-
-	/** 时间 */
-	private String time_string = "";
+	//private TextView tv_time;
 
 	/** 个人中心 */
 	private ImageButton user_icon;
-
-	private BaseStringRequest mStringRequest;
 
 	/** 用户的ID 从用户登录数据中取的 */
 	private String uid = "";
 
 	/** 仪器id */
 	private String mid = "";
-
+	
+	/** 仪器温度id */
+	private String mtid = "";
+	
+	/** 仪器湿度id */
+	private String mhid = "";
+	
 	/** 机器地址 */
 	private String address = "";
 
@@ -168,7 +167,15 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	private ArrayList<String> tlist;
 
 	private ArrayList<String> hlist;
-
+	
+	private SlidingMenu menus;
+	
+	//private int thType;
+	
+	//private String set_time;
+	
+	private ImageView yuan;
+	
 	@SuppressLint("HandlerLeak")
 	private Handler _scrollHandler = new Handler() {
 
@@ -192,7 +199,25 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		}
 
 	};
+	
+	
+	/*@SuppressLint("HandlerLeak")
+	private Handler timelHandler = new Handler() {
 
+		public void handleMessage(Message msg) {
+
+			switch (msg.what) {
+
+			case 0:
+				tv_time.setText(set_time);
+				break;
+			default:
+				break;
+			}
+
+		}
+
+	};*/
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	@SuppressLint("NewApi")
 	@Override
@@ -202,11 +227,39 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		context = this;
 		// 拿到application对象
 		app = (ObserverApplication) getApplication();
-
+		
 		initUi();
+		
 		// 获取用户仪器的信息
-		getUserInstrumentInformation();
-
+        getUserInstrumentInformation();
+	/*	
+		Bundle extras = getIntent().getExtras(); 
+		 if(extras != null){  
+			 thType = extras.getInt("thType", 1);
+			 set_time=extras.getString("set_time");
+			 
+			 Message msg = new Message();
+			 msg.what = 0;
+			 timelHandler.sendMessage(msg);
+				
+			 if(thType==1){
+				temperature.setBackgroundResource(R.drawable.wenduliang);
+				humidity.setBackgroundResource(R.drawable.shiduhui);
+				time.setBackgroundResource(R.drawable.shijianhui);
+				getConsoleGraphTemperature();
+			}
+			 else if(thType==2){
+				temperature.setBackgroundResource(R.drawable.wenduhui);
+				humidity.setBackgroundResource(R.drawable.shiduliang);
+				time.setBackgroundResource(R.drawable.shijianhui);
+				getConsoleGraphHumidity();
+		    }
+		 }
+		else{
+        	// 获取用户仪器的信息
+	        getUserInstrumentInformation();
+         }*/
+       
 		// getNewestTemperature();
 
 		// getConsoleGraphHumidity();
@@ -220,8 +273,8 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		// getUserConfigurationInformation();
 
 		// getUserSpecifiedConfigurationInformation();
-	}
-
+	
+}
 	/**
 	 * TODO :初始化
 	 * 
@@ -243,27 +296,18 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 		humidity = (ImageButton) findViewById(R.id.humidity);
 
-		time = (ImageButton) findViewById(R.id.time);
+		//time = (ImageButton) findViewById(R.id.time);
 
 		tv_temperature = (TextView) findViewById(R.id.tv_temperature);
 		tv_humidity = (TextView) findViewById(R.id.tv_humidity);
-		tv_time = (TextView) findViewById(R.id.tv_time);
+		//tv_time = (TextView) findViewById(R.id.tv_time);
 
 		warning.setOnClickListener(this);
 		information.setOnClickListener(this);
 
 		temperature.setOnClickListener(this);
 		humidity.setOnClickListener(this);
-		time.setOnClickListener(this);
-
-		// 拿到温度
-		// temperature_string = tv_temperature.getText().toString().trim();
-
-		// 拿到湿度
-		// humidity_string = tv_humidity.getText().toString().trim();
-
-		// 拿到时间
-		// time_string = tv_time.getText().toString().trim();
+		//time.setOnClickListener(this);
 
 		// 温度曲线图按钮加提示
 		// View target = findViewById(R.id.temperature);
@@ -281,17 +325,14 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		menu.setOnClickListener(this);
 
 		// configure the SlidingMenu
-		SlidingMenu menus = new SlidingMenu(this);
+		menus = new SlidingMenu(this);
 		menus.setMode(SlidingMenu.RIGHT);
 		// 设置触摸屏幕的模式
-		menus.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		menus.setShadowWidthRes(R.dimen.shadow_width);
-		menus.setShadowDrawable(R.drawable.shadow);
+		menus.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 
 		// 设置滑动菜单视图的宽度
 		menus.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		// 设置渐入渐出效果的值
-		menus.setFadeDegree(0.35f);
+		
 		// 把滑动菜单添加进所有的Activity中，可选值SLIDING_CONTENT ， SLIDING_WINDOW
 		menus.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 		// 为侧滑菜单设置布局
@@ -305,18 +346,66 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		Menuadapter = new MenuAdapter(this, list);
 		lv_set.setAdapter(Menuadapter);
 		lv_set.setOnItemClickListener(this);
-
-		temperature.setBackgroundResource(R.drawable.anniu);
-		humidity.setBackgroundResource(R.drawable.qiehuananniu);
-		time.setBackgroundResource(R.drawable.qiehuananniu);
-
+		
+		// 获取控制台类型默认为温度显示图（1 温度显示图 ---- 2湿度显示图）
+		if (chooseType == 1) {
+		temperature.setBackgroundResource(R.drawable.wendunliang);
+		humidity.setBackgroundResource(R.drawable.shiduhui);
+		//time.setBackgroundResource(R.drawable.shijianhui);
+		}else if (chooseType == 2){
+			temperature.setBackgroundResource(R.drawable.wenduhui);
+			humidity.setBackgroundResource(R.drawable.shiduliang);
+			//time.setBackgroundResource(R.drawable.shijianhui);
+		}else {
+			
+		}
+		
+		yuan=(ImageView) findViewById(R.id.yuan);
+		
 		mHorizontalScrollView = (TemperatureHorizontalScrollView) findViewById(R.id.horizontal_scrollview);
-		mHorizontalScrollView.setImageView(
-				(ImageView) findViewById(R.id.iv_pre),
-				(ImageView) findViewById(R.id.iv_next));
-
 		mHorizontalScrollView._scrollHandler = _scrollHandler;
 
+		//回调事件  滑动的每一个item
+		mHorizontalScrollView.setOnItemResetListener(new TemperatureHorizontalScrollView.OnItemResetListener() {
+			
+			@Override
+			public void onReset(int position) {
+				// 获取控制台类型默认为温度显示图（1 温度显示图 ---- 2湿度显示图）
+				if (chooseType == 1) {
+					// 温度显示
+					float f=temperatureList.get(position).getTemperature();
+					if (f>=15 && f<=16) {
+						yuan.setBackgroundResource(R.drawable.kongwenyuan);
+					}else if(f>=17 && f<=18){
+						yuan.setBackgroundResource(R.drawable.kongwenyuann);
+					}else if(f>=19 && f<=24){
+						yuan.setBackgroundResource(R.drawable.kongwenyuannn);
+					}else if(f>=25 && f<=26){
+						yuan.setBackgroundResource(R.drawable.kongwenyuannnn);
+					}else if(f>=27 && f<=28){
+						yuan.setBackgroundResource(R.drawable.kongwenyuannnnn);
+					}
+				} else if (chooseType == 2) {
+					// 湿度显示
+					float f=humidityList.get(position).getHumidity();
+					if (f>=75 && f<=76) {
+						yuan.setBackgroundResource(R.drawable.kongwenyuan);
+					}else if(f>=77 && f<=78){
+						yuan.setBackgroundResource(R.drawable.kongwenyuann);
+					}else if(f>=79 && f<=80){
+						yuan.setBackgroundResource(R.drawable.kongwenyuannn);
+					}else if(f>=81 && f<=82){
+						yuan.setBackgroundResource(R.drawable.kongwenyuannnn);
+					}else if(f>=83 && f<=85){
+						yuan.setBackgroundResource(R.drawable.kongwenyuannnnn);
+					}
+				} else {
+					
+				}
+			}
+		});
+		
+		//回调事件  点击的每一个item
 		mHorizontalScrollView
 				.setOnItemClickListener(new TemperatureHorizontalScrollView.OnItemClickListener() {
 
@@ -333,32 +422,17 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 							tv_humidity.setText((int) humidityList
 									.get(position).getHumidity() + "");
 						} else {
-							Toast.makeText(ControlActivity.this,
-									"chooseType:" + chooseType,
-									Toast.LENGTH_LONG).show();
+							
 						}
 					}
 				});
 	}
 
-	/** 温度滚动栏 */
-	/*
-	 * private List<TemperatureInfo> buildNavigation() { List<TemperatureInfo>
-	 * navigations = new ArrayList<TemperatureInfo>(); navigations.add(new
-	 * TemperatureInfo((float) 15.55, "00:00")); navigations.add(new
-	 * TemperatureInfo((float) 10.55, "01:00")); navigations.add(new
-	 * TemperatureInfo((float) 8.55, "02:00")); navigations.add(new
-	 * TemperatureInfo((float) 5.5, "03:00")); navigations.add(new
-	 * TemperatureInfo((float) 7, "05:00")); navigations.add(new
-	 * TemperatureInfo((float) 11.11, "06:00")); navigations.add(new
-	 * TemperatureInfo((float) 22.22, "07:00")); navigations.add(new
-	 * TemperatureInfo((float) 33.33, "08:00")); return navigations; }
-	 */
-
 	/** 菜单抽屉实体类 */
 	private List<MenuInfo> initRightMenus() {
 		List<MenuInfo> templist = new ArrayList<MenuInfo>();
 		templist.add(new MenuInfo("控制台"));
+		templist.add(new MenuInfo("设置时间"));
 		templist.add(new MenuInfo("资讯"));
 		templist.add(new MenuInfo("警告"));
 		templist.add(new MenuInfo("设置"));
@@ -379,42 +453,56 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 		// 曲线图页面
 		case 0:
-			intent = new Intent(view.getContext(), ControlActivity.class);
-			break;
-
-		// 资讯页面
+		intent = new Intent(view.getContext(), ControlActivity.class);
+		menus.toggle(true);
+		break;
+			
+	    // 设置时间页面
 		case 1:
+		intent = new Intent(view.getContext(), TimeActivity.class);
+		menus.toggle(true);
+		break;
+						
+		// 资讯页面
+		case 2:
 			intent = new Intent(view.getContext(), InformationActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 警告页面
-		case 2:
+		case 3:
 			intent = new Intent(view.getContext(), WarningActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 设置页面
-		case 3:
+		case 4:
 			intent = new Intent(view.getContext(), SetActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 分析日志页面
-		case 4:
+		case 5:
 			intent = new Intent(view.getContext(), AnalysisLogActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 设备管理页面
-		case 5:
+		case 6:
 			intent = new Intent(view.getContext(), EquipmentMgmActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 版本更新页面
-		case 6:
+		case 7:
 			intent = new Intent(view.getContext(), VersionUpdateActivity.class);
+			menus.toggle(true);
 			break;
 
 		// 关于页面
-		case 7:
+		case 8:
 			intent = new Intent(view.getContext(), AboutActivity.class);
+			menus.toggle(true);
 			break;
 		}
 
@@ -454,8 +542,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 		if (v == menu) {
 			// 侧滑菜单
-			Toast.makeText(ControlActivity.this, "侧滑菜单:", Toast.LENGTH_LONG)
-					.show();
+			menus.toggle(true);
 		} else if (v == warning) {
 			// 警告页面
 			startActivity(new Intent(ControlActivity.this,
@@ -468,24 +555,22 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 			// 温度曲线图
 			chooseType = 1;
 			getUserInstrumentInformation();
-			temperature.setBackgroundResource(R.drawable.anniu);
-			humidity.setBackgroundResource(R.drawable.qiehuananniu);
-			time.setBackgroundResource(R.drawable.qiehuananniu);
-			Toast.makeText(ControlActivity.this, "温度曲线图:" + chooseType,
-					Toast.LENGTH_LONG).show();
+			temperature.setBackgroundResource(R.drawable.wendunliang);
+			humidity.setBackgroundResource(R.drawable.shiduhui);
+			//time.setBackgroundResource(R.drawable.shijianhui);
 		} else if (v == humidity) {
 			// 湿度曲线图
 			chooseType = 2;
 			getUserInstrumentInformation();
-			temperature.setBackgroundResource(R.drawable.qiehuananniu);
-			humidity.setBackgroundResource(R.drawable.anniu);
-			time.setBackgroundResource(R.drawable.qiehuananniu);
-			Toast.makeText(ControlActivity.this, "湿度曲线图:" + chooseType,
-					Toast.LENGTH_LONG).show();
-		} else if (v == time) {
+			temperature.setBackgroundResource(R.drawable.wenduhui);
+			humidity.setBackgroundResource(R.drawable.shiduliang);
+			//time.setBackgroundResource(R.drawable.shijianhui);
+		} /*else if (v == time) {
 			// 设置时间界面
 			startActivity(new Intent(ControlActivity.this, TimeActivity.class));
-		} else if (v == user_icon) {
+			//finish();
+		}*/ 
+		else if (v == user_icon) {
 			// 个人中心
 			startActivity(new Intent(ControlActivity.this,
 					PersonalCenterActivity.class));
@@ -500,9 +585,8 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	public void getConsoleGraphTemperature() {
 
 		uid = app.getUid();
-		mid = app.getMid();
+		mid = app.getTid();
 		tid = "";
-		// 0 旧数据 1新数据
 		tcomp = "";
 
 		String url = "uid=" + uid + "&" + "mid=" + mid + "&" + "tid=" + tid
@@ -557,8 +641,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 											// 日期转换
 											s_t = Utils.date(created_at_t);
 											// 温度曲线图
-											// studyGraphItems.add(new
-											// StudyGraphItem(s, data));
+											// studyGraphItems.add(new StudyGraphItem(s, data));
 
 										} catch (Exception e) {
 											e.printStackTrace();
@@ -582,14 +665,14 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 										tv_temperature
 												.setText((int) temperatureList
-														.get(0)
+														.get(49)
 														.getTemperature()
 														+ "");
 									} else {
-
+										
 										mHorizontalScrollView
 												.setAdapter(tAdapter);
-
+										
 										tAdapter.notifyDataSetChanged();
 
 									}
@@ -597,12 +680,14 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 									// pointList = studyGraph.getPoints();
 									// navs.add(new TemperatureInfo(data_t,
 									// s_t));
-
-									LogUtil.showLog(
+									
+									LogUtil.showLog(	
 											"==========控制台曲线图温度获取接口请求成功:====",
 											"获取的数据：" + array);
 									// todo: parse data.
 								}
+								
+								
 
 								// 请求失败
 								else if (code == 0) {
@@ -625,8 +710,11 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
-						dismissProgressDialog();
+						
+						//dismissProgressDialog();
 					}
+					
+					
 
 				}, new Response.ErrorListener() {
 					public void onErrorResponse(VolleyError error) {
@@ -642,7 +730,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	public void getNewestTemperature() {
 
 		uid = app.getUid();
-		mid = app.getMid();
+		mid = app.getTid();
 
 		String url = "uid=" + uid + "&" + "mid=" + mid;
 
@@ -715,7 +803,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	public void getConsoleGraphHumidity() {
 
 		uid = app.getUid();
-		mid = app.getMid();
+		mid = app.getHid();
 		hid = "";
 		hcomp = "";
 
@@ -779,6 +867,9 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 									}
 									LogUtil.showLog(hlist.get(0));
 									LogUtil.showLog(hlist.get(49));
+									
+									
+									
 									if (hAdapter == null) {
 
 										hAdapter = new HumidityAdapter(
@@ -787,7 +878,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 										mHorizontalScrollView
 												.setAdapter(hAdapter);
 										tv_humidity.setText((int) humidityList
-												.get(0).getHumidity() + "");
+												.get(49).getHumidity() + "");
 									} else {
 
 										mHorizontalScrollView
@@ -796,6 +887,8 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 										tAdapter.notifyDataSetChanged();
 
 									}
+									
+									
 
 									LogUtil.showLog(
 											"==========控制台曲线图湿度获取接口请求成功:====",
@@ -828,7 +921,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
-						dismissProgressDialog();
+						//dismissProgressDialog();
 					}
 				}, new Response.ErrorListener() {
 					@Override
@@ -915,7 +1008,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 	/** 获取用户仪器的信息 */
 	public void getUserInstrumentInformation() {
-		showProgressDialog();
+		//showProgressDialog();
 		uid = app.getUid();
 		String url = "uid=" + uid;
 
@@ -942,10 +1035,16 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 									for (int i = 0; i < length; i++) {
 										// JSONArray中的字段
 										JSONObject jo = array.optJSONObject(i);
+										type = jo.getString("type");
 										mid = jo.getString("id");
 										address = jo.getString("address");
-										type = jo.getString("type");
 
+										if (type.equals("0")) {
+											app.setTid(mid);
+										}else if(type.equals("1")){
+											app.setHid(mid);
+										}
+										
 										// 把mid缓存到Application,可供所有activity使用
 										app.setMid(mid);
 										app.setType(type);
@@ -963,16 +1062,10 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 										// 如果机器类型为0，并且控制台类型为1，则为温度显示图
 										if (type.equals("0") && chooseType == 1) {
 											getConsoleGraphTemperature();
-										} else if (type.equals("1")
-												&& chooseType == 2) {
+										} else if (type.equals("1")&& chooseType == 2) {
 											getConsoleGraphHumidity();
 										} else {
-											Toast.makeText(
-													ControlActivity.this,
-													"type:" + type
-															+ "chooseType:"
-															+ chooseType,
-													Toast.LENGTH_LONG).show();
+											//Toast.makeText(ControlActivity.this,"type:" + type+ "chooseType:"+ chooseType,Toast.LENGTH_LONG).show();
 										}
 									}
 									LogUtil.showLog(
@@ -1011,7 +1104,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						dismissProgressDialog();
+						//dismissProgressDialog();
 						LogUtil.showLog("==========获取用户仪器的信息错误:====", "获取的数据："
 								+ error.toString());
 					}
@@ -1168,12 +1261,12 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	protected void addNewData() {
 		// 温度
 		if (chooseType == 1) {
-			showProgressDialog();
+			//showProgressDialog();
 			uid = app.getUid();
-			mid = app.getMid();
-			tid = tlist.get(49);
-			// 0 旧数据 1新数据
-			tcomp = "1";
+			mid = app.getTid();
+			tid = tlist.get(tlist.size() - 1);
+			// 0 新数据 旧新数据
+			tcomp = "0";
 
 			String url = "uid=" + uid + "&" + "mid=" + mid + "&" + "tid=" + tid
 					+ "&" + "comp=" + tcomp;
@@ -1203,6 +1296,13 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 												.getJSONArray("data");
 
 										int length = array.length();
+										
+										if (length==0) {
+											Toast.makeText(ControlActivity.this, "没有最新温度！",
+													Toast.LENGTH_LONG).show();
+										}
+										else if(length>0){
+											
 										for (int i = 0; i < length; i++) {
 											// JSONArray中的字段
 											JSONObject jo = array
@@ -1212,6 +1312,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 													.getDouble("data");
 											created_at_t = jo
 													.getString("created_at");
+											tid=jo.getString("id");
 
 											try {
 												// 日期转换
@@ -1221,6 +1322,8 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 												e.printStackTrace();
 											}
 
+											tlist.add(tid);
+											
 											temperatureList
 													.add(new TemperatureInfo(
 															data_t, s_t));
@@ -1228,7 +1331,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 										tv_temperature
 												.setText((int) temperatureList
-														.get(0)
+														.get(temperatureList.size() - 1)
 														.getTemperature()
 														+ "");
 
@@ -1236,6 +1339,8 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 												.setAdapter(tAdapter);
 
 										tAdapter.notifyDataSetChanged();
+										
+										}
 
 										LogUtil.showLog(
 												"==========控制台新数据曲线图温度获取接口请求成功:====",
@@ -1263,7 +1368,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
-							dismissProgressDialog();
+							//dismissProgressDialog();
 						}
 
 					}, new Response.ErrorListener() {
@@ -1277,12 +1382,12 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		}
 		// 湿度
 		else if (chooseType == 2) {
-			showProgressDialog();
+			//showProgressDialog();
 			uid = app.getUid();
-			mid = app.getMid();
-			hid = hlist.get(49);
-			// 0 旧数据 1新数据
-			tcomp = "1";
+			mid = app.getHid();
+			hid = hlist.get(hlist.size() - 1);
+			// 0 新数据 1旧数据
+			hcomp = "0";
 
 			String url = "uid=" + uid + "&" + "mid=" + mid + "&" + "hid=" + hid
 					+ "&" + "comp=" + hcomp;
@@ -1310,6 +1415,13 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 												.getJSONArray("data");
 
 										int length = array.length();
+										
+										if (length==0) {
+											Toast.makeText(ControlActivity.this, "没有最新湿度！",
+													Toast.LENGTH_LONG).show();
+											
+										}else if(length>0){
+											
 										for (int i = 0; i < length; i++) {
 											// JSONArray中的字段
 											JSONObject jo = array
@@ -1318,6 +1430,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 													.getDouble("data");
 											created_at_h = jo
 													.getString("created_at");
+											hid=jo.getString("id");
 
 											try {
 												// 日期转换
@@ -1327,17 +1440,20 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 												e.printStackTrace();
 											}
 
+											hlist.add(hid);
+											
 											humidityList.add(new HumidityInfo(
 													data_h, s_h));
 										}
 
 										tv_humidity.setText((int) humidityList
-												.get(0).getHumidity() + "");
+												.get(humidityList.size() - 1).getHumidity() + "");
 
 										mHorizontalScrollView
 												.setAdapter(hAdapter);
 
 										tAdapter.notifyDataSetChanged();
+										}
 
 										LogUtil.showLog(
 												"==========控制台曲线图新数据湿度获取接口请求成功:====",
@@ -1370,7 +1486,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
-							dismissProgressDialog();
+							//dismissProgressDialog();
 						}
 					}, new Response.ErrorListener() {
 						@Override
@@ -1389,12 +1505,12 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	protected void addOldData() {
 		// 温度
 		if (chooseType == 1) {
-			showProgressDialog();
+			//showProgressDialog();
 			uid = app.getUid();
-			mid = app.getMid();
+			mid = app.getTid();
 			tid = tlist.get(0);
-			// 0 旧数据 1新数据
-			tcomp = "0";
+			// 0 新数据 1旧数据
+			tcomp = "1";
 
 			String url = "uid=" + uid + "&" + "mid=" + mid + "&" + "tid=" + tid
 					+ "&" + "comp=" + tcomp;
@@ -1409,6 +1525,9 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 							LogUtil.showLog(
 									"========请求旧数据控制台曲线图温度获取接口数据========",
 									"response:" + response);
+							ArrayList<TemperatureInfo> tempList =new ArrayList<TemperatureInfo>();
+							
+							ArrayList<String> telist = new ArrayList<String>();
 							try {
 								// 接口返回的数据
 								JSONObject comJson = new JSONObject(response);
@@ -1424,6 +1543,13 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 												.getJSONArray("data");
 
 										int length = array.length();
+										
+										if (length==0) {
+											Toast.makeText(ControlActivity.this, "没有旧温度！",
+													Toast.LENGTH_LONG).show();
+										}
+										else if(length>0){
+											
 										for (int i = 0; i < length; i++) {
 											// JSONArray中的字段
 											JSONObject jo = array
@@ -1433,6 +1559,8 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 													.getDouble("data");
 											created_at_t = jo
 													.getString("created_at");
+											
+											tid=jo.getString("id");
 
 											try {
 												// 日期转换
@@ -1441,23 +1569,41 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 											} catch (Exception e) {
 												e.printStackTrace();
 											}
-
-											temperatureList
-													.add(new TemperatureInfo(
+											
+											telist.add(tid);
+											
+											//添加临时数组
+											tempList.add(new TemperatureInfo(
 															data_t, s_t));
+											
 										}
-
+										
+										ArrayList <String> ttemp = new ArrayList<String>();
+										ttemp.addAll(telist);
+										ttemp.addAll(tlist);
+										tlist.clear();
+										tlist.addAll(ttemp);
+										
+										ArrayList <TemperatureInfo> temp = new ArrayList<TemperatureInfo>();
+										temp.addAll(tempList);
+										temp.addAll(temperatureList);
+										
+										temperatureList.clear();
+										
+										temperatureList.addAll(temp);
+										
 										tv_temperature
-												.setText((int) temperatureList
-														.get(0)
-														.getTemperature()
-														+ "");
-
-										mHorizontalScrollView
-												.setAdapter(tAdapter);
+										.setText((int) temperatureList
+												.get(tlist.size() -1)
+												.getTemperature()
+												+ "");
+										
+										mHorizontalScrollView.setAdapter(tAdapter);
 
 										tAdapter.notifyDataSetChanged();
-
+										
+										}
+						
 										LogUtil.showLog(
 												"==========控制台旧数据曲线图温度获取接口请求成功:====",
 												"获取的旧数据：" + array);
@@ -1484,7 +1630,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
-							dismissProgressDialog();
+							//dismissProgressDialog();
 						}
 
 					}, new Response.ErrorListener() {
@@ -1498,12 +1644,12 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		}
 		// 湿度
 		else if (chooseType == 2) {
-			showProgressDialog();
+			//showProgressDialog();
 			uid = app.getUid();
-			mid = app.getMid();
+			mid = app.getHid();
 			hid = hlist.get(0);
-			// 0 旧数据 1新数据
-			tcomp = "0";
+			// 0 新数据 1旧数据
+			hcomp = "1";
 
 			String url = "uid=" + uid + "&" + "mid=" + mid + "&" + "hid=" + hid
 					+ "&" + "comp=" + hcomp;
@@ -1513,9 +1659,12 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 							+ url, new Response.Listener<String>() {
 						@Override
 						public void onResponse(String response) {
-
+							
 							LogUtil.showLog("========请求控制台旧数据湿度获取接口数据========",
 									"response:" + response);
+							ArrayList<HumidityInfo> hempList =new ArrayList<HumidityInfo>();
+							
+							ArrayList<String> helist = new ArrayList<String>();
 							try {
 								// 接口返回的数据
 								JSONObject comJson = new JSONObject(response);
@@ -1531,6 +1680,13 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 												.getJSONArray("data");
 
 										int length = array.length();
+										
+										if (length==0) {
+											Toast.makeText(ControlActivity.this, "没有旧湿度！",
+													Toast.LENGTH_LONG).show();
+										}
+										
+										else if(length>0){
 										for (int i = 0; i < length; i++) {
 											// JSONArray中的字段
 											JSONObject jo = array
@@ -1539,7 +1695,8 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 													.getDouble("data");
 											created_at_h = jo
 													.getString("created_at");
-
+											
+											hid=jo.getString("id");
 											try {
 												// 日期转换
 												s_h = Utils.date(created_at_h);
@@ -1548,17 +1705,37 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 												e.printStackTrace();
 											}
 
-											humidityList.add(new HumidityInfo(
+											helist.add(hid);
+											
+											hempList.add(new HumidityInfo(
 													data_h, s_h));
 										}
 
+										
+										ArrayList <String> htemp = new ArrayList<String>();
+										htemp.addAll(helist);
+										htemp.addAll(hlist);
+										hlist.clear();
+										hlist.addAll(htemp);
+										
+										ArrayList <HumidityInfo> temp = new ArrayList<HumidityInfo>();
+										
+										temp.addAll(hempList);
+										temp.addAll(humidityList);
+										
+										humidityList.clear();
+										
+										humidityList.addAll(temp);
+										
 										tv_humidity.setText((int) humidityList
-												.get(0).getHumidity() + "");
-
+												.get(humidityList.size() -1).getHumidity() + "");
+										
 										mHorizontalScrollView
-												.setAdapter(hAdapter);
-
-										tAdapter.notifyDataSetChanged();
+										.setAdapter(hAdapter);
+										
+										hAdapter.notifyDataSetChanged();
+										
+										}
 
 										LogUtil.showLog(
 												"==========控制台曲线图旧数据湿度获取接口请求成功:====",
@@ -1591,7 +1768,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
-							dismissProgressDialog();
+							//dismissProgressDialog();
 						}
 					}, new Response.ErrorListener() {
 						@Override
@@ -1605,4 +1782,24 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		}
 
 	}
+	
+	@Override
+	   public void onBackPressed() {  
+		new AlertDialog.Builder(this).setTitle("确认退出吗？")
+				.setIcon(android.R.drawable.ic_dialog_info)
+				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// 点击“确认”后的操作
+						ActivityUtil.finishAll();
+						finish();
+					}
+				})
+				.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// 点击“返回”后的操作,这里不设置没有任何操作
+					}
+				}).show();
+		}  
 }

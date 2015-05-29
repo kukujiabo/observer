@@ -7,9 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.peichong.observer.R;
+import com.peichong.observer.R.drawable;
 
 
+import android.R.color;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +62,7 @@ public class TemperatureAdapter extends BaseAdapter{
 		return position;
 	}
 
+	@SuppressLint("ResourceAsColor")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Viewhold viewhold=null;
@@ -71,8 +76,20 @@ public class TemperatureAdapter extends BaseAdapter{
 		//}else{
 			viewhold=(Viewhold) convertView.getTag();
 		//}
+			
+			if (item.getTemperature()>=15 && item.getTemperature()<=16) {
+				viewhold.temperatures.setTextColor(0xff72C3F2);
+			}else if(item.getTemperature()>=17 && item.getTemperature()<=18){
+				viewhold.temperatures.setTextColor(0xff83F2EC);
+			}else if(item.getTemperature()>=19 && item.getTemperature()<=24){
+				viewhold.temperatures.setTextColor(0xff75EA72);
+			}else if(item.getTemperature()>=25 && item.getTemperature()<=26){
+				viewhold.temperatures.setTextColor(0xffFAE064);
+			}else if(item.getTemperature()>=27 && item.getTemperature()<=28){
+				viewhold.temperatures.setTextColor(0xffFCC15A);
+			}
+			
 			viewhold.temperatures.setText(item.getTemperature()+"");
-	
 			viewhold.times.setText(item.getTime().toString());
 		return convertView;
 	}

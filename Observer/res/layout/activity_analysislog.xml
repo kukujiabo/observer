@@ -8,18 +8,37 @@
         android:id="@+id/ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bj"
+        android:background="@drawable/oio"
         >
         
-  <TextView
+	        
+	     <ImageButton
+	            android:id="@+id/fanhui"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_centerVertical="true"
+	            android:layout_marginLeft="20dp"
+	            android:background="@drawable/a" />
+
+	        <ImageView
+	            android:id="@+id/tv"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:layout_centerHorizontal="true"
+	            android:background="@drawable/rizii"
+	            />
+	            
+ <!--  <ImageView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/rizii"
         android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginBottom="20dp"
-         android:textColor="@color/white"
-          android:textSize="@dimen/console_size"
-         android:text="@string/analysislog"
         android:layout_marginTop="@dimen/console_top"
         android:layout_marginLeft="@dimen/console_left"
         />
@@ -49,8 +68,22 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="20dp"
         android:layout_toLeftOf="@+id/warning"
-        android:background="@drawable/shanganniu" />
+        android:background="@drawable/shanganniu" /> -->
     
     </RelativeLayout>
     
+	  <!--   <include 
+        android:id="@+id/todo_list_view"        
+       	android:layout_width="wrap_content"
+       	android:layout_height="wrap_content"
+       	 android:layout_below="@+id/ll"
+       	layout="@layout/listview"
+        /> -->
+        
+        <ListView 
+        android:id="@+id/list"        
+       	android:layout_width="wrap_content"
+       	android:layout_height="wrap_content"
+        android:layout_below="@+id/ll" >
+        </ListView>
 </RelativeLayout>

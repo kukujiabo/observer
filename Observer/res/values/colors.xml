@@ -8,6 +8,11 @@
 	<color name="graph_text">#5875AB</color>
 	<color name="text_black">#000000</color>
 	<color name="bj">#61BCEB</color>
-	<color name="white">#FFFFFF</color>
+	<color name="white">#ffffff</color>
+	<color  name="one">#72C3F2</color>
+	<color  name="two">#83F2EC</color>
+	<color  name="three">#75EA72</color>
+	<color  name="four">#FAE064</color>
+	<color  name="five">#FCC15A</color>
 	
 </resources>

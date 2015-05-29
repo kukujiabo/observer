@@ -1,13 +1,13 @@
 package com.peichong.observer.activities;
 
 
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 import org.json.JSONObject;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -21,7 +21,7 @@ import android.os.Bundle;
  * @version:  V1.0 
  */
 
-public class BaseActivity extends SwipeBackActivity{
+public class BaseActivity extends Activity{
 	private ProgressDialog mProgressDialog;
 	public RequestQueue mRequestQueue;
 	
@@ -36,7 +36,7 @@ public class BaseActivity extends SwipeBackActivity{
 		mProgressDialog = new ProgressDialog(this);
 		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		mProgressDialog.setCanceledOnTouchOutside(false);
-		mProgressDialog.setMessage("正在加载...");
+		//mProgressDialog.setMessage("正在加载...");
 	}
 
 	@Override
@@ -46,26 +46,6 @@ public class BaseActivity extends SwipeBackActivity{
 	}
 
 	
-	@Override
-	   public void onBackPressed() {  
-		new AlertDialog.Builder(this).setTitle("确认退出吗？")
-				.setIcon(android.R.drawable.ic_dialog_info)
-				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// 点击“确认”后的操作
-						ActivityUtil.finishAll();
-						finish();
-					}
-				})
-				.setNegativeButton("返回", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// 点击“返回”后的操作,这里不设置没有任何操作
-					}
-				}).show();
-		// super.onBackPressed();
-		      }  
 	
 	
 	public void showProgressDialog() {

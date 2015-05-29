@@ -69,6 +69,19 @@ public class HumidityAdapter extends BaseAdapter{
 		//}else{
 			viewhold=(Viewhold) convertView.getTag();
 		//}
+			
+			if (item.getHumidity()>=75 && item.getHumidity()<=76) {
+				viewhold.humiditys.setTextColor(0xff72C3F2);
+			}else if(item.getHumidity()>=77 && item.getHumidity()<=78){
+				viewhold.humiditys.setTextColor(0xff83F2EC);
+			}else if(item.getHumidity()>=79 && item.getHumidity()<=80){
+				viewhold.humiditys.setTextColor(0xff75EA72);
+			}else if(item.getHumidity()>=81 && item.getHumidity()<=82){
+				viewhold.humiditys.setTextColor(0xffFAE064);
+			}else if(item.getHumidity()>=83 && item.getHumidity()<=85){
+				viewhold.humiditys.setTextColor(0xffFCC15A);
+			}
+			
 			viewhold.humiditys.setText(item.getHumidity()+"");
 			viewhold.times.setText(item.getTime().toString());
 		return convertView;

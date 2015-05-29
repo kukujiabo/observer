@@ -1,9 +1,7 @@
 package com.peichong.observer.application;
 
-import java.util.ArrayList;
 
 import android.app.Application;
-import android.content.Context;
 
 /**应用程序全局属性*/
 public class ObserverApplication extends Application {
@@ -11,30 +9,19 @@ public class ObserverApplication extends Application {
 	private String uid;
 	/**用户邮箱*/
 	private String email;
-	/**机器ID*/
+	/**机器温度ID*/
+	private String tid;
+	
 	private String mid;
+	
+	/**机器湿度ID*/
+	private String hid;
 	/**机器地址*/
 	private String address;
 	/**机器的类型（0温度 1湿度）*/
 	private String type;
-
 	
-	/**
-	 * @param uid
-	 * @param email
-	 * @param mid
-	 * @param address
-	 * @param type
-	 */
-	public ObserverApplication(String uid, String email, String mid,
-			String address, String type) {
-		super();
-		this.uid = uid;
-		this.email = email;
-		this.mid = mid;
-		this.address = address;
-		this.type = type;
-	}
+	
 	/**
 	 * @return the mid
 	 */
@@ -47,11 +34,67 @@ public class ObserverApplication extends Application {
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
+
+	/**
+	 * @param uid
+	 * @param email
+	 * @param mid
+	 * @param address
+	 * @param type
+	 */
+	/**
+	 * @return the mid
+	 */
+	/**
+	 * @param mid the mid to set
+	 */
 	/**
 	 * @return the address
 	 */
 	public String getAddress() {
 		return address;
+	}
+	/**
+	 * @return the tid
+	 */
+	public String getTid() {
+		return tid;
+	}
+	/**
+	 * @param tid the tid to set
+	 */
+	public void setTid(String tid) {
+		this.tid = tid;
+	}
+	/**
+	 * @return the hid
+	 */
+	public String getHid() {
+		return hid;
+	}
+	/**
+	 * @param hid the hid to set
+	 */
+	public void setHid(String hid) {
+		this.hid = hid;
+	}
+	/**
+	 * @param uid
+	 * @param email
+	 * @param tid
+	 * @param hid
+	 * @param address
+	 * @param type
+	 */
+	public ObserverApplication(String uid, String email, String tid,
+			String hid, String address, String type) {
+		super();
+		this.uid = uid;
+		this.email = email;
+		this.tid = tid;
+		this.hid = hid;
+		this.address = address;
+		this.type = type;
 	}
 	/**
 	 * @param address the address to set

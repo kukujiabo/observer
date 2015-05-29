@@ -3,27 +3,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
     >
-    <TextView
+    
+      <TextView
         android:id="@+id/humiditys"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:minHeight="50dp"
+        android:layout_marginTop="20dp"
         android:minWidth="50dp"
         android:textColor="@android:color/black"
-        android:textSize="15sp" />
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/times"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/humiditys"
         android:layout_below="@+id/humiditys"
         android:gravity="center"
         android:minHeight="50dp"
         android:minWidth="50dp"
-        android:textColor="@android:color/black"
-        android:textSize="15sp" />
+        android:layout_marginTop="10dp"
+        android:textColor="#CECFCE"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/humiditys"
+        android:layout_alignTop="@+id/humiditys"
+        android:layout_marginRight="5dp"
+        android:textSize="20sp"
+        android:text="%" />
 </RelativeLayout>

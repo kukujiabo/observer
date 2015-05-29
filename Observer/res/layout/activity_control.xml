@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/white"
     >
     
     <RelativeLayout
         android:id="@+id/ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 
-        android:background="@color/bj">
+        android:background="@drawable/oio">
         
     <ImageView
         android:id="@+id/tv"
@@ -16,6 +17,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/yemianzi"
         android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="@dimen/console_top"
         android:layout_marginLeft="@dimen/console_left"
@@ -55,35 +58,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:layout_marginTop="50dp"
         android:layout_below="@id/ll"
         >
-        <ImageView
-            android:id="@+id/iv_pre"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="50dp"
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_pre" />
-
-    <com.peichong.observer.slidingcurve.TemperatureHorizontalScrollView
-        android:id="@+id/horizontal_scrollview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:layout_marginTop="50dp"
-        android:paddingBottom="50dp"
-        android:layout_marginBottom="20dp"
-        android:paddingTop="50dp"
-        android:scrollbars="none" />
-
-    <ImageView
-        android:id="@+id/iv_next"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="50dp"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_next" />
 	<!-- 曲线图
 	<com.peichong.observer.slidingcurve.MyHorizontalScrollView
         android:id="@+id/study_graph_layout"
@@ -96,35 +73,55 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </com.peichong.observer.slidingcurve.MyHorizontalScrollView> -->
+
+    <ImageView
+        android:id="@+id/yuan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/kongwenyuan" />
+
+    <com.peichong.observer.slidingcurve.TemperatureHorizontalScrollView
+        android:id="@+id/horizontal_scrollview"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_weight="1"
+        android:fadingEdge="none"
+        android:scrollbars="none" >
+    </com.peichong.observer.slidingcurve.TemperatureHorizontalScrollView>
     
 	</RelativeLayout>
 	
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_below="@id/ll2" >
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/ll2"
+        android:layout_marginTop="20dp"
+         >
 	
 		<ImageButton
         android:id="@+id/temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:background="@drawable/anniu" />
+        android:background="@drawable/wendunliang" />
 
-    <TextView
+		 <TextView
         android:id="@+id/tv_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/temperature"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="12dp"
-        android:textColor="@color/text_black"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:layout_marginLeft="8dp"
-        android:textSize="20sp"
-        android:text="20" />
-
+        android:text="20"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+		 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
@@ -132,7 +129,7 @@
         android:layout_alignBaseline="@+id/tv_temperature"
         android:layout_alignBottom="@+id/tv_temperature"
         android:layout_toRightOf="@+id/tv_temperature"
-		android:textColor="@color/text_black"
+		android:textColor="@color/white"
         android:textSize="@dimen/temperature_size"
         android:text="@string/temperature" />
 
@@ -141,9 +138,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/qiehuananniu" />
-
+        android:layout_marginRight="50dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/shiduhui" />
+    
     <TextView
         android:id="@+id/tv_humidity"
         android:layout_width="wrap_content"
@@ -151,12 +149,10 @@
         android:layout_alignBaseline="@+id/text"
         android:layout_alignBottom="@+id/text"
         android:layout_alignLeft="@+id/humidity"
-        android:layout_marginLeft="10dp"
-        android:textColor="@color/text_black"
-        android:textSize="20sp"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="20" />
+        android:layout_marginLeft="20dp"
+        android:text="20"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/text2"
@@ -165,43 +161,42 @@
         android:layout_alignBaseline="@+id/tv_humidity"
         android:layout_alignBottom="@+id/tv_humidity"
         android:layout_toRightOf="@+id/tv_humidity"
-        android:textColor="@color/text_black"
+        android:textColor="@color/white"
         android:textSize="@dimen/temperature_size"
         android:text="@string/humidity" />
 
-    <ImageButton
+    <!-- <ImageButton
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="50dp"
-        android:background="@drawable/qiehuananniu" />
+        android:background="@drawable/shijianhui" /> -->
 
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/text2"
-        android:layout_alignBottom="@+id/text2"
-        android:layout_alignLeft="@+id/time"
-        android:layout_marginLeft="10dp"
-        android:textColor="@color/text_black"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:text="50" />
-
-    <TextView
+    <!-- <TextView
         android:id="@+id/text3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/tv_time"
         android:layout_alignBottom="@+id/tv_time"
         android:layout_toRightOf="@+id/tv_time"
-        android:textColor="@color/text_black"
+        android:textColor="@color/white"
         android:textSize="@dimen/temperature_size"
-        android:text="@string/time" />
+        android:text="@string/time" /> -->
+
+    <!-- <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text2"
+        android:layout_alignBottom="@+id/text2"
+        android:layout_alignLeft="@+id/time"
+        android:layout_marginLeft="20dp"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@color/white"
+        android:textSize="15sp" /> -->
 		
 	</RelativeLayout>
 </RelativeLayout>

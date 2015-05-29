@@ -41,4 +41,14 @@ public class Utils {
 		String dd = format.format(d);
 		return dd;
 	}
+	
+	/**年月日 时分秒 日期格式 转变成月日 时分*/
+	@SuppressLint("SimpleDateFormat")
+	public static String dateTwo(String s)throws Exception{
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date d=formatter.parse(s);
+		SimpleDateFormat format=new SimpleDateFormat("MM-dd HH:mm");
+		String dd = format.format(d);
+		return dd;
+	}
 }

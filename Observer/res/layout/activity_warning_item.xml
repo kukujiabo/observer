@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/iv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/jinggaoshidugao" />
+
+    <ImageView
+        android:id="@+id/iv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv1"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/huikuang" />
+
+    
+    <TextView
+        android:id="@+id/temhum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center_horizontal"
+        android:text="温度偏高" />
+    
+    <TextView
+        android:id="@+id/time_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/temhum"
+        android:layout_alignBottom="@+id/temhum"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:text="4-26 12:30" />
+
+    <TextView
+        android:id="@+id/temhum_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/temhum"
+        android:layout_alignBottom="@+id/temhum"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/temhum"
+        android:text="10°C" />
+    
+</RelativeLayout>
