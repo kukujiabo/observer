@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -60,14 +61,17 @@ public class MenuAdapter extends BaseAdapter{
 			convertView=inflater.inflate(R.layout.activity_menu_item, null);
 			viewhold=new Viewhold();
 			viewhold.function=(TextView)convertView.findViewById(R.id.function);
+			viewhold.img=(ImageView) convertView.findViewById(R.id.img);
 			convertView.setTag(viewhold);
 		}else{
 			viewhold=(Viewhold) convertView.getTag();
 		}
 			viewhold.function.setText(item.getFunction());
+			viewhold.img.setImageDrawable(item.getUrl());
 		return convertView;
 	}
 	private class Viewhold{
 		private TextView function;
+		private ImageView img;
 	}
 }

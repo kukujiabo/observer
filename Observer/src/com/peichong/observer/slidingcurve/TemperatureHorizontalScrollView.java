@@ -3,6 +3,9 @@
  */
 package com.peichong.observer.slidingcurve;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import com.peichong.observer.R;
 
 import android.annotation.SuppressLint;
@@ -22,6 +25,7 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
+import android.widget.EdgeEffect;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -50,6 +54,9 @@ public class TemperatureHorizontalScrollView extends HorizontalScrollView
 	private OnItemClickListener onItemClickListener;
 	private OnItemResetListener onItemResetListener;
 	public Handler _scrollHandler;
+	
+	private EdgeEffect mEdgeGlowTop;
+	private EdgeEffect mEdgeGlowBottom;
 
 	public TemperatureHorizontalScrollView(Context context, AttributeSet attrs,
 			int defStyle) {
@@ -109,7 +116,7 @@ public class TemperatureHorizontalScrollView extends HorizontalScrollView
 				LayoutParams.FILL_PARENT));
 		addView(mFrameLayout);
 		mSparseArray = new SparseArray<View>();
-
+		mFrameLayout.setFadingEdgeLength(0);
 	}
 
 	private LinearLayout linearLayout;
@@ -129,7 +136,7 @@ public class TemperatureHorizontalScrollView extends HorizontalScrollView
 			mSparseArray.put(i, view);
 			linearLayout.addView(mSparseArray.get(i));
 		}
-
+		linearLayout.setFadingEdgeLength(0);
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.WRAP_CONTENT,
 				LinearLayout.LayoutParams.FILL_PARENT);
@@ -275,6 +282,7 @@ public class TemperatureHorizontalScrollView extends HorizontalScrollView
 		return mSparseArray.get(position);
 	}
 
+	//回调事件  点击的每一个item
 	public interface OnItemClickListener {
 		void click(int position);
 	}
@@ -364,7 +372,8 @@ public class TemperatureHorizontalScrollView extends HorizontalScrollView
 
 	
 
-	interface OnItemResetListener {
+	//回调事件  滑动的每一个item
+	public interface OnItemResetListener {
 		void onReset(int position);
 	}
 
@@ -435,5 +444,52 @@ public class TemperatureHorizontalScrollView extends HorizontalScrollView
 
 	public void setOnScrollStateChangedListener(ScrollViewListener listener) {
 		this.scrollViewListener = listener;
+	}
+	
+	
+	//去掉边界渐变效果
+	@SuppressLint("NewApi")
+	@Override
+	public void setOverScrollMode(int mode) {
+
+	if (mode != OVER_SCROLL_NEVER) {
+
+	if (mEdgeGlowTop == null) {
+
+	Context context = getContext();
+
+	mEdgeGlowTop = new EdgeEffect(context);
+
+	mEdgeGlowBottom = new EdgeEffect(context);
+
+	}
+
+	} else {
+
+	mEdgeGlowTop = null;
+
+	mEdgeGlowBottom = null;
+
+	}
+
+	super.setOverScrollMode(mode);
+
+	try {
+
+	    Method method = getClass().getMethod("setOverScrollMode", int.class);
+
+	    Field field = getClass().getField("OVER_SCROLL_NEVER");
+
+	    if(method != null && field != null){
+
+	        method.invoke(this, field.getInt(View.class));
+
+	    }
+
+	} catch (Exception e) {
+
+	    e.printStackTrace();
+
+		}
 	}
 }

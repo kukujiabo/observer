@@ -5,16 +5,25 @@
     android:background="#69B1D7"
     >
 
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/suo" />
+
     <TextView
         android:id="@+id/function"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:textSize="@dimen/menu_size"
-        android:textColor="@color/black"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:text="控制台" />
+        android:layout_toRightOf="@+id/img"
+        android:layout_marginLeft="10dp"
+        android:text="控制台"
+        android:textColor="@color/black"
+        android:textSize="@dimen/menu_size" />
 	
 </RelativeLayout>

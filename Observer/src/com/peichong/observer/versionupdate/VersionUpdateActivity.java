@@ -4,6 +4,7 @@ package com.peichong.observer.versionupdate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import com.peichong.observer.R;
@@ -45,6 +46,7 @@ public class VersionUpdateActivity extends BaseActivity implements OnClickListen
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏 
 		setContentView(R.layout.activity_versionupdate);
 		initUi();
 		// 拿到application对象

@@ -17,9 +17,9 @@ import com.peichong.observer.activities.ActivityUtil;
 import com.peichong.observer.activities.BaseActivity;
 import com.peichong.observer.analysislog.AnalysisLogActivity;
 import com.peichong.observer.application.ObserverApplication;
+import com.peichong.observer.capture.CaptureActivity;
 import com.peichong.observer.configure.Constants;
 import com.peichong.observer.equipmentmgm.EquipmentMgmActivity;
-import com.peichong.observer.information.InformationActivity;
 import com.peichong.observer.personalcenter.PersonalCenterActivity;
 import com.peichong.observer.set.SetActivity;
 import com.peichong.observer.tools.BaseStringRequest;
@@ -34,12 +34,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -170,6 +173,8 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	
 	private SlidingMenu menus;
 	
+	private Resources res;
+	
 	//private int thType;
 	
 	//private String set_time;
@@ -223,8 +228,11 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏 
 		setContentView(R.layout.activity_control);
 		context = this;
+		// 获取Resources对象  
+	    res = this.getResources();  
 		// 拿到application对象
 		app = (ObserverApplication) getApplication();
 		
@@ -364,6 +372,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		
 		mHorizontalScrollView = (TemperatureHorizontalScrollView) findViewById(R.id.horizontal_scrollview);
 		mHorizontalScrollView._scrollHandler = _scrollHandler;
+		mHorizontalScrollView.setFadingEdgeLength(0);
 
 		//回调事件  滑动的每一个item
 		mHorizontalScrollView.setOnItemResetListener(new TemperatureHorizontalScrollView.OnItemResetListener() {
@@ -431,15 +440,15 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	/** 菜单抽屉实体类 */
 	private List<MenuInfo> initRightMenus() {
 		List<MenuInfo> templist = new ArrayList<MenuInfo>();
-		templist.add(new MenuInfo("控制台"));
-		templist.add(new MenuInfo("设置时间"));
-		templist.add(new MenuInfo("资讯"));
-		templist.add(new MenuInfo("警告"));
-		templist.add(new MenuInfo("设置"));
-		templist.add(new MenuInfo("分析日志"));
-		templist.add(new MenuInfo("设备管理"));
-		templist.add(new MenuInfo("版本更新"));
-		templist.add(new MenuInfo("关于我们"));
+		templist.add(new MenuInfo("控制台",res.getDrawable(R.drawable.suo)));
+		templist.add(new MenuInfo("设置时间",res.getDrawable(R.drawable.renwu)));
+		templist.add(new MenuInfo("资讯",res.getDrawable(R.drawable.suo)));
+		templist.add(new MenuInfo("警告",res.getDrawable(R.drawable.renwu)));
+		templist.add(new MenuInfo("设置",res.getDrawable(R.drawable.suo)));
+		templist.add(new MenuInfo("分析日志",res.getDrawable(R.drawable.renwu)));
+		templist.add(new MenuInfo("设备管理",res.getDrawable(R.drawable.suo)));
+		templist.add(new MenuInfo("版本更新",res.getDrawable(R.drawable.renwu)));
+		templist.add(new MenuInfo("关于我们",res.getDrawable(R.drawable.suo)));
 		return templist;
 	}
 
@@ -465,7 +474,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 						
 		// 资讯页面
 		case 2:
-			intent = new Intent(view.getContext(), InformationActivity.class);
+			intent = new Intent(view.getContext(), CaptureActivity.class);
 			menus.toggle(true);
 			break;
 
@@ -550,7 +559,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		} else if (v == information) {
 			// 资讯页面
 			startActivity(new Intent(ControlActivity.this,
-					InformationActivity.class));
+					CaptureActivity.class));
 		} else if (v == temperature) {
 			// 温度曲线图
 			chooseType = 1;
