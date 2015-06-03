@@ -13,6 +13,20 @@
     <string name="cancel">取消</string>
     <string name="ok">确定</string>
     <string name="dialog_title">温馨提示：</string>
+    <string name="console">控制台</string>
+    <string name="equipmentmgm">设备管理</string>
+    <string name="analysislog">分析日志</string>
+    <string name="personalcenter">个人中心</string>
+    <string name="set">设置</string>
+    <string name="about">关于我们</string>
+    <string name="warning">警告</string>
+    <string name="versionupdate">版本更新</string>
+    <string name="information">资讯</string>
+    <string name="time">m</string>
+    <string name="humidity">%</string>
+    <string name="temperature">°C</string>
     
-    <string name="temperature_unit">`C</string>
+    
+    <string name="temperature_unit">°C</string>
+    <string name="humidity_unit">%</string>
 </resources>

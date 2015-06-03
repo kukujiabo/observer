@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.basicapp"
+    package="com.peichong.observer"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -11,6 +11,16 @@
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
+	 <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 	
     <application
         android:name="com.peichong.observer.application.ObserverApplication"
@@ -18,8 +28,11 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         >
+        
+        <!--登录-->
         <activity
             android:name="com.peichong.observer.activities.MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +40,84 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <!--控制台-->
+         <activity 
+            android:name="com.peichong.observer.slidingcurve.ControlActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            ></activity>
+         
+         <!--警告-->
+         <activity 
+            android:name="com.peichong.observer.warning.WarningActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            ></activity>
+         
+         <!--资讯-->
+         <activity 
+            android:name="com.peichong.observer.information.InformationActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            ></activity>
+         
+          <!--设置时间-->
+         <activity 
+            android:name="com.peichong.observer.slidingcurve.TimeActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            ></activity>
+         
+          <!--设备管理-->
+         <activity 
+            android:name="com.peichong.observer.equipmentmgm.EquipmentMgmActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            ></activity>
+         
+         <!--分析日志-->
+         <activity 
+            android:name="com.peichong.observer.analysislog.AnalysisLogActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            ></activity>
+         
+         <!--设置页面-->
+         <activity 
+            android:name="com.peichong.observer.set.SetActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            ></activity>
+         
+          <!--个人中心-->
+         <activity 
+            android:name="com.peichong.observer.personalcenter.PersonalCenterActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            ></activity>
+         
+          <!--版本更新-->
+         <activity 
+            android:name="com.peichong.observer.versionupdate.VersionUpdateActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            ></activity>
+         
+          <!--版本介绍-->
+         <activity 
+            android:name="com.peichong.observer.versionupdate.VersionIntroducedActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            ></activity>
+         
+          <!--关于界面-->
+         <activity 
+            android:name="com.peichong.observer.about.AboutActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            ></activity>
+         
     </application>
 
 </manifest>

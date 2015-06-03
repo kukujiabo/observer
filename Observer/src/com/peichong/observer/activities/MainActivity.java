@@ -6,11 +6,11 @@ package com.peichong.observer.activities;
 
 
 
-import com.example.basicapp.R;
+import com.peichong.observer.R;
 import com.peichong.observer.slidingcurve.ControlActivity;
+import com.peichong.observer.tools.Base64Coder;
 import com.peichong.observer.tools.SharedPreferencesUtils;
 import com.peichong.observer.tools.UpdateUtil;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -30,6 +30,8 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+
 
 /** 
  * TODO:      登录
@@ -72,14 +74,22 @@ public class MainActivity extends Activity implements OnClickListener{
 		if (v == ib_register){
 			name=editText1.getText().toString().trim();
 			password=editText2.getText().toString().trim();
+			//帐号和密码不为空
 			if (!name.equals("") && !password.equals("")){
-				//String dd = Base64.encode((name + ":" + password).getBytes());
+				//base64转码
+				String dd = Base64Coder.encode((name + ":" + password).getBytes()).toString();
 				SharedPreferencesUtils.saveUserPasword(this, password);
-				//SharedPreferencesUtils.saveData(this, "Base64N&P", dd);
+				SharedPreferencesUtils.saveData(this, "Base64N&P", dd);
 				SharedPreferencesUtils.saveUserName(this, name);
 				SharedPreferencesUtils.saveUserPasword(this, password);
+				//登入请求
 				login();
 			}
+			else{
+				//帐号和密码为空
+				Toast.makeText(MainActivity.this,
+						"请输入帐号和密码！", Toast.LENGTH_LONG)
+						.show();			}
 		}
 	}
 	
@@ -90,6 +100,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	 */ 
 	private void login() {
 		if (name.equals("123") && password.equals("123")) {
+
 			// 登录成功
 			startActivity(new Intent(MainActivity.this,
 					ControlActivity.class));

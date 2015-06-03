@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="#FFFFFF"
+    >
+    
+	<ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/login"
+        android:src="@drawable/ic_launcher" />
+
+    <RelativeLayout 
+        android:id="@+id/ll1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        >
+        
+        <ImageView
+	        android:id="@+id/imageView2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/denglu02" />
+        
+        <TextView
+	        android:id="@+id/name_show"
+	        android:layout_width="wrap_content"
+	        android:layout_height="fill_parent"
+	        android:layout_centerVertical="true"
+	        android:gravity="left|center"
+	        android:text="@string/name_show"
+	        android:layout_alignTop="@+id/imageView2"
+	        android:layout_alignBottom="@+id/imageView2"
+	        android:textColor="@color/black"
+	        android:textSize="15sp" />
+        
+        <EditText
+	        android:id="@+id/name"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:background="@null"
+	        android:layout_centerVertical="true"
+	        android:singleLine="true"
+	        android:layout_marginLeft="@dimen/name"
+	        android:layout_toRightOf="@+id/name_show"
+	        android:layout_alignRight="@+id/imageView2"
+	        android:layout_alignTop="@+id/imageView2"
+	        android:layout_alignBottom="@+id/imageView2"
+	        android:textColor="@color/text_black"
+	        android:hint="@string/name" >
+	    </EditText>
+        
+    </RelativeLayout>
+    
+    
+	<RelativeLayout 
+        android:id="@+id/ll2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll1"
+        android:layout_alignLeft="@+id/ll1"
+        >
+        
+	    <ImageView
+	        android:id="@+id/imageView3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/denglu02" />
+	    
+	    <TextView
+	        android:id="@+id/password_show"
+	        android:layout_width="wrap_content"
+	        android:layout_height="fill_parent"
+	        android:gravity="left|center"
+	        android:layout_alignTop="@+id/imageView3"
+	        android:layout_alignBottom="@+id/imageView3"
+	        android:text="@string/password_show"
+	        android:layout_centerVertical="true"
+	        android:textColor="@color/black"
+	        android:textSize="15sp" />
+
+	    <EditText
+	        android:id="@+id/password"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:background="@null"
+	        android:layout_toRightOf="@+id/password_show"
+	        android:hint="@string/password"
+	        android:layout_marginLeft="@dimen/name"
+	        android:layout_alignRight="@+id/imageView3"
+	        android:layout_alignTop="@+id/imageView3"
+	        android:layout_alignBottom="@+id/imageView3"
+	        android:textColor="@color/text_black"
+	        android:inputType="textPassword" >
+    	</EditText>
+	    
+    </RelativeLayout>
+    
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ll2"
+        android:layout_alignRight="@+id/ll2"
+        android:layout_below="@+id/ll2"
+        android:layout_marginTop="@dimen/et"
+        android:button="@drawable/login_rememberpass" />
+
+    <ImageButton
+        android:id="@+id/ib_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkBox1"
+        android:layout_below="@+id/checkBox1"
+        android:layout_marginTop="@dimen/et"
+        android:background="@drawable/denglu05" />
+</RelativeLayout>

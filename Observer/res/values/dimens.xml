@@ -12,4 +12,38 @@
     
     <!--  记住密码上边距-->
     <dimen name="et">20dp</dimen>
+    
+     <!--  控制台字体大小-->
+    <dimen name="console_size">20sp</dimen>
+    
+     <!--  控制台上边距-->
+    <dimen name="console_top">30dp</dimen>
+    
+     <!--  控制台左边距-->
+    <dimen name="console_left">20dp</dimen>
+    
+     <!--  控制台右边距-->
+    <dimen name="console_right">10dp</dimen>
+    
+      <!--  咨询按钮右边距-->
+    <dimen name="consulting_right">5dp</dimen>
+    
+     <!--  控制台温度字体大小-->
+    <dimen name="temperature_size">15sp</dimen>
+    
+         <!--  控制台时间字体左边距-->
+    <dimen name="time_left">5sp</dimen>
+    
+     <!--  左边距-->
+    <dimen name="left">20dp</dimen>
+    
+     <!--  左边距-->
+    <dimen name="left_two">5dp</dimen>
+    
+     <!--  右边距-->
+    <dimen name="right">20dp</dimen>
+    
+     <!--  上边距-->
+    <dimen name="top">15dp</dimen>
+    
 </resources>
