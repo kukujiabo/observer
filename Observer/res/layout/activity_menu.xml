@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#69B1D7" >
+    android:background="@color/bjthe" >
 
     <TextView
         android:id="@+id/uese_name"
@@ -15,20 +15,23 @@
         android:textColor="@android:color/black"
         android:textSize="20sp" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/user_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/touxiangthree" />
+        android:layout_marginTop="10dp"
+         />
 
     <ListView
         android:id="@+id/lv_set"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_icon"
+        android:fadingEdge="none"  
+       android:cacheColorHint="@android:color/transparent"
+        android:listSelector="@drawable/color" 
          android:divider="@null"
          />
 

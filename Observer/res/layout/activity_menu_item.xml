@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:background="#69B1D7"
+    android:background="@drawable/color"
     >
 
     <ImageView
@@ -11,19 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/suo" />
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:background="@null" 
+        />
 
-    <TextView
-        android:id="@+id/function"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp"
-        android:layout_toRightOf="@+id/img"
-        android:layout_marginLeft="10dp"
-        android:text="控制台"
-        android:textColor="@color/black"
-        android:textSize="@dimen/menu_size" />
 	
 </RelativeLayout>

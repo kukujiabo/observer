@@ -10,7 +10,6 @@ import android.graphics.drawable.Drawable;
  * @version:  V1.0 
  */
 public class MenuInfo {
-	private String function;
 	private Drawable url;
 
 	/**
@@ -31,9 +30,8 @@ public class MenuInfo {
 	 * @param function
 	 * @param drawable
 	 */
-	public MenuInfo(String function, Drawable drawable) {
+	public MenuInfo( Drawable drawable) {
 		super();
-		this.function = function;
 		this.url = drawable;
 	}
 
@@ -48,23 +46,8 @@ public class MenuInfo {
 	/**
 	 * @param function
 	 */
-	public MenuInfo(String function) {
-		super();
-		this.function = function;
-	}
 
 	/**
 	 * @return the function
 	 */
-	public String getFunction() {
-		return function;
-	}
-
-	/**
-	 * @param function the function to set
-	 */
-	public void setFunction(String function) {
-		this.function = function;
-	}
-	
 }

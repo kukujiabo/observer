@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.peichong.observer.R;
 import com.peichong.observer.activities.BaseActivity;
 import com.peichong.observer.application.ObserverApplication;
+import com.peichong.observer.set.SetActivity;
 import com.peichong.observer.slidingcurve.ControlActivity;
 
 /**
@@ -72,6 +73,8 @@ public class EquipmentMgmActivity extends BaseActivity implements
 	/**设置湿度传感器状态图标*/
 	private ImageView set_switch_two;
 	
+	/**进入设置界面*/
+	private ImageButton set_ok;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,8 @@ public class EquipmentMgmActivity extends BaseActivity implements
 		set_state_two=(TextView) findViewById(R.id.set_state_two);
 		set_switch_two=(ImageView) findViewById(R.id.set_switch_two);
 		
+		set_ok=(ImageButton) findViewById(R.id.set_ok);
+		set_ok.setOnClickListener(this);
 		
 		/*warning = (ImageButton) findViewById(R.id.warning);
 		information = (ImageButton) findViewById(R.id.information);
@@ -227,6 +232,11 @@ public class EquipmentMgmActivity extends BaseActivity implements
 			//主界面控制台
 			startActivity(new Intent(EquipmentMgmActivity.this, ControlActivity.class));
 			finish();
+		}
+		//进入设置界面
+		else if(v==set_ok){
+			//进入设置界面
+			startActivity(new Intent(EquipmentMgmActivity.this, SetActivity.class));
 		}
 		
 		/*if (v == menu) {

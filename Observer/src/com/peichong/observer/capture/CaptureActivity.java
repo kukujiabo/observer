@@ -10,6 +10,7 @@ import com.peichong.observer.lib.camera.CameraManager;
 import com.peichong.observer.lib.decode.CaptureActivityHandler;
 import com.peichong.observer.lib.decode.InactivityTimer;
 import com.peichong.observer.slidingcurve.ControlActivity;
+import com.peichong.observer.tools.LogUtil;
 
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -356,13 +357,13 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener,Ca
 		if (result == null || "".equals(result)) {
 			Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 		}else{
-			Intent intent = new Intent(CaptureActivity.this,WebActivity.class);
+			Intent intent = new Intent(CaptureActivity.this, WebActivity.class);  
 			Bundle bundle = new Bundle();
 			bundle.putString("msg", result);
-			intent.putExtras(bundle);
+			intent.putExtras(bundle); 
 			startActivity(intent);
 		
-			//CaptureActivity.this.finish();
+			CaptureActivity.this.finish();
 		// 连续扫描，不发送此消息扫描一次结束后就不能再次扫描
 		 //handler.sendEmptyMessage(R.id.restart_preview);
 		}

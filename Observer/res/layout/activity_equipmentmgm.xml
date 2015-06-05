@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white" >
+    android:background="@color/bjtwo" >
 
     <RelativeLayout
         android:id="@+id/ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/oio" >
+        android:background="@drawable/shebeiguanliltwo" >
 
         <ImageButton
             android:id="@+id/fanhui"
@@ -17,15 +17,17 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:background="@drawable/a" />
-
-        <ImageView
-            android:id="@+id/tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/shebeiguanlil" />
+            android:background="@drawable/huanhui" />
+        
+        <ImageButton
+	            android:id="@+id/set_ok"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_centerVertical="true"
+	            android:layout_marginRight="20dp"
+	            android:background="@drawable/shezhianniuu"
+	           />
 
         <!--
     <ImageView
@@ -94,7 +96,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/shebeihuanliwenduji" />
+            android:src="@drawable/wenduchuanganqi" />
 
         <TextView
             android:id="@+id/set_model"
@@ -128,7 +130,7 @@
              android:layout_alignTop="@+id/set_model"
              android:layout_marginRight="30dp"
              android:layout_marginTop="5dp"
-             android:background="@drawable/touxiang" />
+             android:background="@drawable/zhengchang" />
          
          
       		 <View
@@ -164,7 +166,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/shebeihuanliwendujii" />
+            android:src="@drawable/shiduchuanganqi" />
 
         <TextView
             android:id="@+id/set_model_two"
@@ -186,7 +188,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/set_icon_two"
-            android:text="正在运行"
+            android:text="系统故障"
             android:textColor="#C3C3C3"
             android:textSize="10sp" />
 
@@ -198,7 +200,7 @@
             android:layout_alignTop="@+id/set_model_two"
             android:layout_marginRight="30dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/touxiang" />
+            android:background="@drawable/guzhang" />
 
         <View
             android:id="@+id/View01"

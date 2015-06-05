@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bjtwo"
      >
     
 	<RelativeLayout
         android:id="@+id/ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/oio"
+        android:background="@drawable/shezhiiiii"
         >
         
 	     <ImageButton
@@ -18,16 +19,8 @@
 	            android:layout_alignParentLeft="true"
 	            android:layout_centerVertical="true"
 	            android:layout_marginLeft="20dp"
-	            android:background="@drawable/a" />
+	            android:background="@drawable/huanhui" />
 
-	        <ImageView
-	            android:id="@+id/tv"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_centerVertical="true"
-	            android:layout_centerHorizontal="true"
-	            android:background="@drawable/shezhishezhi"
-	            />
 	        
    <!--  <ImageView
         android:id="@+id/tv"
@@ -86,7 +79,7 @@
 	            android:layout_alignParentTop="true"
 	            android:background="@drawable/liebiao" />
 
-	        <ImageButton
+	        <CheckBox
 	            android:id="@+id/sethyperthermia"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -94,7 +87,8 @@
 	            android:layout_alignParentTop="true"
 	            android:layout_marginTop="10dp"
 	            android:layout_marginRight="20dp"
-	            android:background="@drawable/shezhishuanganniu" />
+	            android:button="@drawable/pictures_select_icon"
+	             />
 
 	        <ImageButton
 	            android:id="@+id/ib2"
@@ -111,7 +105,6 @@
 	            android:layout_alignTop="@+id/ib2"
 	            android:layout_toLeftOf="@+id/gethtem_two"
 	            android:layout_marginTop="15dp"
-	            android:visibility="invisible"
 	            android:text="15"
 	            android:textColor="@color/black"
 	            android:textSize="20sp" />
@@ -126,19 +119,6 @@
 	            android:textColor="@color/black"
 	            android:textSize="20sp"
 	            android:text="°C" />
-
-	        <EditText
-	            android:id="@+id/sethtem"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignBottom="@+id/gethtem"
-	            android:layout_alignLeft="@+id/gethtem"
-	            android:layout_alignTop="@+id/gethtem"
-	            android:layout_toLeftOf="@+id/gethtem_two"
-	            android:background="@null"
-	            android:ems="2"
-	            android:inputType="number" >
-	        </EditText>
 
 	        <ImageButton
 	            android:id="@+id/ib3"
@@ -156,7 +136,6 @@
 	            android:layout_alignLeft="@+id/gethtem"
 	            android:layout_marginBottom="15dp"
 	            android:text="15"
-	            android:visibility="invisible"
 	            android:textColor="@color/black"
 	            android:textSize="20sp"
 	            />
@@ -172,19 +151,6 @@
 	            android:textSize="20sp"
 	            android:text="°C" />
 
-	        <EditText
-	            android:id="@+id/setltem"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignBaseline="@+id/getltem"
-	            android:layout_alignBottom="@+id/getltem"
-	            android:layout_alignLeft="@+id/getltem"
-	            android:layout_toLeftOf="@+id/getltem_two"
-	            android:background="@null"
-	            android:ems="2"
-	            android:inputType="number" >
-	        </EditText>
-
 	        <ImageButton
 	            android:id="@+id/ib4"
 	            android:layout_width="wrap_content"
@@ -193,14 +159,14 @@
 	            android:layout_below="@+id/ib3"
 	            android:background="@drawable/liebiaoc" />
 
-	        <ImageButton
+	        <CheckBox
 	            android:id="@+id/sethumidity"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_alignRight="@+id/gethtem_two"
 	            android:layout_alignTop="@+id/ib4"
 	            android:layout_marginTop="10dp"
-	            android:background="@drawable/shezhishuanganniu" />
+	             android:button="@drawable/pictures_select_icon" />
 
 	        <ImageButton
 	            android:id="@+id/ib5"
@@ -218,7 +184,6 @@
 	            android:layout_alignTop="@+id/ib5"
 	            android:layout_marginTop="15dp"
 	            android:text="15"
-	            android:visibility="invisible"
 	            android:textColor="@color/black"
 	            android:textSize="20sp" />
 
@@ -233,17 +198,6 @@
 	            android:textColor="@color/black"
 	            android:textSize="20sp" />
 
-	        <EditText
-	            android:id="@+id/sethhum"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignLeft="@+id/gethhum"
-	            android:layout_alignTop="@+id/gethhum"
-	            android:layout_toLeftOf="@+id/gethhum_two"
-	            android:background="@null"
-	            android:ems="2"
-	            android:inputType="number" >
-	        </EditText>
 
 	        <ImageButton
 	            android:id="@+id/ib6"
@@ -261,7 +215,6 @@
 	            android:layout_marginBottom="15dp"
 	            android:layout_toLeftOf="@+id/gethhum_two"
 	            android:text="15"
-	            android:visibility="invisible"
 	            android:textColor="@color/black"
 	            android:textSize="20sp" />
 
@@ -276,17 +229,6 @@
 	            android:textColor="@color/black"
 	            android:textSize="20sp" />
 
-	        <EditText
-	            android:id="@+id/setlhum"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignLeft="@+id/getlhum"
-	            android:layout_alignTop="@+id/getlhum"
-	            android:layout_toLeftOf="@+id/getlhum_two"
-	            android:background="@null"
-	            android:ems="2"
-	            android:inputType="number" >
-	        </EditText>
 	        
     </RelativeLayout>
 </RelativeLayout>

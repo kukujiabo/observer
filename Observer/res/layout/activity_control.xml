@@ -2,27 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
+    android:background="@color/bjtwo"
     >
     
     <RelativeLayout
         android:id="@+id/ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 
-        android:background="@drawable/oio">
+        android:background="@drawable/xinkongzhi">
         
-    <ImageView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/yemianzi"
-        android:layout_alignParentLeft="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="@dimen/console_top"
-        android:layout_marginLeft="@dimen/console_left"
-        />
 
     <ImageButton
         android:id="@+id/menu"
@@ -31,25 +19,25 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="20dp"
-        android:background="@drawable/caidan" />
+        android:background="@drawable/caidaananniun" />
 
     <ImageButton
         android:id="@+id/warning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/menu"
-        android:background="@drawable/jingshianniu" />
+        android:background="@drawable/shaomaa" />
 
     <ImageButton
         android:id="@+id/information"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/warning"
-        android:background="@drawable/shanganniu" />
+        android:background="@drawable/liangd" />
     
     </RelativeLayout>
     

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -20,6 +21,8 @@ import com.peichong.observer.R;
 import com.peichong.observer.activities.BaseActivity;
 import com.peichong.observer.application.ObserverApplication;
 import com.peichong.observer.configure.Constants;
+import com.peichong.observer.personalcenter.PersonalCenterActivity;
+import com.peichong.observer.personalcenter.SetNameActivity;
 import com.peichong.observer.slidingcurve.ControlActivity;
 import com.peichong.observer.tools.BaseStringRequest;
 import com.peichong.observer.tools.LogUtil;
@@ -56,37 +59,37 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 	private MenuAdapter Menuadapter;*/
 
 	/** 温度警告 */
-	private ImageButton sethyperthermia;
+	private CheckBox sethyperthermia;
 
 	/** 高温警告 */
 	private TextView gethtem;
 
-	/** 修改高温警告 */
-	private EditText sethtem;
-
 	/** 低温警告 */
 	private TextView getltem;
 
-	/** 修改低温警告 */
-	private EditText setltem;
-
 	/** 湿度警告 */
-	private ImageButton sethumidity;
+	private CheckBox sethumidity;
 
 	/** 高湿警告 */
 	private TextView gethhum;
 
-	/** 修改高湿警告 */
-	private EditText sethhum;
-
 	/** 低湿警告 */
 	private TextView getlhum;
 
-	/** 修改低湿警告 */
-	private EditText setlhum;
-	
 	/**返回*/
 	private ImageButton ib_return;
+	
+	/**温度高温*/
+	private ImageButton ib1;
+	
+	/**温度低温*/
+	private ImageButton ib2;
+	
+	/**湿度高温*/
+	private ImageButton ib3;
+	
+	/**湿度低温*/
+	private ImageButton ib4;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -112,20 +115,30 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 		warning.setOnClickListener(this);
 		information.setOnClickListener(this);*/
 		
-		sethyperthermia = (ImageButton) findViewById(R.id.sethyperthermia);
+		sethyperthermia = (CheckBox) findViewById(R.id.sethyperthermia);
+		sethyperthermia.setOnClickListener(this);
 		gethtem = (TextView) findViewById(R.id.gethtem);
-		sethtem = (EditText) findViewById(R.id.sethtem);
 		getltem = (TextView) findViewById(R.id.getltem);
-		setltem = (EditText) findViewById(R.id.setltem);
-		sethumidity = (ImageButton) findViewById(R.id.sethumidity);
+		sethumidity = (CheckBox) findViewById(R.id.sethumidity);
+		sethumidity.setOnClickListener(this);
 		gethhum = (TextView) findViewById(R.id.gethhum);
-		sethhum = (EditText) findViewById(R.id.sethhum);
 		getlhum = (TextView) findViewById(R.id.getlhum);
-		setlhum = (EditText) findViewById(R.id.setlhum);
 
 		
 		ib_return=(ImageButton) findViewById(R.id.fanhui);
 		ib_return.setOnClickListener(this);
+		
+		ib1=(ImageButton) findViewById(R.id.ib2);
+		ib1.setOnClickListener(this);
+		
+		ib2=(ImageButton) findViewById(R.id.ib3);
+		ib2.setOnClickListener(this);
+		
+		ib3=(ImageButton) findViewById(R.id.ib5);
+		ib3.setOnClickListener(this);
+		
+		ib4=(ImageButton) findViewById(R.id.ib6);
+		ib4.setOnClickListener(this);
 		
 	/*	menu = (ImageButton) findViewById(R.id.menu);
 		menu.setOnClickListener(this);
@@ -239,12 +252,26 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		
+		//返回至设备管理界面
 		if (v==ib_return) {
-			//主界面控制台
-			startActivity(new Intent(SetActivity.this, ControlActivity.class));
 			finish();
 		}
-		
+		//设置温度高温
+		else if(v==ib1){
+			startActivity(new Intent(SetActivity.this, TemHighActivity.class));
+		}
+		//设置温度低温
+		else if(v==ib2){
+			startActivity(new Intent(SetActivity.this, TemLowhActivity.class));	
+		}
+		//设置湿度高温
+		else if(v==ib3){
+			startActivity(new Intent(SetActivity.this, HemHighActivity.class));	
+		}
+		//设置湿度低温
+		else if(v==ib4){
+			startActivity(new Intent(SetActivity.this, HemLowhActivity.class));	
+		}
 		/*if (v == menu) {
 			// 侧滑菜单
 			menus.toggle(true);
@@ -329,31 +356,84 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 									String ht = jo.getJSONObject(
 											"t_warning_high").getString(
 											"setting_value");
-									gethtem.setText(ht);
-									gethtem.setVisibility(View.INVISIBLE);
-									sethtem.setText(ht);
-
+									
 									String lt = jo.getJSONObject(
 											"t_warning_low").getString(
 											"setting_value");
-									getltem.setText(lt);
-									getltem.setVisibility(View.INVISIBLE);
-									setltem.setText(lt);
+									
 
 									String hh = jo.getJSONObject(
 											"h_warning_high").getString(
 											"setting_value");
-									gethhum.setText(hh);
-									gethhum.setVisibility(View.INVISIBLE);
-									sethhum.setText(hh);
-
+									
 									String lh = jo.getJSONObject(
 											"h_warning_low").getString(
 											"setting_value");
-									getlhum.setText(lh);
-									getlhum.setVisibility(View.INVISIBLE);
-									setlhum.setText(lh);
-
+									
+									//修改高温度
+									Intent intent = SetActivity.this.getIntent(); 
+									Bundle bundle = intent.getExtras();
+									if (bundle == null) {
+										gethtem.setText(ht);
+										getltem.setText(lt);
+										gethhum.setText(hh);
+										getlhum.setText(lh);
+									}else{
+										String name = bundle.getString("msg1");
+										gethtem.setText(name);
+										getltem.setText(lt);
+										gethhum.setText(hh);
+										getlhum.setText(lh);
+									}
+									
+									//修改低温度
+									Intent intent2 = SetActivity.this.getIntent(); 
+									Bundle bundle2 = intent2.getExtras();
+									if (bundle2 == null) {
+										gethtem.setText(ht);
+										getltem.setText(lt);
+										gethhum.setText(hh);
+										getlhum.setText(lh);
+									}else{
+										String name = bundle2.getString("msg2");
+										gethtem.setText(ht);
+										getltem.setText(name);
+										gethhum.setText(hh);
+										getlhum.setText(lh);
+									}
+									
+									//修改高湿度
+									Intent intent3 = SetActivity.this.getIntent(); 
+									Bundle bundle3 = intent3.getExtras();
+									if (bundle3 == null) {
+										gethtem.setText(ht);
+										getltem.setText(lt);
+										gethhum.setText(hh);
+										getlhum.setText(lh);
+									}else{
+										String name = bundle3.getString("msg3");
+										gethtem.setText(ht);
+										getltem.setText(lt);
+										gethhum.setText(name);
+										getlhum.setText(lh);
+									}
+									
+									//修改高湿度
+									Intent intent4 = SetActivity.this.getIntent(); 
+									Bundle bundle4 = intent4.getExtras();
+									if (bundle4 == null) {
+										gethtem.setText(ht);
+										getltem.setText(lt);
+										gethhum.setText(hh);
+										getlhum.setText(lh);
+									}else{
+										String name = bundle4.getString("msg4");
+										gethtem.setText(ht);
+										getltem.setText(lt);
+										gethhum.setText(hh);
+										getlhum.setText(name);
+									}
+									
 									LogUtil.showLog(
 											"==========请求获取用户的配置信息接口请求成功:====",
 											"获取的数据：" + jo);

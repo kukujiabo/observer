@@ -5,6 +5,9 @@ import java.util.Date;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.widget.LinearLayout;
 
 
 /** 
@@ -50,5 +53,19 @@ public class Utils {
 		SimpleDateFormat format=new SimpleDateFormat("MM-dd HH:mm");
 		String dd = format.format(d);
 		return dd;
+	}
+	
+	/**缩小bitmap*/
+	public static Bitmap CutPicture(Bitmap bitmap, int width, int height) {
+		  if (bitmap != null) {
+		   float scaleWidth = ((float) width) / bitmap.getWidth();
+		   float scaleHeight = ((float) height) / bitmap.getHeight();
+		   Matrix matrix = new Matrix();
+		   matrix.postScale(scaleWidth, scaleHeight);
+		   Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+		   return resizedBitmap;
+		  } else {
+		   return null;
+		  }
 	}
 }

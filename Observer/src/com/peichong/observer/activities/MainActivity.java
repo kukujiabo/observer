@@ -74,6 +74,12 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
 	/** 邮箱 */
 	private String email = "";
+	
+	/** 电话 */
+	private String phone = "";
+	
+	/** 头像url */
+	private String imgUrl = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -183,11 +189,24 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 										// JSONObject中的字段
 										uid = jo.getString("id");
 										email = jo.getString("email");
+										name = jo.getString("name");
+										phone = jo.getString("phone");
+										imgUrl = jo.getString("pic_url");
+										
 										//把id缓存到Application,可供所有activity使用
 										app.setUid(uid);
 										//把email缓存到Application,可供所有activity使用
 										app.setEmail(email);
 
+										//把昵称缓存到Application
+										app.setName(name);
+										
+										//把电话缓存到Application
+										app.setPhone(phone);
+										
+										//把图片url缓存到Application
+										app.setUrl(imgUrl);
+										
 										LogUtil.showLog(
 												"+++++++++++id+++++++++", "id:"
 														+ app.getUid());

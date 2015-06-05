@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.peichong.observer.R;
 import com.peichong.observer.activities.BaseActivity;
@@ -44,6 +45,8 @@ public class AboutActivity extends BaseActivity implements OnClickListener{
 	
 	private SlidingMenu menus;*/
 	
+	/**文本*/
+	private TextView set_texts;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,8 @@ public class AboutActivity extends BaseActivity implements OnClickListener{
 		
 		ib_return=(ImageButton) findViewById(R.id.fanhui);
 		ib_return.setOnClickListener(this);
+		
+		set_texts=(TextView) findViewById(R.id.set_texts);
 		
 		/*warning = (ImageButton) findViewById(R.id.warning);
 		information = (ImageButton) findViewById(R.id.information);

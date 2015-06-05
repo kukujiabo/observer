@@ -23,6 +23,7 @@ import com.peichong.observer.equipmentmgm.EquipmentMgmActivity;
 import com.peichong.observer.personalcenter.PersonalCenterActivity;
 import com.peichong.observer.set.SetActivity;
 import com.peichong.observer.tools.BaseStringRequest;
+import com.peichong.observer.tools.DownLoadImage;
 import com.peichong.observer.tools.LogUtil;
 import com.peichong.observer.tools.Utils;
 import com.peichong.observer.versionupdate.VersionUpdateActivity;
@@ -35,6 +36,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,7 +55,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 /**
- * TODO: 滑动曲线图
+ * TODO: 滑动温湿度图
  * 
  * @author: wy
  * @version: V1.0
@@ -114,7 +117,10 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	//private TextView tv_time;
 
 	/** 个人中心 */
-	private ImageButton user_icon;
+	private ImageView user_icon;
+	
+	/**设置名字*/
+	private TextView uese_name;
 
 	/** 用户的ID 从用户登录数据中取的 */
 	private String uid = "";
@@ -346,8 +352,19 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		// 为侧滑菜单设置布局
 		menus.setMenu(R.layout.activity_menu);
 
-		user_icon = (ImageButton) findViewById(R.id.user_icon);
+		user_icon = (ImageView) findViewById(R.id.user_icon);
 		user_icon.setOnClickListener(this);
+		uese_name=(TextView) findViewById(R.id.uese_name);
+		
+		uese_name.setText(app.getName());
+		//修改头像
+				String s="http://218.244.135.148:8080"+app.getUrl().trim();
+				if (app.getUrl().equals("") ||app.getUrl()==null) {
+					Bitmap b=BitmapFactory.decodeResource(this.getResources(), R.drawable.touxianggo);
+					user_icon.setImageBitmap(b);
+				}else{
+					new DownLoadImage(user_icon).execute(s);
+				}
 
 		lv_set = (ListView) findViewById(R.id.lv_set);
 		List<MenuInfo> list = initRightMenus();
@@ -440,15 +457,12 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	/** 菜单抽屉实体类 */
 	private List<MenuInfo> initRightMenus() {
 		List<MenuInfo> templist = new ArrayList<MenuInfo>();
-		templist.add(new MenuInfo("控制台",res.getDrawable(R.drawable.suo)));
-		templist.add(new MenuInfo("设置时间",res.getDrawable(R.drawable.renwu)));
-		templist.add(new MenuInfo("资讯",res.getDrawable(R.drawable.suo)));
-		templist.add(new MenuInfo("警告",res.getDrawable(R.drawable.renwu)));
-		templist.add(new MenuInfo("设置",res.getDrawable(R.drawable.suo)));
-		templist.add(new MenuInfo("分析日志",res.getDrawable(R.drawable.renwu)));
-		templist.add(new MenuInfo("设备管理",res.getDrawable(R.drawable.suo)));
-		templist.add(new MenuInfo("版本更新",res.getDrawable(R.drawable.renwu)));
-		templist.add(new MenuInfo("关于我们",res.getDrawable(R.drawable.suo)));
+		templist.add(new MenuInfo(res.getDrawable(R.drawable.touxiaangtubiaoff)));
+		templist.add(new MenuInfo(res.getDrawable(R.drawable.touxiaangtubiaoe)));
+		templist.add(new MenuInfo(res.getDrawable(R.drawable.touxiaangtubiaod)));
+		templist.add(new MenuInfo(res.getDrawable(R.drawable.touxiaangtubiaoc)));
+		templist.add(new MenuInfo(res.getDrawable(R.drawable.touxiaangtubiaob)));
+		templist.add(new MenuInfo(res.getDrawable(R.drawable.touxiaangtubiaoa)));
 		return templist;
 	}
 
@@ -459,60 +473,42 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		Intent intent = null;
 		// 只要没有滑动则都属于点击
 		switch (position) {
-
-		// 曲线图页面
+		// 控制台
 		case 0:
 		intent = new Intent(view.getContext(), ControlActivity.class);
 		menus.toggle(true);
 		break;
 			
-	    // 设置时间页面
+	    // 扫码
 		case 1:
-		intent = new Intent(view.getContext(), TimeActivity.class);
+		intent = new Intent(view.getContext(), CaptureActivity.class);
 		menus.toggle(true);
 		break;
 						
-		// 资讯页面
+		// 警告
 		case 2:
-			intent = new Intent(view.getContext(), CaptureActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 警告页面
-		case 3:
 			intent = new Intent(view.getContext(), WarningActivity.class);
 			menus.toggle(true);
 			break;
 
-		// 设置页面
-		case 4:
-			intent = new Intent(view.getContext(), SetActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 分析日志页面
-		case 5:
-			intent = new Intent(view.getContext(), AnalysisLogActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 设备管理页面
-		case 6:
+		// 设备管理
+		case 3:
 			intent = new Intent(view.getContext(), EquipmentMgmActivity.class);
 			menus.toggle(true);
 			break;
 
-		// 版本更新页面
-		case 7:
+		// 版本更新
+		case 4:
 			intent = new Intent(view.getContext(), VersionUpdateActivity.class);
 			menus.toggle(true);
 			break;
 
-		// 关于页面
-		case 8:
+		// 关于我们
+		case 5:
 			intent = new Intent(view.getContext(), AboutActivity.class);
 			menus.toggle(true);
 			break;
+
 		}
 
 		// 页面跳转
@@ -556,10 +552,14 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 			// 警告页面
 			startActivity(new Intent(ControlActivity.this,
 					WarningActivity.class));
+			// 侧滑菜单
+			menus.toggle(true);
 		} else if (v == information) {
 			// 资讯页面
 			startActivity(new Intent(ControlActivity.this,
 					CaptureActivity.class));
+			// 侧滑菜单
+			menus.toggle(true);
 		} else if (v == temperature) {
 			// 温度曲线图
 			chooseType = 1;
@@ -583,6 +583,8 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 			// 个人中心
 			startActivity(new Intent(ControlActivity.this,
 					PersonalCenterActivity.class));
+			// 侧滑菜单
+			menus.toggle(true);
 		}
 	}
 
@@ -1794,6 +1796,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	
 	@Override
 	   public void onBackPressed() {  
+		menus.toggle(true);
 		new AlertDialog.Builder(this).setTitle("确认退出吗？")
 				.setIcon(android.R.drawable.ic_dialog_info)
 				.setPositiveButton("确定", new DialogInterface.OnClickListener() {

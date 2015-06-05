@@ -4,6 +4,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
+    <RelativeLayout
+        android:id="@+id/ll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/zixn"
+        >
+        
+	      <ImageButton
+	            android:id="@+id/fanhui"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_centerVertical="true"
+	            android:layout_marginLeft="20dp"
+	            android:background="@drawable/huanhui" />
+
+    
+    </RelativeLayout>
+    
 	<WebView 
 	    android:id="@+id/web"
 	    android:layout_width="fill_parent"

@@ -21,7 +21,52 @@ public class ObserverApplication extends Application {
 	/**机器的类型（0温度 1湿度）*/
 	private String type;
 	
+	/**昵称*/
+	private String name;
 	
+	/**电话*/
+	private String phone;
+	
+	/**图片url*/
+	private String url;
+	
+	
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	/**
+	 * @return the phone
+	 */
+	public String getPhone() {
+		return phone;
+	}
+	/**
+	 * @param phone the phone to set
+	 */
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	/**
 	 * @return the mid
 	 */

@@ -8,7 +8,7 @@
         android:id="@+id/ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/oio"
+        android:background="@drawable/banbengengqin"
         >
         
 	        
@@ -19,16 +19,7 @@
 	            android:layout_alignParentLeft="true"
 	            android:layout_centerVertical="true"
 	            android:layout_marginLeft="20dp"
-	            android:background="@drawable/a" />
-
-	        <ImageView
-	            android:id="@+id/tv"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_centerVertical="true"
-	            android:layout_centerHorizontal="true"
-	            android:background="@drawable/banbengengxinn"
-	            />
+	            android:background="@drawable/huanhui" />
 	        
  <!--  <ImageView
         android:id="@+id/tv"

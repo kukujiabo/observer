@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white" >
+    android:background="@color/bjtwo" >
     
 	    <RelativeLayout
         android:id="@+id/ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/oio"
+        android:background="@drawable/shijiann"
          >
         
 	          <ImageButton
@@ -18,18 +18,19 @@
 	            android:layout_alignParentLeft="true"
 	            android:layout_centerVertical="true"
 	            android:layout_marginLeft="20dp"
-	            android:background="@drawable/a" />
-
-	        <TextView
-	            android:id="@+id/tv"
+	            android:background="@drawable/huanhui" />
+	          
+	          <TextView
+	            android:id="@+id/ok"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
 	            android:layout_centerVertical="true"
-	            android:layout_centerHorizontal="true"
-	            android:text="设置时间"
+	            android:layout_marginRight="20dp"
 	            android:textSize="15sp"
 	            android:textColor="@color/white"
-	            />
+	            android:text="确定" />
+
    <!--   <ImageView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
@@ -80,7 +81,7 @@
 	     android:layout_below="@+id/ll"
 	     android:layout_centerHorizontal="true"
 	     android:layout_marginTop="50dp"
-	     android:background="@drawable/zhong" />
+	     android:background="@drawable/shijiannn" />
 
 	 <SeekBar
 	     android:id="@+id/time_seekbar"

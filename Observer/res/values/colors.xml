@@ -9,11 +9,18 @@
 	<color name="text_black">#000000</color>
 	<color name="bj">#61BCEB</color>
 	<color name="white">#ffffff</color>
+	<color name="beijing">#F1F1F1</color>
 	<color  name="one">#72C3F2</color>
 	<color  name="two">#83F2EC</color>
 	<color  name="three">#75EA72</color>
 	<color  name="four">#FAE064</color>
 	<color  name="five">#FCC15A</color>
+	<color  name="bjtwo">#F1F1F1</color>
+	<color  name="bjthe">#EAEAEA</color>
+	
+	
+	<color  name="budian">#EAEAEA</color>
+	<color  name="dian">#77CED8</color>
 	
 	<color name="contents_text">#ff000000</color>
     <color name="encode_view">#ffffffff</color>
