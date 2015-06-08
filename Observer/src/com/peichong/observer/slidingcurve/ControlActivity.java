@@ -90,7 +90,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 	/** 控制台文件保存的类型 */
 	public static int chooseType = 1;
-
+	
 	/** 菜单 */
 	private ImageButton menu;
 	/** 警告 */
@@ -246,6 +246,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		
 		// 获取用户仪器的信息
         getUserInstrumentInformation();
+        
 	/*	
 		Bundle extras = getIntent().getExtras(); 
 		 if(extras != null){  
@@ -289,6 +290,16 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		// getUserSpecifiedConfigurationInformation();
 	
 }
+	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		menus.showContent();
+	}
 	/**
 	 * TODO :初始化
 	 * 
@@ -358,13 +369,13 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		
 		uese_name.setText(app.getName());
 		//修改头像
-				String s="http://218.244.135.148:8080"+app.getUrl().trim();
-				if (app.getUrl().equals("") ||app.getUrl()==null) {
-					Bitmap b=BitmapFactory.decodeResource(this.getResources(), R.drawable.touxianggo);
-					user_icon.setImageBitmap(b);
-				}else{
-					new DownLoadImage(user_icon).execute(s);
-				}
+		String s="http://218.244.135.148:8080"+app.getUrl().trim();
+		if (app.getUrl().equals("") ||app.getUrl()==null) {
+			Bitmap b=BitmapFactory.decodeResource(this.getResources(), R.drawable.touxianggo);
+			user_icon.setImageBitmap(b);
+		}else{
+			new DownLoadImage(user_icon).execute(s);
+		}
 
 		lv_set = (ListView) findViewById(R.id.lv_set);
 		List<MenuInfo> list = initRightMenus();
@@ -458,8 +469,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	private List<MenuInfo> initRightMenus() {
 		List<MenuInfo> templist = new ArrayList<MenuInfo>();
 		templist.add(new MenuInfo(res.getDrawable(R.drawable.touxiaangtubiaoff)));
-		templist.add(new MenuInfo(res.getDrawable(R.drawable.touxiaangtubiaoe)));
-		templist.add(new MenuInfo(res.getDrawable(R.drawable.touxiaangtubiaod)));
+		templist.add(new MenuInfo(res.getDrawable(R.drawable.jianggaoo)));
 		templist.add(new MenuInfo(res.getDrawable(R.drawable.touxiaangtubiaoc)));
 		templist.add(new MenuInfo(res.getDrawable(R.drawable.touxiaangtubiaob)));
 		templist.add(new MenuInfo(res.getDrawable(R.drawable.touxiaangtubiaoa)));
@@ -476,37 +486,31 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		// 控制台
 		case 0:
 		intent = new Intent(view.getContext(), ControlActivity.class);
-		menus.toggle(true);
+		menus.showContent();
 		break;
 			
-	    // 扫码
+	    // 警告
 		case 1:
-		intent = new Intent(view.getContext(), CaptureActivity.class);
-		menus.toggle(true);
+		intent = new Intent(view.getContext(), WarningActivity.class);
+		menus.showContent();
 		break;
 						
-		// 警告
-		case 2:
-			intent = new Intent(view.getContext(), WarningActivity.class);
-			menus.toggle(true);
-			break;
-
 		// 设备管理
-		case 3:
+		case 2:
 			intent = new Intent(view.getContext(), EquipmentMgmActivity.class);
-			menus.toggle(true);
+			menus.showContent();
 			break;
 
 		// 版本更新
-		case 4:
+		case 3:
 			intent = new Intent(view.getContext(), VersionUpdateActivity.class);
-			menus.toggle(true);
+			menus.showContent();
 			break;
 
 		// 关于我们
-		case 5:
+		case 4:
 			intent = new Intent(view.getContext(), AboutActivity.class);
-			menus.toggle(true);
+			menus.showContent();
 			break;
 
 		}
@@ -549,17 +553,17 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 			// 侧滑菜单
 			menus.toggle(true);
 		} else if (v == warning) {
+			// 扫一扫页面
+			startActivity(new Intent(ControlActivity.this,
+					CaptureActivity.class));
+			// 侧滑菜单
+			menus.showContent();
+		} else if (v == information) {
 			// 警告页面
 			startActivity(new Intent(ControlActivity.this,
 					WarningActivity.class));
 			// 侧滑菜单
-			menus.toggle(true);
-		} else if (v == information) {
-			// 资讯页面
-			startActivity(new Intent(ControlActivity.this,
-					CaptureActivity.class));
-			// 侧滑菜单
-			menus.toggle(true);
+			menus.showContent();
 		} else if (v == temperature) {
 			// 温度曲线图
 			chooseType = 1;
@@ -584,7 +588,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 			startActivity(new Intent(ControlActivity.this,
 					PersonalCenterActivity.class));
 			// 侧滑菜单
-			menus.toggle(true);
+			menus.showContent();
 		}
 	}
 
@@ -1796,7 +1800,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	
 	@Override
 	   public void onBackPressed() {  
-		menus.toggle(true);
+		menus.showContent();
 		new AlertDialog.Builder(this).setTitle("确认退出吗？")
 				.setIcon(android.R.drawable.ic_dialog_info)
 				.setPositiveButton("确定", new DialogInterface.OnClickListener() {

@@ -6,6 +6,9 @@ import java.util.List;
 import com.peichong.observer.R;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,8 @@ public class MenuAdapter extends BaseAdapter{
 	private Context ctx;
 	private List<MenuInfo> list;
 	private LayoutInflater inflater;
+	public int selectIndex;
+	
 	public MenuAdapter() {
 		// TODO Auto-generated constructor stub
 	}
@@ -66,6 +71,7 @@ public class MenuAdapter extends BaseAdapter{
 			viewhold=(Viewhold) convertView.getTag();
 		}
 			viewhold.img.setImageDrawable(item.getUrl());
+			
 		return convertView;
 	}
 	private class Viewhold{

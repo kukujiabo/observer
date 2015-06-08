@@ -3,7 +3,6 @@
  */
 package com.peichong.observer.personalcenter;
 
-import org.fireking.app.imagelib.widget.PicSelectActivity;
 
 import android.content.Intent;
 import android.os.Bundle;

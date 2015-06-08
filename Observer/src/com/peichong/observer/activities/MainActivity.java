@@ -344,12 +344,12 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	}
 
 	/**
-	 * 获取本地版本号，版本号必须为三位
+	 * 获取本地版本号，版本号必须为两位
 	 * 
 	 * @return
 	 */
 	private String getVersionName() {
-		String ver = "1.0.0";
+		String ver = "1.0";
 		try {
 			PackageManager packageManager = getPackageManager();
 			PackageInfo packInfo;

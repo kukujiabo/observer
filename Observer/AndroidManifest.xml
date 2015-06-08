@@ -150,47 +150,22 @@
             </intent-filter> 
         </activity>
         
-        <!-- 上传头像-->
+        <!-- 上传头像
         <activity
             android:name="org.fireking.app.imagelib.widget.PicSelectActivity"
             android:screenOrientation="portrait" android:theme="@style/activityTheme">
         </activity>  
+        -->
         
-          <!-- 设置高温度界面 -->
+           <!-- 设置温度和湿度界面 -->
         <activity
-            android:name="com.peichong.observer.set.TemHighActivity"
+            android:name="com.peichong.observer.set.TemHumActivity"
             android:screenOrientation="portrait" android:theme="@style/activityTheme">
             <intent-filter>  
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>  
             </intent-filter> 
         </activity>
-        
-          <!-- 设置低温度界面 -->
-        <activity
-            android:name="com.peichong.observer.set.TemLowhActivity"
-            android:screenOrientation="portrait" android:theme="@style/activityTheme">
-            <intent-filter>  
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>  
-            </intent-filter> 
-        </activity>
-        
-          <!-- 设置高湿度界面 -->
-        <activity
-            android:name="com.peichong.observer.set.HemHighActivity"
-            android:screenOrientation="portrait" android:theme="@style/activityTheme">
-            <intent-filter>  
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>  
-            </intent-filter> 
-        </activity>
-        
-          <!-- 设置低湿度界面 -->
-        <activity
-            android:name="com.peichong.observer.set.HemLowhActivity"
-            android:screenOrientation="portrait" android:theme="@style/activityTheme">
-            <intent-filter>  
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>  
-            </intent-filter> 
-        </activity>
+       
     </application>
 
 </manifest>

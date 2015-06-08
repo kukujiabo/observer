@@ -4,8 +4,11 @@ package com.peichong.observer.set;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -13,12 +16,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.peichong.observer.R;
 import com.peichong.observer.activities.BaseActivity;
+import com.peichong.observer.activities.MainActivity;
 import com.peichong.observer.application.ObserverApplication;
 import com.peichong.observer.configure.Constants;
 import com.peichong.observer.personalcenter.PersonalCenterActivity;
@@ -90,6 +95,87 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 	
 	/**湿度低温*/
 	private ImageButton ib4;
+	
+	/**修改高温度*//*
+	private final int TEMHIGH=0;
+	
+	*//**修改低温度*//*
+	private final int TEMLOW=1;
+	
+	*//**修改高湿度*//*
+	private final int HUMHIGH=2;
+	
+	*//**修改低湿度*//*
+	private final int HUMLOW=3;*/
+	
+	/**修改类型*/
+	private int set_type=0;
+	
+/*	@SuppressLint("HandlerLeak")
+	private Handler temHumHandler = new Handler() {
+
+		public void handleMessage(Message msg) {
+
+			switch (msg.what) {
+
+			// 修改高温度
+			case TEMHIGH:
+				Intent intent = SetActivity.this.getIntent(); 
+				Bundle bundle = intent.getExtras();
+				if (bundle == null) {
+					Toast.makeText(SetActivity.this, "修改高温度不成功！",
+							Toast.LENGTH_LONG).show();
+				}else{
+					String name = bundle.getString("msg");
+					gethtem.setText(name);
+				}
+				break;
+
+			// 修改低温度
+			case TEMLOW:
+				Intent intent2 = SetActivity.this.getIntent(); 
+				Bundle bundle2 = intent2.getExtras();
+				if (bundle2 == null) {
+					Toast.makeText(SetActivity.this, "修改低温度不成功！",
+							Toast.LENGTH_LONG).show();
+				}else{
+					String name = bundle2.getString("msg");
+					gethtem.setText(name);
+				}
+				break;
+				
+			// 修改高湿度
+			case HUMHIGH:
+				Intent intent3 = SetActivity.this.getIntent(); 
+				Bundle bundle3 = intent3.getExtras();
+				if (bundle3 == null) {
+					Toast.makeText(SetActivity.this, "修改高湿度不成功！",
+							Toast.LENGTH_LONG).show();
+				}else{
+					String name = bundle3.getString("msg");
+					gethtem.setText(name);
+				}			
+			break;
+			
+			// 修改低湿度
+			case HUMLOW:
+				Intent intent4 = SetActivity.this.getIntent(); 
+				Bundle bundle4 = intent4.getExtras();
+				if (bundle4 == null) {
+					Toast.makeText(SetActivity.this, "修改高湿度不成功！",
+							Toast.LENGTH_LONG).show();
+				}else{
+					String name = bundle4.getString("msg");
+					gethtem.setText(name);
+				}										
+			break;
+			default:
+				break;
+			}
+
+		}
+
+	};*/
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -258,19 +344,40 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 		}
 		//设置温度高温
 		else if(v==ib1){
-			startActivity(new Intent(SetActivity.this, TemHighActivity.class));
+			set_type=1;
+			startActivity(new Intent(SetActivity.this, TemHumActivity.class));
+			/*// 修改高温度
+			Message msg = new Message();
+			msg.what = TEMHIGH;
+			temHumHandler.sendMessage(msg);*/
+			
 		}
-		//设置温度低温
+		//设置低温度
 		else if(v==ib2){
-			startActivity(new Intent(SetActivity.this, TemLowhActivity.class));	
+			set_type=2;
+			startActivity(new Intent(SetActivity.this, TemHumActivity.class));	
+			/*// 修改低温度
+			Message msg = new Message();
+			msg.what = TEMLOW;
+			temHumHandler.sendMessage(msg);*/
 		}
 		//设置湿度高温
 		else if(v==ib3){
-			startActivity(new Intent(SetActivity.this, HemHighActivity.class));	
+			set_type=3;
+			startActivity(new Intent(SetActivity.this, TemHumActivity.class));	
+			/*// 修改高湿度
+			Message msg = new Message();
+			msg.what = HUMHIGH;
+			temHumHandler.sendMessage(msg);*/
 		}
 		//设置湿度低温
 		else if(v==ib4){
-			startActivity(new Intent(SetActivity.this, HemLowhActivity.class));	
+			set_type=4;
+			startActivity(new Intent(SetActivity.this, TemHumActivity.class));	
+			/*// 修改低湿度
+			Message msg = new Message();
+			msg.what = HUMLOW;
+			temHumHandler.sendMessage(msg);*/
 		}
 		/*if (v == menu) {
 			// 侧滑菜单
@@ -353,11 +460,11 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 																R.drawable.shezhianniu));
 									}
 
-									String ht = jo.getJSONObject(
+									String th = jo.getJSONObject(
 											"t_warning_high").getString(
 											"setting_value");
 									
-									String lt = jo.getJSONObject(
+									String tl = jo.getJSONObject(
 											"t_warning_low").getString(
 											"setting_value");
 									
@@ -366,72 +473,62 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 											"h_warning_high").getString(
 											"setting_value");
 									
-									String lh = jo.getJSONObject(
+									String hl = jo.getJSONObject(
 											"h_warning_low").getString(
 											"setting_value");
 									
-									//修改高温度
-									Intent intent = SetActivity.this.getIntent(); 
-									Bundle bundle = intent.getExtras();
-									if (bundle == null) {
-										gethtem.setText(ht);
-										getltem.setText(lt);
-										gethhum.setText(hh);
-										getlhum.setText(lh);
-									}else{
-										String name = bundle.getString("msg1");
-										gethtem.setText(name);
-										getltem.setText(lt);
-										gethhum.setText(hh);
-										getlhum.setText(lh);
-									}
+									gethtem.setText(th);
+									getltem.setText(tl);
+									gethhum.setText(hh);
+									getlhum.setText(hl);
 									
-									//修改低温度
-									Intent intent2 = SetActivity.this.getIntent(); 
-									Bundle bundle2 = intent2.getExtras();
-									if (bundle2 == null) {
-										gethtem.setText(ht);
-										getltem.setText(lt);
-										gethhum.setText(hh);
-										getlhum.setText(lh);
-									}else{
-										String name = bundle2.getString("msg2");
-										gethtem.setText(ht);
-										getltem.setText(name);
-										gethhum.setText(hh);
-										getlhum.setText(lh);
+									//高温度
+									if (set_type==1) {
+										Intent intent = SetActivity.this.getIntent(); 
+										Bundle bundle = intent.getExtras();
+										if (bundle == null) {
+											Toast.makeText(SetActivity.this, "修改高温度不成功！",
+													Toast.LENGTH_LONG).show();
+										}else{
+											String name = bundle.getString("msg");
+											gethtem.setText(name);
+										}
 									}
-									
-									//修改高湿度
-									Intent intent3 = SetActivity.this.getIntent(); 
-									Bundle bundle3 = intent3.getExtras();
-									if (bundle3 == null) {
-										gethtem.setText(ht);
-										getltem.setText(lt);
-										gethhum.setText(hh);
-										getlhum.setText(lh);
-									}else{
-										String name = bundle3.getString("msg3");
-										gethtem.setText(ht);
-										getltem.setText(lt);
-										gethhum.setText(name);
-										getlhum.setText(lh);
+									//低温度
+									else if(set_type==2){
+										Intent intent = SetActivity.this.getIntent(); 
+										Bundle bundle = intent.getExtras();
+										if (bundle == null) {
+											Toast.makeText(SetActivity.this, "修改低温度不成功！",
+													Toast.LENGTH_LONG).show();
+										}else{
+											String name = bundle.getString("msg");
+											getltem.setText(name);
+										}
 									}
-									
-									//修改高湿度
-									Intent intent4 = SetActivity.this.getIntent(); 
-									Bundle bundle4 = intent4.getExtras();
-									if (bundle4 == null) {
-										gethtem.setText(ht);
-										getltem.setText(lt);
-										gethhum.setText(hh);
-										getlhum.setText(lh);
-									}else{
-										String name = bundle4.getString("msg4");
-										gethtem.setText(ht);
-										getltem.setText(lt);
-										gethhum.setText(hh);
-										getlhum.setText(name);
+									//高湿度
+									else if(set_type==3){
+										Intent intent = SetActivity.this.getIntent(); 
+										Bundle bundle = intent.getExtras();
+										if (bundle == null) {
+											Toast.makeText(SetActivity.this, "修改高湿度不成功！",
+													Toast.LENGTH_LONG).show();
+										}else{
+											String name = bundle.getString("msg");
+											gethhum.setText(name);
+										}
+									}
+									//低湿度
+									else if(set_type==4){
+										Intent intent = SetActivity.this.getIntent(); 
+										Bundle bundle = intent.getExtras();
+										if (bundle == null) {
+											Toast.makeText(SetActivity.this, "修改低湿度不成功！",
+													Toast.LENGTH_LONG).show();
+										}else{
+											String name = bundle.getString("msg");
+											getlhum.setText(name);
+										}
 									}
 									
 									LogUtil.showLog(

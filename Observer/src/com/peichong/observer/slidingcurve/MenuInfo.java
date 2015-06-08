@@ -12,6 +12,9 @@ import android.graphics.drawable.Drawable;
 public class MenuInfo {
 	private Drawable url;
 
+	
+
+
 	/**
 	 * @return the url
 	 */

@@ -30,7 +30,22 @@ public class ObserverApplication extends Application {
 	/**图片url*/
 	private String url;
 	
+	/**设置温度和湿度类型*/
+	private int set_type;
 	
+	
+	/**
+	 * @return the set_type
+	 */
+	public int getSet_type() {
+		return set_type;
+	}
+	/**
+	 * @param set_type the set_type to set
+	 */
+	public void setSet_type(int set_type) {
+		this.set_type = set_type;
+	}
 	/**
 	 * @return the url
 	 */

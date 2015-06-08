@@ -9,7 +9,7 @@
         android:id="@+id/ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/xiugaidishi"
+        android:background="@drawable/touxiangcaidann"
         >
         
 	        
@@ -37,7 +37,7 @@
     </RelativeLayout>
     
 	<EditText
-	        android:id="@+id/set_name"
+	        android:id="@+id/set_names"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/ll"
@@ -50,7 +50,7 @@
 	        android:textColor="@color/text_black"
 	        android:maxLength="3"
 	        android:inputType="number"
-	        android:hint="修改低湿度" >
+	        android:hint="修改温度和湿度" >
 	    </EditText>
 
 	<ImageView

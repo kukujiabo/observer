@@ -1,7 +1,6 @@
 package com.peichong.observer.personalcenter;
 
 
-import org.fireking.app.imagelib.widget.PicSelectActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -264,8 +263,8 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 		}
 		//设置头像
 		else if(v==set_touxiang){
-			Intent intent = new Intent(this,PicSelectActivity.class); 
-			startActivityForResult(intent, 0x123);
+//			Intent intent = new Intent(this,PicSelectActivity.class); 
+//			startActivityForResult(intent, 0x123);
 		}
 		//设置昵称
 		else if(v==set_name){
