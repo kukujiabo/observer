@@ -351,9 +351,9 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 		// configure the SlidingMenu
 		menus = new SlidingMenu(this);
-		menus.setMode(SlidingMenu.RIGHT);
+		menus.setMode(SlidingMenu.LEFT);
 		// 设置触摸屏幕的模式
-		menus.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+		menus.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 
 		// 设置滑动菜单视图的宽度
 		menus.setBehindOffsetRes(R.dimen.slidingmenu_offset);

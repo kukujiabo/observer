@@ -2,13 +2,20 @@ package com.peichong.observer.versionupdate;
 
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.peichong.observer.R;
 import com.peichong.observer.activities.BaseActivity;
+import com.peichong.observer.activities.MainActivity;
 import com.peichong.observer.application.ObserverApplication;
 import com.peichong.observer.slidingcurve.ControlActivity;
 
@@ -43,6 +50,22 @@ public class VersionUpdateActivity extends BaseActivity implements OnClickListen
 	
 	private SlidingMenu menus;
 	*/
+	
+	/**当前版本*/
+	private TextView current;
+	
+	/**当前版本大小*/
+	private TextView size;
+	
+	/**更新版本*/
+	private TextView update;
+	
+	/**更新版本大小*/
+	private TextView sizetwo;
+	
+	/**版本更新按钮*/
+	private ImageButton download;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,6 +87,19 @@ public class VersionUpdateActivity extends BaseActivity implements OnClickListen
 		
 		ib_return=(ImageButton) findViewById(R.id.fanhui);
 		ib_return.setOnClickListener(this);
+		
+		current=(TextView) findViewById(R.id.current);
+		
+		size=(TextView) findViewById(R.id.size);
+		
+		update=(TextView) findViewById(R.id.update);
+		
+		sizetwo=(TextView) findViewById(R.id.sizetwo);
+		
+		download=(ImageButton) findViewById(R.id.download);
+		
+		String s=getVersionName();
+		current.setText(s);
 		
 	/*	warning = (ImageButton) findViewById(R.id.warning);
 		information = (ImageButton) findViewById(R.id.information);
@@ -188,6 +224,11 @@ public class VersionUpdateActivity extends BaseActivity implements OnClickListen
 			startActivity(new Intent(VersionUpdateActivity.this, ControlActivity.class));
 			finish();
 		}
+		//版本更新
+		else if(v==download){
+			Toast.makeText(VersionUpdateActivity.this, "版本更新！",
+					Toast.LENGTH_LONG).show();
+		}
 		
 		/*if (v == menu) {
 			// 侧滑菜单
@@ -205,5 +246,23 @@ public class VersionUpdateActivity extends BaseActivity implements OnClickListen
 			startActivity(new Intent(VersionUpdateActivity.this,
 					PersonalCenterActivity.class));
 		}*/
+	}
+	
+	/**
+	 * 获取本地版本号，版本号必须为两位
+	 * 
+	 * @return
+	 */
+	private String getVersionName() {
+		String ver = "1.0";
+		try {
+			PackageManager packageManager = getPackageManager();
+			PackageInfo packInfo;
+			packInfo = packageManager.getPackageInfo(getPackageName(), 0);
+			ver = packInfo.versionName;
+		} catch (NameNotFoundException e) {
+			return ver;
+		}
+		return ver;
 	}
 }

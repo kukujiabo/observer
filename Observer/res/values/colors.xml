@@ -16,10 +16,11 @@
 	<color  name="four">#FAE064</color>
 	<color  name="five">#FCC15A</color>
 	<color  name="bjtwo">#F1F1F1</color>
-	<color  name="bjthe">#EAEAEA</color>
+	<color  name="bjthe">#666666</color>
 	
 	
-	<color  name="budian">#EAEAEA</color>
+	
+	<color  name="budian">#666666</color>
 	<color  name="dian">#77CED8</color>
 	
 	<color name="contents_text">#ff000000</color>

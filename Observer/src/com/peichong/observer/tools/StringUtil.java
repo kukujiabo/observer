@@ -18,4 +18,17 @@ public class StringUtil {
 			return str.substring(str.indexOf(Xmlfirst) + Xmlfirst.length(), str.indexOf(Xmlend));  
 			
 		}
+		
+		/**判断一个字符串是不是全数字*/
+		public static boolean isNum(String ss)
+	    {  for(int i=0;i<ss.length();i++)
+	    {
+	     char a=ss.charAt(i);
+	     if(a<'0'||a>'9')
+	     {
+	      return false;
+	     }
+	    }
+	    return true;
+	    }	
 }

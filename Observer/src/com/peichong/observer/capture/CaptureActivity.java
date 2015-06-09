@@ -5,16 +5,17 @@ import java.io.IOException;
 
 import com.peichong.observer.R;
 import com.peichong.observer.activities.BaseActivity;
+import com.peichong.observer.activities.MainActivity;
 import com.peichong.observer.application.ObserverApplication;
 import com.peichong.observer.lib.camera.CameraManager;
 import com.peichong.observer.lib.decode.CaptureActivityHandler;
 import com.peichong.observer.lib.decode.InactivityTimer;
 import com.peichong.observer.slidingcurve.ControlActivity;
 import com.peichong.observer.tools.LogUtil;
+import com.peichong.observer.tools.StringUtil;
 
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
-import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -44,14 +45,6 @@ import android.widget.Toast;
  * @version:  V1.0 
  */
 public class CaptureActivity  extends BaseActivity implements OnClickListener,Callback{
-	
-	/** 菜单 *//*
-	private ImageButton menu;
-	*//** 警告 *//*
-	private ImageButton warning;
-	
-	*//** 个人中心 *//*
-	private ImageButton user_icon;*/
 
 	/** 应用程序全局属性 */
 	private ObserverApplication app;
@@ -59,13 +52,6 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener,Ca
 	/**返回*/
 	private ImageButton ib_return;
 	
-	/******* 侧滑菜单 *******//*
-	private ListView lv_set;// 设置菜单
-
-	private MenuAdapter Menuadapter;
-	
-	private SlidingMenu menus;
-	*/
 	
 	/******************扫描二维码**************************/
 	private CaptureActivityHandler handler;
@@ -93,7 +79,7 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener,Ca
 		app = (ObserverApplication) getApplication();
 		initUi();
 	}
-	
+		
 	/**
 	 * TODO :初始化
 	 * 
@@ -123,139 +109,16 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener,Ca
 		mAnimation.setInterpolator(new LinearInterpolator());
 		mQrLineView.setAnimation(mAnimation);
 				
-		/*warning = (ImageButton) findViewById(R.id.warning);
-
-		warning.setOnClickListener(this);
-		
-		menu = (ImageButton) findViewById(R.id.menu);
-		menu.setOnClickListener(this);
-
-		// configure the SlidingMenu
-		menus = new SlidingMenu(this);
-		menus.setMode(SlidingMenu.RIGHT);
-		 //设置触摸屏幕的模式
-		menus.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		//menus.setShadowWidthRes(R.dimen.shadow_width);
-		//menus.setShadowDrawable(R.drawable.shadow);
-
-		 //设置滑动菜单视图的宽度
-		menus.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		// 设置渐入渐出效果的值
-		menus.setFadeDegree(0.35f);
-		// 把滑动菜单添加进所有的Activity中，可选值SLIDING_CONTENT ， SLIDING_WINDOW
-		menus.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		// 为侧滑菜单设置布局
-		menus.setMenu(R.layout.activity_menu);
-
-		user_icon = (ImageButton) findViewById(R.id.user_icon);
-		user_icon.setOnClickListener(this);
-		
-		lv_set = (ListView) findViewById(R.id.lv_set);
-		List<MenuInfo> list = initRightMenus();
-		Menuadapter = new MenuAdapter(this, list);
-		lv_set.setAdapter(Menuadapter);
-		lv_set.setOnItemClickListener(this);*/
 	}
 	
-	/** 菜单抽屉实体类 *//*
-	private List<MenuInfo> initRightMenus() {
-		List<MenuInfo> templist = new ArrayList<MenuInfo>();
-		templist.add(new MenuInfo("控制台"));
-		templist.add(new MenuInfo("资讯"));
-		templist.add(new MenuInfo("警告"));
-		templist.add(new MenuInfo("设置"));
-		templist.add(new MenuInfo("分析日志"));
-		templist.add(new MenuInfo("设备管理"));
-		templist.add(new MenuInfo("版本更新"));
-		templist.add(new MenuInfo("关于我们"));
-		return templist;
-	}*/
-
-	/** 条目点击 *//*
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		Intent intent = null;
-		switch (position) {
-
-		// 曲线图页面
-		case 0:
-			intent = new Intent(view.getContext(), ControlActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 资讯页面
-		case 1:
-			intent = new Intent(view.getContext(), InformationActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 警告页面
-		case 2:
-			intent = new Intent(view.getContext(), WarningActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 设置页面
-		case 3:
-			intent = new Intent(view.getContext(), SetActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 分析日志页面
-		case 4:
-			intent = new Intent(view.getContext(), AnalysisLogActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 设备管理页面
-		case 5:
-			intent = new Intent(view.getContext(), EquipmentMgmActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 版本更新页面
-		case 6:
-			intent = new Intent(view.getContext(), VersionUpdateActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 关于页面
-		case 7:
-			intent = new Intent(view.getContext(), AboutActivity.class);
-			menus.toggle(true);
-			break;
-		}
-
-		// 页面跳转
-		if (intent != null) {
-			// intent.putExtra("lv_item_id", id);
-			startActivity(intent);
-		}
-	}
-*/
 	/** 按钮点击 */
 	@Override
 	public void onClick(View v) {
 		
 		if (v==ib_return) {
 			//主界面控制台
-			//startActivity(new Intent(CaptureActivity.this, ControlActivity.class));
 			finish();
 		}
-		
-		/*if (v == menu) {
-			// 侧滑菜单
-			menus.toggle(true);
-		}
-		if (v == warning) {
-			// 警告页面
-			startActivity(new Intent(InformationActivity.this, WarningActivity.class));
-		} else if (v == user_icon) {
-			// 个人中心
-			startActivity(new Intent(InformationActivity.this,
-					PersonalCenterActivity.class));
-		}*/
 	}
 	
 	public boolean isNeedCapture() {
@@ -357,13 +220,20 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener,Ca
 		if (result == null || "".equals(result)) {
 			Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 		}else{
-			Intent intent = new Intent(CaptureActivity.this, WebActivity.class);  
+			/*Intent intent = new Intent(CaptureActivity.this, WebActivity.class);  
 			Bundle bundle = new Bundle();
 			bundle.putString("msg", result);
 			intent.putExtras(bundle); 
-			startActivity(intent);
-		
-			CaptureActivity.this.finish();
+			startActivity(intent);*/
+			if (StringUtil.isNum(result)) {
+				//发送给服务器
+				Toast.makeText(CaptureActivity.this, result,
+						Toast.LENGTH_LONG).show();
+			}else{
+				Toast.makeText(CaptureActivity.this, "扫描的不是条形码！",
+						Toast.LENGTH_LONG).show();
+			}
+			//CaptureActivity.this.finish();
 		// 连续扫描，不发送此消息扫描一次结束后就不能再次扫描
 		 //handler.sendEmptyMessage(R.id.restart_preview);
 		}
@@ -460,5 +330,4 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener,Ca
 			mediaPlayer.seekTo(0);
 		}
 	};
-	
 }

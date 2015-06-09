@@ -16,9 +16,9 @@
         android:id="@+id/menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="20dp"
         android:background="@drawable/caidaananniun" />
 
     <ImageButton
@@ -26,7 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
         android:layout_toLeftOf="@+id/menu"
         android:background="@drawable/shaomaa" />
 
@@ -35,9 +36,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="20dp"
         android:layout_toLeftOf="@+id/warning"
-        android:background="@drawable/liangd" />
+        android:background="@drawable/liangdd" />
     
     </RelativeLayout>
     
@@ -45,7 +46,6 @@
         android:id="@+id/ll2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:layout_marginTop="100dp"
         android:layout_below="@id/ll"
         >
@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/temperature"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="20"
@@ -118,7 +118,7 @@
         android:layout_alignBottom="@+id/tv_temperature"
         android:layout_toRightOf="@+id/tv_temperature"
 		android:textColor="@color/white"
-        android:textSize="@dimen/temperature_size"
+        android:textSize="10sp"
         android:text="@string/temperature" />
 
     <ImageButton
@@ -150,7 +150,7 @@
         android:layout_alignBottom="@+id/tv_humidity"
         android:layout_toRightOf="@+id/tv_humidity"
         android:textColor="@color/white"
-        android:textSize="@dimen/temperature_size"
+        android:textSize="10sp"
         android:text="@string/humidity" />
 
     <!-- <ImageButton
@@ -185,6 +185,18 @@
         android:text="1"
         android:textColor="@color/white"
         android:textSize="15sp" /> -->
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/text"
+        android:layout_toRightOf="@+id/tv_temperature"
+        android:text="@string/temperature_two"
+        android:textColor="@color/white"
+        android:layout_marginLeft="-3dp"
+        android:layout_marginTop="16dp"
+        android:textSize="15sp" />
 		
 	</RelativeLayout>
 </RelativeLayout>

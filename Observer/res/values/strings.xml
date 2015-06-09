@@ -23,7 +23,8 @@
     <string name="information">资讯</string>
     <string name="time">m</string>
     <string name="humidity">%</string>
-    <string name="temperature">°C</string>
+    <string name="temperature">C</string>
+    <string name="temperature_two">°</string>
     <string name="temperature_unit">°C</string>
     <string name="humidity_unit">%</string>
     <string name="title_activity_test">TestActivity</string>
@@ -34,7 +35,7 @@
       <string name="hum_high">湿度偏高</string>
        <string name="hum_low">湿度偏低</string>
        
-           <string name="scan_tips">将二维码图片对准扫描框即可自动扫描</string>
+           <string name="scan_tips">将条形码图片对准扫描框即可自动扫描</string>
            
          <string name="fengye">fengye</string>
   

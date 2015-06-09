@@ -2,23 +2,39 @@ package com.peichong.observer.personalcenter;
 
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.peichong.observer.R;
 import com.peichong.observer.activities.ActivityUtil;
@@ -37,16 +53,6 @@ import com.peichong.observer.tools.Utils;
  */
 public class PersonalCenterActivity extends BaseActivity implements OnClickListener{
 
-	/** 菜单 *//*
-	private ImageButton menu;
-	*//** 警告 *//*
-	private ImageButton warning;
-	*//** 资讯 *//*
-	private ImageButton information;
-	
-	*//** 个人中心 *//*
-	private ImageButton user_icon;
-*/
 	/** 应用程序全局属性 */
 	private ObserverApplication app;
 	
@@ -73,14 +79,11 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 	
 	public  String newName;
 	
-	private Bitmap bit;
+	private static final int PHOTO_WITH_DATA = 18;  //从SD卡中得到图片
+	private static final int PHOTO_WITH_CAMERA = 37;// 拍摄照片
 	
-	/******* 侧滑菜单 *******//*
-	private ListView lv_set;// 设置菜单
-
-	private MenuAdapter Menuadapter;
-	
-	private SlidingMenu menus;*/
+	private String imgPath  = "";
+	private String imgName = "";
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -141,117 +144,7 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 		show_phone=(TextView) findViewById(R.id.show_phone);
 		show_touxiang=(ImageView) findViewById(R.id.show_touxiang);
 		
-		/*warning = (ImageButton) findViewById(R.id.warning);
-		information = (ImageButton) findViewById(R.id.information);
-
-		warning.setOnClickListener(this);
-		information.setOnClickListener(this);
-		
-		menu = (ImageButton) findViewById(R.id.menu);
-		menu.setOnClickListener(this);
-
-		// configure the SlidingMenu
-		menus = new SlidingMenu(this);
-		menus.setMode(SlidingMenu.RIGHT);
-		 //设置触摸屏幕的模式
-		menus.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		//menus.setShadowWidthRes(R.dimen.shadow_width);
-		//menus.setShadowDrawable(R.drawable.shadow);
-
-		 //设置滑动菜单视图的宽度
-		menus.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		// 设置渐入渐出效果的值
-		menus.setFadeDegree(0.35f);
-		// 把滑动菜单添加进所有的Activity中，可选值SLIDING_CONTENT ， SLIDING_WINDOW
-		menus.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		// 为侧滑菜单设置布局
-		menus.setMenu(R.layout.activity_menu);
-
-		user_icon = (ImageButton) findViewById(R.id.user_icon);
-		user_icon.setOnClickListener(this);
-		
-		lv_set = (ListView) findViewById(R.id.lv_set);
-		List<MenuInfo> list = initRightMenus();
-		Menuadapter = new MenuAdapter(this, list);
-		lv_set.setAdapter(Menuadapter);
-		lv_set.setOnItemClickListener(this);*/
 	}
-	/** 菜单抽屉实体类 *//*
-	private List<MenuInfo> initRightMenus() {
-		List<MenuInfo> templist = new ArrayList<MenuInfo>();
-		templist.add(new MenuInfo("控制台"));
-		templist.add(new MenuInfo("资讯"));
-		templist.add(new MenuInfo("警告"));
-		templist.add(new MenuInfo("设置"));
-		templist.add(new MenuInfo("分析日志"));
-		templist.add(new MenuInfo("设备管理"));
-		templist.add(new MenuInfo("版本更新"));
-		templist.add(new MenuInfo("关于我们"));
-		return templist;
-	}*/
-
-	/** 条目点击 *//*
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		Intent intent = null;
-		switch (position) {
-
-		// 曲线图页面
-		case 0:
-			intent = new Intent(view.getContext(), ControlActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 资讯页面
-		case 1:
-			intent = new Intent(view.getContext(), InformationActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 警告页面
-		case 2:
-			intent = new Intent(view.getContext(), WarningActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 设置页面
-		case 3:
-			intent = new Intent(view.getContext(), SetActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 分析日志页面
-		case 4:
-			intent = new Intent(view.getContext(), AnalysisLogActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 设备管理页面
-		case 5:
-			intent = new Intent(view.getContext(), EquipmentMgmActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 版本更新页面
-		case 6:
-			intent = new Intent(view.getContext(), VersionUpdateActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 关于页面
-		case 7:
-			intent = new Intent(view.getContext(), AboutActivity.class);
-			menus.toggle(true);
-			break;
-		}
-
-		// 页面跳转
-		if (intent != null) {
-			// intent.putExtra("lv_item_id", id);
-			startActivity(intent);
-		}
-	}*/
 
 	/** 按钮点击 */
 	@Override
@@ -265,6 +158,7 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 		else if(v==set_touxiang){
 //			Intent intent = new Intent(this,PicSelectActivity.class); 
 //			startActivityForResult(intent, 0x123);
+			openPictureSelectDialog();
 		}
 		//设置昵称
 		else if(v==set_name){
@@ -275,22 +169,6 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 		else if(v==tuichu){
 			Esc();
 		}
-		/*if (v == menu) {
-			// 侧滑菜单
-			menus.toggle(true);
-		}
-		if (v == warning) {
-			// 警告页面
-			startActivity(new Intent(PersonalCenterActivity.this, WarningActivity.class));
-		} else if (v == information) {
-			// 资讯页面
-			startActivity(new Intent(PersonalCenterActivity.this,
-					InformationActivity.class));
-		} else if (v == user_icon) {
-			// 个人中心
-			startActivity(new Intent(PersonalCenterActivity.this,
-					PersonalCenterActivity.class));
-		}*/
 	}
 	
 	/**退出当前帐号*/
@@ -348,4 +226,153 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
                         }).show();
     }
     
+	/**打开对话框**/
+	private void openPictureSelectDialog() {
+		//自定义Context,添加主题
+		Context dialogContext = new ContextThemeWrapper(PersonalCenterActivity.this, android.R.style.Theme_Light);
+		String[] choiceItems= new String[2];
+		choiceItems[0] = "相机拍摄";  //拍照
+		choiceItems[1] = "本地相册";  //从相册中选择
+		ListAdapter adapter = new ArrayAdapter<String>(dialogContext, android.R.layout.simple_list_item_1,choiceItems);
+		//对话框建立在刚才定义好的上下文上
+		AlertDialog.Builder builder = new AlertDialog.Builder(dialogContext);
+		builder.setTitle("选择图片");
+		builder.setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which) {
+				case 0:  //相机
+					doTakePhoto();
+					break;
+				case 1:  //从图库相册中选取
+					doPickPhotoFromGallery();
+					break;
+				}
+				dialog.dismiss();
+			}
+		});
+		builder.create().show();
+	}	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	   
+		if(resultCode == RESULT_OK) {  //返回成功
+			switch (requestCode) {
+			case PHOTO_WITH_CAMERA:  {//拍照获取图片
+				String status = Environment.getExternalStorageState();
+				if(status.equals(Environment.MEDIA_MOUNTED)) { //是否有SD卡
+					
+					Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/image.jpg");
+					
+					imgName = createPhotoFileName();
+					//写一个方法将此文件保存到本应用下面啦
+	            	savePicture(imgName,bitmap);
+
+	            	if (bitmap != null) {
+						//为防止原始图片过大导致内存溢出，这里先缩小原图显示，然后释放原始Bitmap占用的内存
+						Bitmap smallBitmap = Utils.CutPicture(bitmap, 65, 40);
+						
+						show_touxiang.setImageBitmap(smallBitmap);
+					}
+	            	//Toast.makeText(PersonalCenterActivity.this, "已保存本应用的files文件夹下", Toast.LENGTH_LONG).show();
+				}else {
+					Toast.makeText(PersonalCenterActivity.this, "没有SD卡", Toast.LENGTH_LONG).show();
+				}
+				break;
+			}
+				case PHOTO_WITH_DATA:  {//从图库中选择图片
+					ContentResolver resolver = getContentResolver();
+					//照片的原始资源地址
+					Uri originalUri = data.getData();  
+
+					try {
+						 //使用ContentProvider通过URI获取原始图片
+						Bitmap photo = MediaStore.Images.Media.getBitmap(resolver, originalUri);
+						
+						imgName = createPhotoFileName();
+		       			//写一个方法将此文件保存到本应用下面啦
+		            	savePicture(imgName,photo);
+		            	
+		            	if (photo != null) {
+							//为防止原始图片过大导致内存溢出，这里先缩小原图显示，然后释放原始Bitmap占用的内存
+							Bitmap smallBitmap = Utils.CutPicture(photo, 65, 40);
+							
+							show_touxiang.setImageBitmap(smallBitmap);
+						}
+		            	//Toast.makeText(PersonalCenterActivity.this, "已保存本应用的files文件夹下", Toast.LENGTH_LONG).show();
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				break;
+				}
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	
+	/**从相册获取图片**/
+	private void doPickPhotoFromGallery() {
+		Intent intent = new Intent();
+		intent.setType("image/*");  // 开启Pictures画面Type设定为image
+		intent.setAction(Intent.ACTION_GET_CONTENT); //使用Intent.ACTION_GET_CONTENT这个Action 
+		startActivityForResult(intent, PHOTO_WITH_DATA); //取得相片后返回到本画面
+	}
+	
+	/**拍照获取相片**/
+	private void doTakePhoto() {
+	    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); //调用系统相机
+	   
+	    Uri imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"image.jpg"));
+		//指定照片保存路径（SD卡），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
+	    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+       
+	    //直接使用，没有缩小  
+        startActivityForResult(intent, PHOTO_WITH_CAMERA);  //用户点击了从相机获取
+	}
+	
+	/**创建图片不同的文件名**/
+	private String createPhotoFileName() {
+		String fileName = "";
+		Date date = new Date(System.currentTimeMillis());  //系统当前时间
+		SimpleDateFormat dateFormat = new SimpleDateFormat("'IMG'_yyyyMMdd_HHmmss");
+		fileName = dateFormat.format(date) + ".jpg";
+		return fileName;
+	}
+	
+	 /**获取文件路径**/
+	 public String uri2filePath(Uri uri)  
+	    {  
+	        String[] projection = {MediaStore.Images.Media.DATA };  
+	        Cursor cursor = managedQuery(uri, projection, null, null, null);  
+	        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);  
+	        cursor.moveToFirst();  
+	        String path =  cursor.getString(column_index);
+	        return path;  
+	    }  
+	 
+	 /**保存图片到本应用下**/
+	 private void savePicture(String fileName,Bitmap bitmap) {
+		   
+			FileOutputStream fos =null;
+			try {//直接写入名称即可，没有会被自动创建；私有：只有本应用才能访问，重新内容写入会被覆盖
+				fos = PersonalCenterActivity.this.openFileOutput(fileName, Context.MODE_PRIVATE); 
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);// 把图片写入指定文件夹中
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if(null != fos) {
+						fos.close();
+						fos = null;
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 }
