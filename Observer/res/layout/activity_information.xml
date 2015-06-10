@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:background="@color/bjtwo"
-    android:orientation="vertical"
-    >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
     
-	 <RelativeLayout
+     <RelativeLayout
         android:id="@+id/ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -22,132 +21,105 @@
 	            android:layout_marginLeft="10dp"
 	            android:background="@drawable/huanhui" />
 
-	       <!--  <ImageView
-	            android:id="@+id/tv"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_centerVertical="true"
-	            android:layout_centerHorizontal="true"
-	            android:background="@drawable/zixunxu"
-	            />
-  <ImageView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/zixunxu"
-        android:layout_alignParentLeft="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="@dimen/console_top"
-        android:layout_marginLeft="@dimen/console_left"
-        />
-    <ImageButton
-        android:id="@+id/menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/caidan" />
-
-    <ImageButton
-        android:id="@+id/warning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
-        android:layout_toLeftOf="@+id/menu"
-        android:background="@drawable/jingshianniu" />
-
-    <ImageButton
-        android:id="@+id/information"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
-        android:layout_toLeftOf="@+id/warning"
-        android:background="@drawable/shanganniu" /> -->
     
     </RelativeLayout> 
     
-	 <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/capture_containter"
-        >
-
-	  <SurfaceView
-        android:id="@+id/capture_preview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <ImageView
-        android:id="@+id/top_mask"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/scan_mask"
-        android:contentDescription="@string/app_name" />
-
     <RelativeLayout
-        android:id="@+id/capture_crop_layout"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_below="@id/top_mask"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/capture"
-        android:contentDescription="@string/app_name" >
+        android:id="@+id/capture_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll" >
+
+        <FrameLayout
+            android:id="@+id/capture_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <ImageView
-            android:id="@+id/capture_scan_line"
+            android:id="@+id/capture_mask_top"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/shadow" />
+
+        <RelativeLayout
+            android:id="@+id/capture_crop_view"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/capture_mask_top"
+            android:background="@drawable/qr_code_bg" >
+
+            <ImageView
+                android:id="@+id/capture_scan_line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/scan_line" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/capture_mask_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_margin="5dp"
-            android:background="@drawable/scan_line"
-            android:contentDescription="@string/app_name" />
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/capture_crop_view"
+            android:background="@drawable/shadow" />
+
+        <ImageView
+            android:id="@+id/capture_mask_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_above="@id/capture_mask_bottom"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/capture_mask_top"
+            android:layout_toLeftOf="@id/capture_crop_view"
+            android:background="@drawable/shadow" />
+
+        <ImageView
+            android:id="@+id/capture_mask_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_above="@id/capture_mask_bottom"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/capture_mask_top"
+            android:layout_toRightOf="@id/capture_crop_view"
+            android:background="@drawable/shadow" />
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignTop="@+id/capture_mask_bottom"
+             android:layout_centerHorizontal="true"
+             android:layout_marginTop="15dp"
+             android:text="@string/scan_tips"
+             android:textColor="@android:color/white"
+             android:textSize="15sp" />
+
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/bottom_mask"
+    <Button
+        android:id="@+id/capture_restart_scan"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:layout_below="@id/capture_crop_layout"
-        android:background="@drawable/scan_mask"
-        android:contentDescription="@string/app_name" />
-
-    <ImageView
-        android:id="@+id/left_mask"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottom_mask"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/top_mask"
-        android:layout_toLeftOf="@id/capture_crop_layout"
-        android:background="@drawable/scan_mask"
-        android:contentDescription="@string/app_name" />
-
-    <ImageView
-        android:id="@+id/right_mask"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottom_mask"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/top_mask"
-        android:layout_toRightOf="@id/capture_crop_layout"
-        android:background="@drawable/scan_mask"
-        android:contentDescription="@string/app_name" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/capture_crop_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:text="@string/scan_tips"
+        android:background="#66ffcc00"
+        android:gravity="center"
+        android:text="重新扫描"
         android:textColor="@android:color/white"
         android:textSize="15sp" />
-     </RelativeLayout>    
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/capture_scan_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/capture_restart_scan"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="扫描中..."
+        android:textColor="@android:color/white"
+        android:textSize="15sp" />
+
+</RelativeLayout>

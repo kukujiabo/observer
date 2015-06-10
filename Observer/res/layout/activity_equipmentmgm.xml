@@ -130,7 +130,7 @@
              android:layout_alignTop="@+id/set_model"
              android:layout_marginRight="30dp"
              android:layout_marginTop="5dp"
-             android:background="@drawable/zhengchang" />
+             android:background="@null" />
          
          
       		 <View
@@ -200,7 +200,7 @@
             android:layout_alignTop="@+id/set_model_two"
             android:layout_marginRight="30dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/guzhang" />
+            android:background="@null" />
 
         <View
             android:id="@+id/View01"

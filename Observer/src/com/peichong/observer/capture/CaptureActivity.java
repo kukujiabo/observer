@@ -1,41 +1,40 @@
 package com.peichong.observer.capture;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+
+import net.sourceforge.zbar.Config;
+import net.sourceforge.zbar.Image;
+import net.sourceforge.zbar.ImageScanner;
+import net.sourceforge.zbar.Symbol;
+import net.sourceforge.zbar.SymbolSet;
 
 
 import com.peichong.observer.R;
 import com.peichong.observer.activities.BaseActivity;
-import com.peichong.observer.activities.MainActivity;
 import com.peichong.observer.application.ObserverApplication;
-import com.peichong.observer.lib.camera.CameraManager;
-import com.peichong.observer.lib.decode.CaptureActivityHandler;
-import com.peichong.observer.lib.decode.InactivityTimer;
-import com.peichong.observer.slidingcurve.ControlActivity;
-import com.peichong.observer.tools.LogUtil;
 import com.peichong.observer.tools.StringUtil;
 
-import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
-import android.graphics.Point;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
+import android.content.pm.ActivityInfo;
+import android.graphics.Rect;
+import android.hardware.Camera;
+import android.hardware.Camera.AutoFocusCallback;
+import android.hardware.Camera.PreviewCallback;
+import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Vibrator;
-import android.view.SurfaceHolder;
-import android.view.SurfaceHolder.Callback;
-import android.view.SurfaceView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
-import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -44,7 +43,7 @@ import android.widget.Toast;
  * @author:   wy 
  * @version:  V1.0 
  */
-public class CaptureActivity  extends BaseActivity implements OnClickListener,Callback{
+public class CaptureActivity  extends BaseActivity implements OnClickListener{
 
 	/** 应用程序全局属性 */
 	private ObserverApplication app;
@@ -54,20 +53,27 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener,Ca
 	
 	
 	/******************扫描二维码**************************/
-	private CaptureActivityHandler handler;
-	private boolean hasSurface;
-	private InactivityTimer inactivityTimer;
-	private MediaPlayer mediaPlayer;
-	private boolean playBeep;
-	private static final float BEEP_VOLUME = 0.50f;
-	private boolean vibrate;
-	private int x = 0;
-	private int y = 0;
-	private int cropWidth = 0;
-	private int cropHeight = 0;
-	private RelativeLayout mContainer = null;
-	private RelativeLayout mCropLayout = null;
-	private boolean isNeedCapture = false;
+	private Camera mCamera;
+	private CameraPreview mPreview;
+	private Handler autoFocusHandler;
+	private CameraManager mCameraManager;
+
+	private TextView scanResult;
+	private FrameLayout scanPreview;
+	private Button scanRestart;
+	private RelativeLayout scanContainer;
+	private RelativeLayout scanCropView;
+	private ImageView scanLine;
+
+	private Rect mCropRect = null;
+	private boolean barcodeScanned = false;
+	private boolean previewing = true;
+	private ImageScanner mImageScanner = null;
+
+	static {
+		System.loadLibrary("iconv");
+	}
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +83,11 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener,Ca
 		setContentView(R.layout.activity_information);
 		// 拿到application对象
 		app = (ObserverApplication) getApplication();
+		
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		initUi();
+		addEvents();
+		initViews();
 	}
 		
 	/**
@@ -91,24 +101,12 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener,Ca
 		ib_return=(ImageButton) findViewById(R.id.fanhui);
 		ib_return.setOnClickListener(this);
 		
-		
-		// 初始化 CameraManager
-		CameraManager.init(getApplication());
-		hasSurface = false;
-		inactivityTimer = new InactivityTimer(this);
-
-		mContainer = (RelativeLayout) findViewById(R.id.capture_containter);
-		mCropLayout = (RelativeLayout) findViewById(R.id.capture_crop_layout);
-
-		ImageView mQrLineView = (ImageView) findViewById(R.id.capture_scan_line);
-		TranslateAnimation mAnimation = new TranslateAnimation(TranslateAnimation.ABSOLUTE, 0f, TranslateAnimation.ABSOLUTE, 0f,
-		TranslateAnimation.RELATIVE_TO_PARENT, 0f, TranslateAnimation.RELATIVE_TO_PARENT, 0.9f);
-		mAnimation.setDuration(1500);
-		mAnimation.setRepeatCount(-1);
-		mAnimation.setRepeatMode(Animation.REVERSE);
-		mAnimation.setInterpolator(new LinearInterpolator());
-		mQrLineView.setAnimation(mAnimation);
-				
+		scanPreview = (FrameLayout) findViewById(R.id.capture_preview);
+		scanResult = (TextView) findViewById(R.id.capture_scan_result);
+		scanRestart = (Button) findViewById(R.id.capture_restart_scan);
+		scanContainer = (RelativeLayout) findViewById(R.id.capture_container);
+		scanCropView = (RelativeLayout) findViewById(R.id.capture_crop_view);
+		scanLine = (ImageView) findViewById(R.id.capture_scan_line);
 	}
 	
 	/** 按钮点击 */
@@ -121,213 +119,177 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener,Ca
 		}
 	}
 	
-	public boolean isNeedCapture() {
-		return isNeedCapture;
-	}
-
-	public void setNeedCapture(boolean isNeedCapture) {
-		this.isNeedCapture = isNeedCapture;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public int getCropWidth() {
-		return cropWidth;
-	}
-
-	public void setCropWidth(int cropWidth) {
-		this.cropWidth = cropWidth;
-	}
-
-	public int getCropHeight() {
-		return cropHeight;
-	}
-
-	public void setCropHeight(int cropHeight) {
-		this.cropHeight = cropHeight;
-	}
-	
-	boolean flag = true;
-
-	protected void light() {
-		if (flag == true) {
-			flag = false;
-			// 开闪光灯
-			CameraManager.get().openLight();
-		} else {
-			flag = true;
-			// 关闪光灯
-			CameraManager.get().offLight();
-		}
-
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	protected void onResume() {
-		super.onResume();
-		SurfaceView surfaceView = (SurfaceView) findViewById(R.id.capture_preview);
-		SurfaceHolder surfaceHolder = surfaceView.getHolder();
-		if (hasSurface) {
-			initCamera(surfaceHolder);
-		} else {
-			surfaceHolder.addCallback(this);
-			surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		}
-		playBeep = true;
-		AudioManager audioService = (AudioManager) getSystemService(AUDIO_SERVICE);
-		if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
-			playBeep = false;
-		}
-		initBeepSound();
-		vibrate = true;
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		if (handler != null) {
-			handler.quitSynchronously();
-			handler = null;
-		}
-		CameraManager.get().closeDriver();
-	}
-
-	@Override
-	protected void onDestroy() {
-		inactivityTimer.shutdown();
-		super.onDestroy();
-	}
-
-	public void handleDecode(String result) {
-		inactivityTimer.onActivity();
-		playBeepSoundAndVibrate();
-		
-		if (result == null || "".equals(result)) {
-			Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-		}else{
-			/*Intent intent = new Intent(CaptureActivity.this, WebActivity.class);  
-			Bundle bundle = new Bundle();
-			bundle.putString("msg", result);
-			intent.putExtras(bundle); 
-			startActivity(intent);*/
-			if (StringUtil.isNum(result)) {
-				//发送给服务器
-				Toast.makeText(CaptureActivity.this, result,
-						Toast.LENGTH_LONG).show();
-			}else{
-				Toast.makeText(CaptureActivity.this, "扫描的不是条形码！",
-						Toast.LENGTH_LONG).show();
+	/**点击重新扫描*/
+	private void addEvents() {
+		scanRestart.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				if (barcodeScanned) {
+					barcodeScanned = false;
+					scanResult.setText("扫描中...");
+					mCamera.setPreviewCallback(previewCb);
+					mCamera.startPreview();
+					previewing = true;
+					mCamera.autoFocus(autoFocusCB);
+				}
 			}
-			//CaptureActivity.this.finish();
-		// 连续扫描，不发送此消息扫描一次结束后就不能再次扫描
-		 //handler.sendEmptyMessage(R.id.restart_preview);
-		}
+		});
 	}
 
-	private void initCamera(SurfaceHolder surfaceHolder) {
+	private void initViews() {
+		mImageScanner = new ImageScanner();
+		mImageScanner.setConfig(0, Config.X_DENSITY, 3);
+		mImageScanner.setConfig(0, Config.Y_DENSITY, 3);
+
+		autoFocusHandler = new Handler();
+		mCameraManager = new CameraManager(this);
 		try {
-			CameraManager.get().openDriver(surfaceHolder);
-
-			Point point = CameraManager.get().getCameraResolution();
-			int width = point.y;
-			int height = point.x;
-
-			int x = mCropLayout.getLeft() * width / mContainer.getWidth();
-			int y = mCropLayout.getTop() * height / mContainer.getHeight();
-
-			int cropWidth = mCropLayout.getWidth() * width / mContainer.getWidth();
-			int cropHeight = mCropLayout.getHeight() * height / mContainer.getHeight();
-
-			setX(x);
-			setY(y);
-			setCropWidth(cropWidth);
-			setCropHeight(cropHeight);
-			// 设置是否需要截图
-			setNeedCapture(true);
-			
-
-		} catch (IOException ioe) {
-			return;
-		} catch (RuntimeException e) {
-			return;
+			mCameraManager.openDriver();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		if (handler == null) {
-			handler = new CaptureActivityHandler(CaptureActivity.this);
-		}
+
+		mCamera = mCameraManager.getCamera();
+		mPreview = new CameraPreview(this, mCamera, previewCb, autoFocusCB);
+		scanPreview.addView(mPreview);
+
+		TranslateAnimation animation = new TranslateAnimation(
+				Animation.RELATIVE_TO_PARENT, 0.0f,
+				Animation.RELATIVE_TO_PARENT, 0.0f,
+				Animation.RELATIVE_TO_PARENT, 0.0f,
+				Animation.RELATIVE_TO_PARENT, 0.85f);
+		animation.setDuration(3000);
+		animation.setRepeatCount(-1);
+		animation.setRepeatMode(Animation.REVERSE);
+		scanLine.startAnimation(animation);
 	}
 
-	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+	public void onPause() {
+		super.onPause();
+		releaseCamera();
 	}
 
-	@Override
-	public void surfaceCreated(SurfaceHolder holder) {
-		if (!hasSurface) {
-			hasSurface = true;
-			initCamera(holder);
+	private void releaseCamera() {
+		if (mCamera != null) {
+			previewing = false;
+			mCamera.setPreviewCallback(null);
+			mCamera.release();
+			mCamera = null;
 		}
 	}
 
-	@Override
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		hasSurface = false;
-
-	}
-
-	public Handler getHandler() {
-		return handler;
-	}
-
-	private void initBeepSound() {
-		if (playBeep && mediaPlayer == null) {
-			setVolumeControlStream(AudioManager.STREAM_MUSIC);
-			mediaPlayer = new MediaPlayer();
-			mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-			mediaPlayer.setOnCompletionListener(beepListener);
-
-			AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.beep);
-			try {
-				mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
-				file.close();
-				mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
-				mediaPlayer.prepare();
-			} catch (IOException e) {
-				mediaPlayer = null;
-			}
-		}
-	}
-
-	private static final long VIBRATE_DURATION = 200L;
-
-	private void playBeepSoundAndVibrate() {
-		if (playBeep && mediaPlayer != null) {
-			mediaPlayer.start();
-		}
-		if (vibrate) {
-			Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-			vibrator.vibrate(VIBRATE_DURATION);
-		}
-	}
-
-	private final OnCompletionListener beepListener = new OnCompletionListener() {
-		public void onCompletion(MediaPlayer mediaPlayer) {
-			mediaPlayer.seekTo(0);
+	private Runnable doAutoFocus = new Runnable() {
+		public void run() {
+			if (previewing)
+				mCamera.autoFocus(autoFocusCB);
 		}
 	};
+	
+	/**处理扫描结果*/
+	PreviewCallback previewCb = new PreviewCallback() {
+		public void onPreviewFrame(byte[] data, Camera camera) {
+			Size size = camera.getParameters().getPreviewSize();
+
+			// 这里需要将获取的data翻转一下，因为相机默认拿的的横屏的数据
+			byte[] rotatedData = new byte[data.length];
+			for (int y = 0; y < size.height; y++) {
+				for (int x = 0; x < size.width; x++)
+					rotatedData[x * size.height + size.height - y - 1] = data[x
+							+ y * size.width];
+			}
+
+			// 宽高也要调整
+			int tmp = size.width;
+			size.width = size.height;
+			size.height = tmp;
+
+			initCrop();
+
+			Image barcode = new Image(size.width, size.height, "Y800");
+			barcode.setData(rotatedData);
+			barcode.setCrop(mCropRect.left, mCropRect.top, mCropRect.width(),
+					mCropRect.height());
+
+			int result = mImageScanner.scanImage(barcode);
+			String resultStr = null;
+
+			if (result != 0) {
+				SymbolSet syms = mImageScanner.getResults();
+				for (Symbol sym : syms) {
+					resultStr = sym.getData();
+				}
+			}
+
+			//如果扫描结果不为空
+			if (!TextUtils.isEmpty(resultStr)) {
+				//判断是不是数字 如果是数字代表条形码
+				if (StringUtil.isNum(resultStr)) {
+					previewing = false;
+					mCamera.setPreviewCallback(null);
+					mCamera.stopPreview();
+
+					scanResult.setText("扫描结果:" + resultStr);
+					barcodeScanned = true;
+				}
+				else{
+					Toast.makeText(CaptureActivity.this, "扫描的不是条形码！",
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+		}
+	};
+
+	// Mimic continuous auto-focusing
+	AutoFocusCallback autoFocusCB = new AutoFocusCallback() {
+		public void onAutoFocus(boolean success, Camera camera) {
+			autoFocusHandler.postDelayed(doAutoFocus, 1000);
+		}
+	};
+
+	/**
+	 * 初始化截取的矩形区域
+	 */
+	private void initCrop() {
+		int cameraWidth = mCameraManager.getCameraResolution().y;
+		int cameraHeight = mCameraManager.getCameraResolution().x;
+
+		/** 获取布局中扫描框的位置信息 */
+		int[] location = new int[2];
+		scanCropView.getLocationInWindow(location);
+
+		int cropLeft = location[0];
+		int cropTop = location[1] - getStatusBarHeight();
+
+		int cropWidth = scanCropView.getWidth();
+		int cropHeight = scanCropView.getHeight();
+
+		/** 获取布局容器的宽高 */
+		int containerWidth = scanContainer.getWidth();
+		int containerHeight = scanContainer.getHeight();
+
+		/** 计算最终截取的矩形的左上角顶点x坐标 */
+		int x = cropLeft * cameraWidth / containerWidth;
+		/** 计算最终截取的矩形的左上角顶点y坐标 */
+		int y = cropTop * cameraHeight / containerHeight;
+
+		/** 计算最终截取的矩形的宽度 */
+		int width = cropWidth * cameraWidth / containerWidth;
+		/** 计算最终截取的矩形的高度 */
+		int height = cropHeight * cameraHeight / containerHeight;
+
+		/** 生成最终的截取的矩形 */
+		mCropRect = new Rect(x, y, width + x, height + y);
+	}
+
+	private int getStatusBarHeight() {
+		try {
+			Class<?> c = Class.forName("com.android.internal.R$dimen");
+			Object obj = c.newInstance();
+			Field field = c.getField("status_bar_height");
+			int x = Integer.parseInt(field.get(obj).toString());
+			return getResources().getDimensionPixelSize(x);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }

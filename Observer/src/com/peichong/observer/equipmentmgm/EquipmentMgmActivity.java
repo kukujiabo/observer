@@ -2,6 +2,8 @@ package com.peichong.observer.equipmentmgm;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -84,6 +86,25 @@ public class EquipmentMgmActivity extends BaseActivity implements
 		// 拿到application对象
 		app = (ObserverApplication) getApplication();
 		initUi();
+		
+		if (app.gettActive().equals("1")) {
+			set_state.setText("正在运行");
+			Bitmap b=BitmapFactory.decodeResource(this.getResources(), R.drawable.zhengchang);
+			set_switch.setImageBitmap(b);
+		}else{
+			set_state.setText("机器故障");
+			Bitmap b=BitmapFactory.decodeResource(this.getResources(), R.drawable.guzhang);
+			set_switch.setImageBitmap(b);
+		}
+		if (app.gethActive().equals("1")) {
+			set_state_two.setText("正在运行");
+			Bitmap b=BitmapFactory.decodeResource(this.getResources(), R.drawable.zhengchang);
+			set_switch_two.setImageBitmap(b);
+		}else{
+			set_state_two.setText("机器故障");
+			Bitmap b=BitmapFactory.decodeResource(this.getResources(), R.drawable.guzhang);
+			set_switch_two.setImageBitmap(b);
+		}
 	}
 
 	/**
@@ -111,119 +132,8 @@ public class EquipmentMgmActivity extends BaseActivity implements
 		set_ok=(ImageButton) findViewById(R.id.set_ok);
 		set_ok.setOnClickListener(this);
 		
-		/*warning = (ImageButton) findViewById(R.id.warning);
-		information = (ImageButton) findViewById(R.id.information);
-
-		warning.setOnClickListener(this);
-		information.setOnClickListener(this);
-
-		menu = (ImageButton) findViewById(R.id.menu);
-		menu.setOnClickListener(this);
-
-		// configure the SlidingMenu
-		menus = new SlidingMenu(this);
-		menus.setMode(SlidingMenu.RIGHT);
-		// 设置触摸屏幕的模式
-		menus.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		//menus.setShadowWidthRes(R.dimen.shadow_width);
-		//menus.setShadowDrawable(R.drawable.shadow);
-
-		// 设置滑动菜单视图的宽度
-		menus.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		// 设置渐入渐出效果的值
-		//menus.setFadeDegree(0.35f);
-		// 把滑动菜单添加进所有的Activity中，可选值SLIDING_CONTENT ， SLIDING_WINDOW
-		menus.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		// 为侧滑菜单设置布局
-		menus.setMenu(R.layout.activity_menu);
-
-		user_icon = (ImageButton) findViewById(R.id.user_icon);
-		user_icon.setOnClickListener(this);
-
-		lv_set = (ListView) findViewById(R.id.lv_set);
-		List<MenuInfo> list = initRightMenus();
-		Menuadapter = new MenuAdapter(this, list);
-		lv_set.setAdapter(Menuadapter);
-		lv_set.setOnItemClickListener(this);*/
 	}
 
-	/** 菜单抽屉实体类 *//*
-	private List<MenuInfo> initRightMenus() {
-		List<MenuInfo> templist = new ArrayList<MenuInfo>();
-		templist.add(new MenuInfo("控制台"));
-		templist.add(new MenuInfo("资讯"));
-		templist.add(new MenuInfo("警告"));
-		templist.add(new MenuInfo("设置"));
-		templist.add(new MenuInfo("分析日志"));
-		templist.add(new MenuInfo("设备管理"));
-		templist.add(new MenuInfo("版本更新"));
-		templist.add(new MenuInfo("关于我们"));
-		return templist;
-	}*/
-
-	/** 条目点击 *//*
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		Intent intent = null;
-		switch (position) {
-
-		// 曲线图页面
-		case 0:
-			intent = new Intent(view.getContext(), ControlActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 资讯页面
-		case 1:
-			intent = new Intent(view.getContext(), InformationActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 警告页面
-		case 2:
-			intent = new Intent(view.getContext(), WarningActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 设置页面
-		case 3:
-			intent = new Intent(view.getContext(), SetActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 分析日志页面
-		case 4:
-			intent = new Intent(view.getContext(), AnalysisLogActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 设备管理页面
-		case 5:
-			intent = new Intent(view.getContext(), EquipmentMgmActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 版本更新页面
-		case 6:
-			intent = new Intent(view.getContext(), VersionUpdateActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 关于页面
-		case 7:
-			intent = new Intent(view.getContext(), AboutActivity.class);
-			menus.toggle(true);
-			break;
-		}
-
-		// 页面跳转
-		if (intent != null) {
-			// intent.putExtra("lv_item_id", id);
-			startActivity(intent);
-		}
-	}
-*/
 	/** 按钮点击 */
 	@Override
 	public void onClick(View v) {
@@ -238,23 +148,5 @@ public class EquipmentMgmActivity extends BaseActivity implements
 			//进入设置界面
 			startActivity(new Intent(EquipmentMgmActivity.this, SetActivity.class));
 		}
-		
-		/*if (v == menu) {
-			// 侧滑菜单
-			menus.toggle(true);
-		}
-		if (v == warning) {
-			// 警告页面
-			startActivity(new Intent(EquipmentMgmActivity.this,
-					WarningActivity.class));
-		} else if (v == information) {
-			// 资讯页面
-			startActivity(new Intent(EquipmentMgmActivity.this,
-					InformationActivity.class));
-		} else if (v == user_icon) {
-			// 个人中心
-			startActivity(new Intent(EquipmentMgmActivity.this,
-					PersonalCenterActivity.class));
-		}*/
 	}
 }

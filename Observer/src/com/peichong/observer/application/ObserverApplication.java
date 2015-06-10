@@ -33,7 +33,99 @@ public class ObserverApplication extends Application {
 	/**设置温度和湿度类型*/
 	private int set_type;
 	
+	/**高温警告*/
+	private String t_warning_high;
 	
+	/**低温警告*/
+	private String t_warning_low;
+	
+	/**高湿警告*/
+	private String h_warning_high;
+	
+	/**低湿警告*/
+	private String h_warning_low;
+	
+	/**温度传感器运行状态*/
+	private String tActive;
+	
+	/**湿度传感器运行状态*/
+	private String hActive;
+	
+	
+	
+
+	/**
+	 * @return the tActive
+	 */
+	public String gettActive() {
+		return tActive;
+	}
+	/**
+	 * @param tActive the tActive to set
+	 */
+	public void settActive(String tActive) {
+		this.tActive = tActive;
+	}
+	/**
+	 * @return the hActive
+	 */
+	public String gethActive() {
+		return hActive;
+	}
+	/**
+	 * @param hActive the hActive to set
+	 */
+	public void sethActive(String hActive) {
+		this.hActive = hActive;
+	}
+	/**
+	 * @return the t_warning_high
+	 */
+	public String getT_warning_high() {
+		return t_warning_high;
+	}
+	/**
+	 * @param t_warning_high the t_warning_high to set
+	 */
+	public void setT_warning_high(String t_warning_high) {
+		this.t_warning_high = t_warning_high;
+	}
+	/**
+	 * @return the t_warning_low
+	 */
+	public String getT_warning_low() {
+		return t_warning_low;
+	}
+	/**
+	 * @param t_warning_low the t_warning_low to set
+	 */
+	public void setT_warning_low(String t_warning_low) {
+		this.t_warning_low = t_warning_low;
+	}
+	/**
+	 * @return the h_warning_high
+	 */
+	public String getH_warning_high() {
+		return h_warning_high;
+	}
+	/**
+	 * @param h_warning_high the h_warning_high to set
+	 */
+	public void setH_warning_high(String h_warning_high) {
+		this.h_warning_high = h_warning_high;
+	}
+	/**
+	 * @return the h_warning_low
+	 */
+	public String getH_warning_low() {
+		return h_warning_low;
+	}
+	/**
+	 * @param h_warning_low the h_warning_low to set
+	 */
+	public void setH_warning_low(String h_warning_low) {
+		this.h_warning_low = h_warning_low;
+	}
 	/**
 	 * @return the set_type
 	 */

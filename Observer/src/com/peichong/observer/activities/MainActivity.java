@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		//拿到Application对象
 		app= (ObserverApplication) getApplication();
 		init();
-		et_name.setText("testuser1");
+		et_name.setText("wy");
 		et_password.setText("123");
 	}
 
@@ -141,24 +141,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	 */
 	private void login() {
 
-		 /* if (name.equals("testuser1") && password.equals("123")) {
-		 
-		 // 登录成功 
-		Intent intent = new Intent();
-		  intent.setClass(MainActivity.this, ControlActivity.class); 
-		  //把温度Y传过去
-		  
-		  //intent.putExtra("data", data); 
-		  //把转换后的时间X传过去 
-		  //intent.putExtra("s", s); 
-		  startActivity(intent); 
-		  //获取温度曲线图接口 getConsoleGraphTemperature();
-		  finish(); 
-		  } else { 
-			  // 登录失败
-			  Toast.makeText(MainActivity.this, "登录失败:",Toast.LENGTH_LONG) .show();
-		 
-		  }*/
 		 
 		showProgressDialog();
 		String url = "name=" + name + "&" + "password=" + password;

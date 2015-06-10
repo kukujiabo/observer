@@ -96,18 +96,11 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 		app = (ObserverApplication) getApplication();
 		initUi();
 		
-		//修改昵称
-		Intent intent = this.getIntent(); 
-		Bundle bundle = intent.getExtras();
-		if (bundle == null) {
-			show_name.setText(app.getName());
-		}else{
-			String name = bundle.getString("msg");
-			show_name.setText(name);
-		}
-		
 		//修改电话
 		show_phone.setText(app.getPhone());
+		
+		//修改姓名
+		show_name.setText(app.getName());
 		
 		//修改头像
 		String s="http://218.244.135.148:8080"+app.getUrl().trim();

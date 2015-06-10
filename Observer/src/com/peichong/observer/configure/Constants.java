@@ -46,6 +46,12 @@ public class Constants {
 		/** 控制台曲线图温度获取接口*/                                  
 		public static final String GET_WARNING="http://218.244.135.148:8080/warning/list?";
 		
+		/** 修改湿度和温度*/                                  
+		public static final String SET_UPDATE="http://218.244.135.148:8080/usersetting/update?";
+		
+		/** 修改姓名*/                                  
+		public static final String SET_NAME="http://218.244.135.148:8080/user/edit?";
+		
 		/** 版本消息  */
 		public static final String VERSION = "";
 	}

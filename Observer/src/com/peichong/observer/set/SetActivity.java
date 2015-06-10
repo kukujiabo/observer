@@ -96,86 +96,8 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 	/**湿度低温*/
 	private ImageButton ib4;
 	
-	/**修改高温度*//*
-	private final int TEMHIGH=0;
-	
-	*//**修改低温度*//*
-	private final int TEMLOW=1;
-	
-	*//**修改高湿度*//*
-	private final int HUMHIGH=2;
-	
-	*//**修改低湿度*//*
-	private final int HUMLOW=3;*/
-	
 	/**修改类型*/
-	private int set_type=0;
-	
-/*	@SuppressLint("HandlerLeak")
-	private Handler temHumHandler = new Handler() {
-
-		public void handleMessage(Message msg) {
-
-			switch (msg.what) {
-
-			// 修改高温度
-			case TEMHIGH:
-				Intent intent = SetActivity.this.getIntent(); 
-				Bundle bundle = intent.getExtras();
-				if (bundle == null) {
-					Toast.makeText(SetActivity.this, "修改高温度不成功！",
-							Toast.LENGTH_LONG).show();
-				}else{
-					String name = bundle.getString("msg");
-					gethtem.setText(name);
-				}
-				break;
-
-			// 修改低温度
-			case TEMLOW:
-				Intent intent2 = SetActivity.this.getIntent(); 
-				Bundle bundle2 = intent2.getExtras();
-				if (bundle2 == null) {
-					Toast.makeText(SetActivity.this, "修改低温度不成功！",
-							Toast.LENGTH_LONG).show();
-				}else{
-					String name = bundle2.getString("msg");
-					gethtem.setText(name);
-				}
-				break;
-				
-			// 修改高湿度
-			case HUMHIGH:
-				Intent intent3 = SetActivity.this.getIntent(); 
-				Bundle bundle3 = intent3.getExtras();
-				if (bundle3 == null) {
-					Toast.makeText(SetActivity.this, "修改高湿度不成功！",
-							Toast.LENGTH_LONG).show();
-				}else{
-					String name = bundle3.getString("msg");
-					gethtem.setText(name);
-				}			
-			break;
-			
-			// 修改低湿度
-			case HUMLOW:
-				Intent intent4 = SetActivity.this.getIntent(); 
-				Bundle bundle4 = intent4.getExtras();
-				if (bundle4 == null) {
-					Toast.makeText(SetActivity.this, "修改高湿度不成功！",
-							Toast.LENGTH_LONG).show();
-				}else{
-					String name = bundle4.getString("msg");
-					gethtem.setText(name);
-				}										
-			break;
-			default:
-				break;
-			}
-
-		}
-
-	};*/
+	public static int set_type=1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -195,12 +117,6 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 	 * @return :void
 	 */
 	private void initUi() {
-		/*warning = (ImageButton) findViewById(R.id.warning);
-		information = (ImageButton) findViewById(R.id.information);
-
-		warning.setOnClickListener(this);
-		information.setOnClickListener(this);*/
-		
 		sethyperthermia = (CheckBox) findViewById(R.id.sethyperthermia);
 		sethyperthermia.setOnClickListener(this);
 		gethtem = (TextView) findViewById(R.id.gethtem);
@@ -226,113 +142,8 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 		ib4=(ImageButton) findViewById(R.id.ib6);
 		ib4.setOnClickListener(this);
 		
-	/*	menu = (ImageButton) findViewById(R.id.menu);
-		menu.setOnClickListener(this);
-
-		// configure the SlidingMenu
-		menus = new SlidingMenu(this);
-		menus.setMode(SlidingMenu.RIGHT);
-		 //设置触摸屏幕的模式
-		menus.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		//menus.setShadowWidthRes(R.dimen.shadow_width);
-		//menus.setShadowDrawable(R.drawable.shadow);
-
-		 //设置滑动菜单视图的宽度
-		menus.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		// 设置渐入渐出效果的值
-		menus.setFadeDegree(0.35f);
-		// 把滑动菜单添加进所有的Activity中，可选值SLIDING_CONTENT ， SLIDING_WINDOW
-		menus.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		// 为侧滑菜单设置布局
-		menus.setMenu(R.layout.activity_menu);
-
-		user_icon = (ImageButton) findViewById(R.id.user_icon);
-		user_icon.setOnClickListener(this);
-		
-		lv_set = (ListView) findViewById(R.id.lv_set);
-		List<MenuInfo> list = initRightMenus();
-		Menuadapter = new MenuAdapter(this, list);
-		lv_set.setAdapter(Menuadapter);
-		lv_set.setOnItemClickListener(this);*/
 	}
 
-	/** 菜单抽屉实体类 *//*
-	private List<MenuInfo> initRightMenus() {
-		List<MenuInfo> templist = new ArrayList<MenuInfo>();
-		templist.add(new MenuInfo("控制台"));
-		templist.add(new MenuInfo("资讯"));
-		templist.add(new MenuInfo("警告"));
-		templist.add(new MenuInfo("设置"));
-		templist.add(new MenuInfo("分析日志"));
-		templist.add(new MenuInfo("设备管理"));
-		templist.add(new MenuInfo("版本更新"));
-		templist.add(new MenuInfo("关于我们"));
-		return templist;
-	}
-*/
-	/** 条目点击 *//*
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		Intent intent = null;
-		switch (position) {
-
-		// 曲线图页面
-		case 0:
-			intent = new Intent(view.getContext(), ControlActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 资讯页面
-		case 1:
-			intent = new Intent(view.getContext(), InformationActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 警告页面
-		case 2:
-			intent = new Intent(view.getContext(), WarningActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 设置页面
-		case 3:
-			intent = new Intent(view.getContext(), SetActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 分析日志页面
-		case 4:
-			intent = new Intent(view.getContext(), AnalysisLogActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 设备管理页面
-		case 5:
-			intent = new Intent(view.getContext(), EquipmentMgmActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 版本更新页面
-		case 6:
-			intent = new Intent(view.getContext(), VersionUpdateActivity.class);
-			menus.toggle(true);
-			break;
-
-		// 关于页面
-		case 7:
-			intent = new Intent(view.getContext(), AboutActivity.class);
-			menus.toggle(true);
-			break;
-			
-		}
-
-		// 页面跳转
-		if (intent != null) {
-			// intent.putExtra("lv_item_id", id);
-			startActivity(intent);
-		}
-	}*/
 
 	/** 按钮点击 */
 	@Override
@@ -346,55 +157,23 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 		else if(v==ib1){
 			set_type=1;
 			startActivity(new Intent(SetActivity.this, TemHumActivity.class));
-			/*// 修改高温度
-			Message msg = new Message();
-			msg.what = TEMHIGH;
-			temHumHandler.sendMessage(msg);*/
 			
 		}
 		//设置低温度
 		else if(v==ib2){
 			set_type=2;
 			startActivity(new Intent(SetActivity.this, TemHumActivity.class));	
-			/*// 修改低温度
-			Message msg = new Message();
-			msg.what = TEMLOW;
-			temHumHandler.sendMessage(msg);*/
 		}
 		//设置湿度高温
 		else if(v==ib3){
 			set_type=3;
 			startActivity(new Intent(SetActivity.this, TemHumActivity.class));	
-			/*// 修改高湿度
-			Message msg = new Message();
-			msg.what = HUMHIGH;
-			temHumHandler.sendMessage(msg);*/
 		}
 		//设置湿度低温
 		else if(v==ib4){
 			set_type=4;
 			startActivity(new Intent(SetActivity.this, TemHumActivity.class));	
-			/*// 修改低湿度
-			Message msg = new Message();
-			msg.what = HUMLOW;
-			temHumHandler.sendMessage(msg);*/
 		}
-		/*if (v == menu) {
-			// 侧滑菜单
-			menus.toggle(true);
-		}
-		if (v == warning) {
-			// 警告页面
-			startActivity(new Intent(SetActivity.this, WarningActivity.class));
-		} else if (v == information) {
-			// 资讯页面
-			startActivity(new Intent(SetActivity.this,
-					InformationActivity.class));
-		} else if (v == user_icon) {
-			// 个人中心
-			startActivity(new Intent(SetActivity.this,
-					PersonalCenterActivity.class));
-		}*/
 	}
 
 	
@@ -425,10 +204,8 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 									JSONObject jo = comJson
 											.getJSONObject("data");
 
-									jo.getJSONObject("t_interval").getString(
-											"setting_value");
-									jo.getJSONObject("h_interval").getString(
-											"setting_value");
+									jo.getJSONObject("t_interval").getString("setting_value");
+									jo.getJSONObject("h_interval").getString("setting_value");
 
 									String tType = jo
 											.getJSONObject("t_warning")
@@ -482,54 +259,18 @@ public class SetActivity extends BaseActivity implements OnClickListener {
 									gethhum.setText(hh);
 									getlhum.setText(hl);
 									
-									//高温度
-									if (set_type==1) {
-										Intent intent = SetActivity.this.getIntent(); 
-										Bundle bundle = intent.getExtras();
-										if (bundle == null) {
-											Toast.makeText(SetActivity.this, "修改高温度不成功！",
-													Toast.LENGTH_LONG).show();
-										}else{
-											String name = bundle.getString("msg");
-											gethtem.setText(name);
-										}
-									}
-									//低温度
-									else if(set_type==2){
-										Intent intent = SetActivity.this.getIntent(); 
-										Bundle bundle = intent.getExtras();
-										if (bundle == null) {
-											Toast.makeText(SetActivity.this, "修改低温度不成功！",
-													Toast.LENGTH_LONG).show();
-										}else{
-											String name = bundle.getString("msg");
-											getltem.setText(name);
-										}
-									}
-									//高湿度
-									else if(set_type==3){
-										Intent intent = SetActivity.this.getIntent(); 
-										Bundle bundle = intent.getExtras();
-										if (bundle == null) {
-											Toast.makeText(SetActivity.this, "修改高湿度不成功！",
-													Toast.LENGTH_LONG).show();
-										}else{
-											String name = bundle.getString("msg");
-											gethhum.setText(name);
-										}
-									}
-									//低湿度
-									else if(set_type==4){
-										Intent intent = SetActivity.this.getIntent(); 
-										Bundle bundle = intent.getExtras();
-										if (bundle == null) {
-											Toast.makeText(SetActivity.this, "修改低湿度不成功！",
-													Toast.LENGTH_LONG).show();
-										}else{
-											String name = bundle.getString("msg");
-											getlhum.setText(name);
-										}
-									}
+									app.setT_warning_high(jo.getJSONObject(
+											"t_warning_high").getString(
+											"setting_name"));
+									app.setT_warning_low(jo.getJSONObject(
+											"t_warning_low").getString(
+											"setting_name"));
+									app.setH_warning_high(jo.getJSONObject(
+											"h_warning_high").getString(
+											"setting_name"));
+									app.setH_warning_low(jo.getJSONObject(
+											"h_warning_low").getString(
+											"setting_name"));
 									
 									LogUtil.showLog(
 											"==========请求获取用户的配置信息接口请求成功:====",

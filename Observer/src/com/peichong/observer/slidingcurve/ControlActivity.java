@@ -136,7 +136,10 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	
 	/** 机器地址 */
 	private String address = "";
-
+	
+	/**机器运行状态*/
+	private String active="";
+	
 	/** 机器类型 （0 温度 1湿度） */
 	private String type = "";
 
@@ -181,10 +184,6 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 	
 	private Resources res;
 	
-	//private int thType;
-	
-	//private String set_time;
-	
 	private ImageView yuan;
 	
 	@SuppressLint("HandlerLeak")
@@ -211,24 +210,6 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 	};
 	
-	
-	/*@SuppressLint("HandlerLeak")
-	private Handler timelHandler = new Handler() {
-
-		public void handleMessage(Message msg) {
-
-			switch (msg.what) {
-
-			case 0:
-				tv_time.setText(set_time);
-				break;
-			default:
-				break;
-			}
-
-		}
-
-	};*/
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	@SuppressLint("NewApi")
 	@Override
@@ -247,48 +228,6 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		// 获取用户仪器的信息
         getUserInstrumentInformation();
         
-	/*	
-		Bundle extras = getIntent().getExtras(); 
-		 if(extras != null){  
-			 thType = extras.getInt("thType", 1);
-			 set_time=extras.getString("set_time");
-			 
-			 Message msg = new Message();
-			 msg.what = 0;
-			 timelHandler.sendMessage(msg);
-				
-			 if(thType==1){
-				temperature.setBackgroundResource(R.drawable.wenduliang);
-				humidity.setBackgroundResource(R.drawable.shiduhui);
-				time.setBackgroundResource(R.drawable.shijianhui);
-				getConsoleGraphTemperature();
-			}
-			 else if(thType==2){
-				temperature.setBackgroundResource(R.drawable.wenduhui);
-				humidity.setBackgroundResource(R.drawable.shiduliang);
-				time.setBackgroundResource(R.drawable.shijianhui);
-				getConsoleGraphHumidity();
-		    }
-		 }
-		else{
-        	// 获取用户仪器的信息
-	        getUserInstrumentInformation();
-         }*/
-       
-		// getNewestTemperature();
-
-		// getConsoleGraphHumidity();
-
-		// getNewestHumidity();
-
-		// getUserInstrumentInformation();
-
-		// getIdInstrumentInformation();
-
-		// getUserConfigurationInformation();
-
-		// getUserSpecifiedConfigurationInformation();
-	
 }
 	
 	/* (non-Javadoc)
@@ -321,18 +260,15 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 		humidity = (ImageButton) findViewById(R.id.humidity);
 
-		//time = (ImageButton) findViewById(R.id.time);
 
 		tv_temperature = (TextView) findViewById(R.id.tv_temperature);
 		tv_humidity = (TextView) findViewById(R.id.tv_humidity);
-		//tv_time = (TextView) findViewById(R.id.tv_time);
 
 		warning.setOnClickListener(this);
 		information.setOnClickListener(this);
 
 		temperature.setOnClickListener(this);
 		humidity.setOnClickListener(this);
-		//time.setOnClickListener(this);
 
 		// 温度曲线图按钮加提示
 		// View target = findViewById(R.id.temperature);
@@ -387,11 +323,9 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		if (chooseType == 1) {
 		temperature.setBackgroundResource(R.drawable.wendunliang);
 		humidity.setBackgroundResource(R.drawable.shiduhui);
-		//time.setBackgroundResource(R.drawable.shijianhui);
 		}else if (chooseType == 2){
 			temperature.setBackgroundResource(R.drawable.wenduhui);
 			humidity.setBackgroundResource(R.drawable.shiduliang);
-			//time.setBackgroundResource(R.drawable.shijianhui);
 		}else {
 			
 		}
@@ -503,8 +437,9 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 		// 版本更新
 		case 3:
-			intent = new Intent(view.getContext(), VersionUpdateActivity.class);
+			//intent = new Intent(viaew.getContext(), VersionUpdateActivity.class);
 			menus.showContent();
+			updated();
 			break;
 
 		// 关于我们
@@ -567,14 +502,16 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		} else if (v == temperature) {
 			// 温度曲线图
 			chooseType = 1;
-			getUserInstrumentInformation();
+			//getUserInstrumentInformation();
+			getConsoleGraphTemperature();
 			temperature.setBackgroundResource(R.drawable.wendunliang);
 			humidity.setBackgroundResource(R.drawable.shiduhui);
 			//time.setBackgroundResource(R.drawable.shijianhui);
 		} else if (v == humidity) {
 			// 湿度曲线图
 			chooseType = 2;
-			getUserInstrumentInformation();
+			//getUserInstrumentInformation();
+			getConsoleGraphHumidity();
 			temperature.setBackgroundResource(R.drawable.wenduhui);
 			humidity.setBackgroundResource(R.drawable.shiduliang);
 			//time.setBackgroundResource(R.drawable.shijianhui);
@@ -1053,11 +990,14 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 										type = jo.getString("type");
 										mid = jo.getString("id");
 										address = jo.getString("address");
+										active=jo.getString("active");
 
 										if (type.equals("0")) {
 											app.setTid(mid);
+											app.settActive(active);
 										}else if(type.equals("1")){
 											app.setHid(mid);
+											app.sethActive(active);
 										}
 										
 										// 把mid缓存到Application,可供所有activity使用
@@ -1798,6 +1738,7 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 
 	}
 	
+	/**点击返回键退出*/
 	@Override
 	   public void onBackPressed() {  
 		menus.showContent();
@@ -1815,6 +1756,18 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// 点击“返回”后的操作,这里不设置没有任何操作
+					}
+				}).show();
+		}  
+	
+	   /**没有最新版本*/
+	   public void updated() {  
+		new AlertDialog.Builder(this).setTitle("当前已为最新版本！")
+				.setIcon(android.R.drawable.ic_dialog_info)
+				.setPositiveButton("关闭", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						
 					}
 				}).show();
 		}  

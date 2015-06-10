@@ -4,6 +4,11 @@
 package com.peichong.observer.personalcenter;
 
 
+import java.util.HashMap;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,13 +17,26 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
 import com.peichong.observer.R;
 import com.peichong.observer.activities.BaseActivity;
+import com.peichong.observer.activities.MainActivity;
 import com.peichong.observer.application.ObserverApplication;
 import com.peichong.observer.capture.CaptureActivity;
 import com.peichong.observer.capture.WebActivity;
+import com.peichong.observer.configure.Constants;
+import com.peichong.observer.set.SetActivity;
+import com.peichong.observer.set.TemHumActivity;
 import com.peichong.observer.slidingcurve.ControlActivity;
+import com.peichong.observer.tools.Base64Coder;
+import com.peichong.observer.tools.BaseStringRequest;
+import com.peichong.observer.tools.LogUtil;
+import com.peichong.observer.tools.SharedPreferencesUtils;
 
 
 /** 
@@ -39,6 +57,14 @@ public class SetNameActivity  extends BaseActivity implements OnClickListener{
 	
 	/**设置昵称*/
 	private EditText set_name;
+	
+	/**用户ID*/
+	private String uid;
+	
+	private BaseStringRequest mStringRequest;
+	
+	/**帐号姓名*/
+	private String name;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +103,92 @@ public class SetNameActivity  extends BaseActivity implements OnClickListener{
 		}
 		//保存成功返回个人中心
 		else if(v==ok){
-			Intent intent = new Intent(SetNameActivity.this, PersonalCenterActivity.class);  
-			Bundle bundle = new Bundle();
-			bundle.putString("msg", set_name.getText().toString());
-			intent.putExtras(bundle); 
-			startActivity(intent);
-			finish();
+			name = set_name.getText().toString().trim();
+			// 帐号不为空
+			if (!name.equals("")) {
+				// base64转码
+				String dd = Base64Coder.encode(
+						(name).getBytes()).toString();
+				SharedPreferencesUtils.saveData(this, "Base64N&P", dd);
+				SharedPreferencesUtils.saveUserName(this, name);
+				// 修改请求
+				setName();
+			} else {
+				// 帐号为空
+				Toast.makeText(SetNameActivity.this, "请输入帐号！",
+						Toast.LENGTH_LONG).show();
+			}
+			
 		}
+	}
+	
+	/** 修改姓名 */
+	public void setName() {
+		showProgressDialog();
+		uid=app.getUid();
+		String url = "uid=" + uid + "&" + "uname=" + name;
+		mStringRequest = new BaseStringRequest(Method.GET,
+				Constants.RequestUrl.SET_NAME + url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+
+						dismissProgressDialog();
+
+						try {
+							// 接口返回的数据
+							JSONObject comJson = new JSONObject(response);
+
+							// JSONObject中的字段
+							if (comJson.has("code")) {
+								int code = comJson.getInt("code");
+								// 请求成功
+								if (code == 1) {
+									app.setName(name);
+										// 修改成功
+										startActivity(new Intent(
+												SetNameActivity.this,
+												PersonalCenterActivity.class));
+										finish();
+								}
+								// 请求失败
+								else if (code == 0) {
+									// 修改失败
+									Toast.makeText(SetNameActivity.this,
+											"修改失败:" + response,
+											Toast.LENGTH_LONG).show();
+									String msg = comJson.getString("msg");
+
+									LogUtil.showLog("==========修改失败:====",
+											"失败原因：" + msg);
+								} else {
+
+								}
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						dismissProgressDialog();
+						Toast.makeText(SetNameActivity.this,
+								"修改错误:" + error.toString(), Toast.LENGTH_SHORT)
+								.show();
+					}
+				}) {
+
+			@Override
+			protected HashMap<String, String> getParams()
+					throws AuthFailureError {
+				HashMap<String, String> hashMap = new HashMap<String, String>();
+				hashMap.put("name", name);
+				return hashMap;
+			}
+		};
+
+		mStringRequest.setTag("updateName");
+		mRequestQueue.add(mStringRequest);
 	}
 }
