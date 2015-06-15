@@ -18,6 +18,9 @@
 	<color  name="bjtwo">#F1F1F1</color>
 	<color  name="bjthe">#666666</color>
 	
+	<color  name="normal">#f2aa10</color>
+	<color  name="dangerous">#f86666</color>
+	
 	
 	
 	<color  name="budian">#666666</color>

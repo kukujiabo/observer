@@ -1,9 +1,8 @@
-/**
- * 
- */
-package com.peichong.observer.tools;
+package com.peichong.observer.capture;
 
 import java.io.InputStream;
+
+import com.peichong.observer.tools.Utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,17 +15,16 @@ import android.widget.ImageView;
  * @author:   wy 
  * @version:  V1.0 
  */
-public class DownLoadImage extends AsyncTask<String, Void, Bitmap> {  
+public class DownLoadImageTwo extends AsyncTask<String, Void, Bitmap> {  
     ImageView imageView;  
   
-    public DownLoadImage(ImageView imageView) {  
+    public DownLoadImageTwo(ImageView imageView) {  
         // TODO Auto-generated constructor stub  
         this.imageView = imageView;  
     }  
   
     @Override
 	public Bitmap doInBackground(String... urls) {  
-        // TODO Auto-generated method stub  
         String url = urls[0];  
         Bitmap tmpBitmap = null;  
         try {  
@@ -35,7 +33,7 @@ public class DownLoadImage extends AsyncTask<String, Void, Bitmap> {
         } catch (Exception e) {  
             e.printStackTrace();  
         }  
-        return Utils.CutPicture(tmpBitmap, 40, 40); 
+        return Utils.CutPicture(tmpBitmap, imageView.getWidth(), 100); 
     }  
   
     @Override  

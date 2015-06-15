@@ -3,8 +3,10 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="libs/android-viewbadger.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="libs/android-async-http-1.4.5.jar"/>
+	<classpathentry kind="lib" path="libs/android-viewbadger.jar"/>
 	<classpathentry kind="lib" path="libs/base64-2.3.8.jar"/>
 	<classpathentry kind="lib" path="libs/commons-lang-2.6.jar"/>
 	<classpathentry kind="lib" path="libs/commons-lang3-3.0-beta.jar"/>
@@ -12,7 +14,5 @@
 	<classpathentry kind="lib" path="libs/ksoap2-android-assembly-3.0.0-jar-with-dependencies.jar"/>
 	<classpathentry kind="lib" path="libs/Volley.jar"/>
 	<classpathentry kind="lib" path="libs/ZBarDecoder.jar"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

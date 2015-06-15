@@ -2,6 +2,11 @@ package com.peichong.observer.capture;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.HashMap;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;
@@ -10,11 +15,21 @@ import net.sourceforge.zbar.Symbol;
 import net.sourceforge.zbar.SymbolSet;
 
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
 import com.peichong.observer.R;
 import com.peichong.observer.activities.BaseActivity;
 import com.peichong.observer.application.ObserverApplication;
+import com.peichong.observer.configure.Constants;
+import com.peichong.observer.set.SetActivity;
+import com.peichong.observer.set.TemHumActivity;
+import com.peichong.observer.tools.BaseStringRequest;
+import com.peichong.observer.tools.LogUtil;
 import com.peichong.observer.tools.StringUtil;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.hardware.Camera;
@@ -51,6 +66,9 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener{
 	/**返回*/
 	private ImageButton ib_return;
 	
+	/**用户id*/
+	private String uid;
+	
 	
 	/******************扫描二维码**************************/
 	private Camera mCamera;
@@ -58,7 +76,7 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener{
 	private Handler autoFocusHandler;
 	private CameraManager mCameraManager;
 
-	private TextView scanResult;
+	//private TextView scanResult;
 	private FrameLayout scanPreview;
 	private Button scanRestart;
 	private RelativeLayout scanContainer;
@@ -69,6 +87,9 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener{
 	private boolean barcodeScanned = false;
 	private boolean previewing = true;
 	private ImageScanner mImageScanner = null;
+	
+	private BaseStringRequest mStringRequest;
+	
 
 	static {
 		System.loadLibrary("iconv");
@@ -102,7 +123,7 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener{
 		ib_return.setOnClickListener(this);
 		
 		scanPreview = (FrameLayout) findViewById(R.id.capture_preview);
-		scanResult = (TextView) findViewById(R.id.capture_scan_result);
+		//scanResult = (TextView) findViewById(R.id.capture_scan_result);
 		scanRestart = (Button) findViewById(R.id.capture_restart_scan);
 		scanContainer = (RelativeLayout) findViewById(R.id.capture_container);
 		scanCropView = (RelativeLayout) findViewById(R.id.capture_crop_view);
@@ -125,7 +146,7 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener{
 			public void onClick(View v) {
 				if (barcodeScanned) {
 					barcodeScanned = false;
-					scanResult.setText("扫描中...");
+					//scanResult.setText("扫描中...");
 					mCamera.setPreviewCallback(previewCb);
 					mCamera.startPreview();
 					previewing = true;
@@ -227,8 +248,11 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener{
 					mCamera.setPreviewCallback(null);
 					mCamera.stopPreview();
 
-					scanResult.setText("扫描结果:" + resultStr);
+					//scanResult.setText("扫描结果:" + resultStr);
 					barcodeScanned = true;
+					app.setBarCode(resultStr);
+					//条形码接口
+					submitResultStr();
 				}
 				else{
 					Toast.makeText(CaptureActivity.this, "扫描的不是条形码！",
@@ -291,5 +315,105 @@ public class CaptureActivity  extends BaseActivity implements OnClickListener{
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	
+	/** 提交条形码 */
+	public void submitResultStr() {
+		showProgressDialog();
+		uid=app.getUid();
+		
+		String url = "uid=" + uid + "&" +  "code=" + app.getBarCode();
+		mStringRequest = new BaseStringRequest(Method.GET,
+				Constants.RequestUrl.SUBMITRESULTSTR + url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+
+						dismissProgressDialog();
+
+						try {
+							// 接口返回的数据
+							JSONObject comJson = new JSONObject(response);
+
+							// JSONObject中的字段
+							if (comJson.has("code")) {
+								int code = comJson.getInt("code");
+								// 请求成功
+								if (code == 1) {
+										
+									// JSONObject中的字段
+									JSONObject jo = comJson.getJSONObject("info");
+									
+									app.setBarCodeIv(jo.getString("pic_url"));
+									
+									app.setBarCodeName(jo.getString("name"));
+									
+									app.setBarCodeBrand(jo.getString("brand"));
+									
+									app.setBarCodeOrigin(jo.getString("area"));
+									
+									app.setBarCodeTv5(jo.getString("spec"));
+									
+									app.setBarCodeType(jo.getString("grape"));
+									
+									//app.setBarCodeNetcontent(jo.getString(""));
+									
+									app.setBarCodeTemappropriate(jo.getString("temp"));
+									
+									app.setBarCodeHemappropriate(jo.getString("humi"));
+									
+									app.setBarCodeTem(jo.getString("cur_temp"));
+									
+									app.setBarCodeHem(jo.getString("cur_humi"));
+									
+									
+									app.setBarCodePrompt_twotext(jo.getString("notice"));
+									
+									// 提交成功
+										startActivity(new Intent(
+												CaptureActivity.this,
+												ResultStrDetailsActivity.class));
+										finish();
+								}
+								// 请求失败
+								else if (code == 0) {
+									// 修改失败
+									Toast.makeText(CaptureActivity.this,
+											"提交失败:" + response,
+											Toast.LENGTH_LONG).show();
+									String msg = comJson.getString("msg");
+
+									LogUtil.showLog("==========修改失败:====",
+											"失败原因：" + msg);
+								} else {
+
+								}
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						dismissProgressDialog();
+						Toast.makeText(CaptureActivity.this,
+								"提交错误:" + error.toString(), Toast.LENGTH_SHORT)
+								.show();
+					}
+				}) {
+
+			@Override
+			protected HashMap<String, String> getParams()
+					throws AuthFailureError {
+				HashMap<String, String> hashMap = new HashMap<String, String>();
+				hashMap.put("resultStr", app.getBarCode());
+				return hashMap;
+			}
+		};
+
+		mStringRequest.setTag("submit");
+		mRequestQueue.add(mStringRequest);
 	}
 }

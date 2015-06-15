@@ -52,6 +52,8 @@ public class Constants {
 		/** 修改姓名*/                                  
 		public static final String SET_NAME="http://218.244.135.148:8080/user/edit?";
 		
+		/**提交条形码*/
+		public static final String SUBMITRESULTSTR="http://218.244.135.148:8080/wine/wineByCode?";
 		/** 版本消息  */
 		public static final String VERSION = "";
 	}

@@ -15,18 +15,15 @@ import com.peichong.observer.R;
 import com.peichong.observer.about.AboutActivity;
 import com.peichong.observer.activities.ActivityUtil;
 import com.peichong.observer.activities.BaseActivity;
-import com.peichong.observer.analysislog.AnalysisLogActivity;
 import com.peichong.observer.application.ObserverApplication;
 import com.peichong.observer.capture.CaptureActivity;
 import com.peichong.observer.configure.Constants;
 import com.peichong.observer.equipmentmgm.EquipmentMgmActivity;
 import com.peichong.observer.personalcenter.PersonalCenterActivity;
-import com.peichong.observer.set.SetActivity;
 import com.peichong.observer.tools.BaseStringRequest;
 import com.peichong.observer.tools.DownLoadImage;
 import com.peichong.observer.tools.LogUtil;
 import com.peichong.observer.tools.Utils;
-import com.peichong.observer.versionupdate.VersionUpdateActivity;
 import com.peichong.observer.warning.WarningActivity;
 
 import android.annotation.SuppressLint;
@@ -38,7 +35,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -506,7 +502,6 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 			getConsoleGraphTemperature();
 			temperature.setBackgroundResource(R.drawable.wendunliang);
 			humidity.setBackgroundResource(R.drawable.shiduhui);
-			//time.setBackgroundResource(R.drawable.shijianhui);
 		} else if (v == humidity) {
 			// 湿度曲线图
 			chooseType = 2;
@@ -514,16 +509,12 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 			getConsoleGraphHumidity();
 			temperature.setBackgroundResource(R.drawable.wenduhui);
 			humidity.setBackgroundResource(R.drawable.shiduliang);
-			//time.setBackgroundResource(R.drawable.shijianhui);
-		} /*else if (v == time) {
-			// 设置时间界面
-			startActivity(new Intent(ControlActivity.this, TimeActivity.class));
-			//finish();
-		}*/ 
+		} 
 		else if (v == user_icon) {
 			// 个人中心
 			startActivity(new Intent(ControlActivity.this,
 					PersonalCenterActivity.class));
+			//startActivity(new Intent(ControlActivity.this,ResultStrDetailsActivity.class));
 			// 侧滑菜单
 			menus.showContent();
 		}

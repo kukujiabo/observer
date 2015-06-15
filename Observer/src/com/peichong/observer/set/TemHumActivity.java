@@ -130,7 +130,7 @@ public class TemHumActivity extends BaseActivity implements OnClickListener{
 			 set_names.setHint("修改低湿警告");
 		}
 		
-		String url = "uid=" + uid + "&" + setting_name + "=" + set_names.getText();
+		String url = "uid=" + uid + "&" + setting_name + "=" + set_names.getText().toString().trim();
 		mStringRequest = new BaseStringRequest(Method.GET,
 				Constants.RequestUrl.SET_UPDATE + url,
 				new Response.Listener<String>() {
@@ -186,7 +186,7 @@ public class TemHumActivity extends BaseActivity implements OnClickListener{
 			protected HashMap<String, String> getParams()
 					throws AuthFailureError {
 				HashMap<String, String> hashMap = new HashMap<String, String>();
-				hashMap.put("setting_name", set_names.getText().toString());
+				hashMap.put("setting_name", set_names.getText().toString().trim());
 				return hashMap;
 			}
 		};

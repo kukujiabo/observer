@@ -50,10 +50,219 @@ public class ObserverApplication extends Application {
 	
 	/**湿度传感器运行状态*/
 	private String hActive;
-	
-	
-	
 
+	/**条形码图片URL*/
+	private String barCodeIv;
+	
+	/**物品名称*/
+	private String barCodeName;
+	
+	/**物品品牌*/
+	private String barCodeBrand;
+	
+	/**物品产地*/
+	private String barCodeOrigin;
+	
+	/**物品类型介绍*/
+	private String barCodeTv5;
+	
+	/**物品类型详情*/
+	private String barCodeType;
+	
+	/**物品净含量*/
+	private String barCodeNetcontent;
+	
+	/**待酒温度*/
+	private String barCodeTemappropriate;
+	
+	/**待酒湿度*/
+	private String barCodeHemappropriate;
+	
+	/**当前温度*/
+	private String barCodeTem;
+	
+	/**当前湿度*/
+	private String barCodeHem;
+	
+	/**当前时间*/
+	private String barCodeTime;
+	
+	/**温馨提示内容*/
+	private String barCodePrompt_twotext;
+	
+	/**保存条形码*/
+	private String barCode;
+	
+	
+	
+	/**
+	 * @return the barCode
+	 */
+	public String getBarCode() {
+		return barCode;
+	}
+	/**
+	 * @param barCode the barCode to set
+	 */
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
+	}
+	/**
+	 * @return the barCodeIv
+	 */
+	public String getBarCodeIv() {
+		return barCodeIv;
+	}
+	/**
+	 * @param barCodeIv the barCodeIv to set
+	 */
+	public void setBarCodeIv(String barCodeIv) {
+		this.barCodeIv = barCodeIv;
+	}
+	/**
+	 * @return the barCodeName
+	 */
+	public String getBarCodeName() {
+		return barCodeName;
+	}
+	/**
+	 * @param barCodeName the barCodeName to set
+	 */
+	public void setBarCodeName(String barCodeName) {
+		this.barCodeName = barCodeName;
+	}
+	/**
+	 * @return the barCodeBrand
+	 */
+	public String getBarCodeBrand() {
+		return barCodeBrand;
+	}
+	/**
+	 * @param barCodeBrand the barCodeBrand to set
+	 */
+	public void setBarCodeBrand(String barCodeBrand) {
+		this.barCodeBrand = barCodeBrand;
+	}
+	/**
+	 * @return the barCodeOrigin
+	 */
+	public String getBarCodeOrigin() {
+		return barCodeOrigin;
+	}
+	/**
+	 * @param barCodeOrigin the barCodeOrigin to set
+	 */
+	public void setBarCodeOrigin(String barCodeOrigin) {
+		this.barCodeOrigin = barCodeOrigin;
+	}
+	/**
+	 * @return the barCodeTv5
+	 */
+	public String getBarCodeTv5() {
+		return barCodeTv5;
+	}
+	/**
+	 * @param barCodeTv5 the barCodeTv5 to set
+	 */
+	public void setBarCodeTv5(String barCodeTv5) {
+		this.barCodeTv5 = barCodeTv5;
+	}
+	/**
+	 * @return the barCodeType
+	 */
+	public String getBarCodeType() {
+		return barCodeType;
+	}
+	/**
+	 * @param barCodeType the barCodeType to set
+	 */
+	public void setBarCodeType(String barCodeType) {
+		this.barCodeType = barCodeType;
+	}
+	/**
+	 * @return the barCodeNetcontent
+	 */
+	public String getBarCodeNetcontent() {
+		return barCodeNetcontent;
+	}
+	/**
+	 * @param barCodeNetcontent the barCodeNetcontent to set
+	 */
+	public void setBarCodeNetcontent(String barCodeNetcontent) {
+		this.barCodeNetcontent = barCodeNetcontent;
+	}
+	/**
+	 * @return the barCodeTemappropriate
+	 */
+	public String getBarCodeTemappropriate() {
+		return barCodeTemappropriate;
+	}
+	/**
+	 * @param barCodeTemappropriate the barCodeTemappropriate to set
+	 */
+	public void setBarCodeTemappropriate(String barCodeTemappropriate) {
+		this.barCodeTemappropriate = barCodeTemappropriate;
+	}
+	/**
+	 * @return the barCodeHemappropriate
+	 */
+	public String getBarCodeHemappropriate() {
+		return barCodeHemappropriate;
+	}
+	/**
+	 * @param barCodeHemappropriate the barCodeHemappropriate to set
+	 */
+	public void setBarCodeHemappropriate(String barCodeHemappropriate) {
+		this.barCodeHemappropriate = barCodeHemappropriate;
+	}
+	/**
+	 * @return the barCodeTem
+	 */
+	public String getBarCodeTem() {
+		return barCodeTem;
+	}
+	/**
+	 * @param barCodeTem the barCodeTem to set
+	 */
+	public void setBarCodeTem(String barCodeTem) {
+		this.barCodeTem = barCodeTem;
+	}
+	/**
+	 * @return the barCodeHem
+	 */
+	public String getBarCodeHem() {
+		return barCodeHem;
+	}
+	/**
+	 * @param barCodeHem the barCodeHem to set
+	 */
+	public void setBarCodeHem(String barCodeHem) {
+		this.barCodeHem = barCodeHem;
+	}
+	/**
+	 * @return the barCodeTime
+	 */
+	public String getBarCodeTime() {
+		return barCodeTime;
+	}
+	/**
+	 * @param barCodeTime the barCodeTime to set
+	 */
+	public void setBarCodeTime(String barCodeTime) {
+		this.barCodeTime = barCodeTime;
+	}
+	/**
+	 * @return the barCodePrompt_twotext
+	 */
+	public String getBarCodePrompt_twotext() {
+		return barCodePrompt_twotext;
+	}
+	/**
+	 * @param barCodePrompt_twotext the barCodePrompt_twotext to set
+	 */
+	public void setBarCodePrompt_twotext(String barCodePrompt_twotext) {
+		this.barCodePrompt_twotext = barCodePrompt_twotext;
+	}
 	/**
 	 * @return the tActive
 	 */

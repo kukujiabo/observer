@@ -27,29 +27,12 @@ import com.peichong.observer.slidingcurve.ControlActivity;
 public class EquipmentMgmActivity extends BaseActivity implements
 		OnClickListener{
 
-	/** 菜单 *//*
-	private ImageButton menu;
-	*//** 警告 *//*
-	private ImageButton warning;
-	*//** 资讯 *//*
-	private ImageButton information;
-
-	*//** 个人中心 *//*
-	private ImageButton user_icon;*/
 
 	/** 应用程序全局属性 */
 	private ObserverApplication app;
 	
 	/**返回*/
 	private ImageButton ib_return;
-
-/*	*//******* 侧滑菜单 *******//*
-	private ListView lv_set;// 设置菜单
-
-	private MenuAdapter Menuadapter;
-	
-	private SlidingMenu menus;*/
-	
 	/**设置温度图标*/
 	private ImageView set_icon;
 	

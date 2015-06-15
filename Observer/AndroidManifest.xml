@@ -167,6 +167,11 @@
         </activity>
        
         
+        <!-- 条形码扫描详情 -->
+        <activity
+            android:name="com.peichong.observer.capture.ResultStrDetailsActivity"
+            android:screenOrientation="portrait" android:theme="@style/activityTheme">
+        </activity>
     </application>
 
 </manifest>
