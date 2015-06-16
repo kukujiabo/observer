@@ -1,6 +1,13 @@
 package com.peichong.observer.tools;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.widget.LinearLayout;
 
 
 /** 
@@ -26,5 +33,39 @@ public class Utils {
 	public static int dip2px(Context context, float dpValue) {
 		final float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (dpValue * scale + 0.5f);
+	}
+	
+	/**年月日 时分秒 日期格式 转变成时分*/
+	@SuppressLint("SimpleDateFormat")
+	public static String date(String s)throws Exception{
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date d=formatter.parse(s);
+		SimpleDateFormat format=new SimpleDateFormat("HH:mm");
+		String dd = format.format(d);
+		return dd;
+	}
+	
+	/**年月日 时分秒 日期格式 转变成月日 时分*/
+	@SuppressLint("SimpleDateFormat")
+	public static String dateTwo(String s)throws Exception{
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date d=formatter.parse(s);
+		SimpleDateFormat format=new SimpleDateFormat("MM-dd HH:mm");
+		String dd = format.format(d);
+		return dd;
+	}
+	
+	/**缩小bitmap*/
+	public static Bitmap CutPicture(Bitmap bitmap, int width, int height) {
+		  if (bitmap != null) {
+		   float scaleWidth = ((float) width) / bitmap.getWidth();
+		   float scaleHeight = ((float) height) / bitmap.getHeight();
+		   Matrix matrix = new Matrix();
+		   matrix.postScale(scaleWidth, scaleHeight);
+		   Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+		   return resizedBitmap;
+		  } else {
+		   return null;
+		  }
 	}
 }

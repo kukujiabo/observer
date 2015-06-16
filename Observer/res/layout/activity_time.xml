@@ -2,54 +2,243 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bj" >
+    android:background="@color/bjtwo" >
     
 	    <RelativeLayout
         android:id="@+id/ll"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        >
+        android:background="@drawable/shijiann"
+         >
         
-    <TextView
+	          <ImageButton
+	            android:id="@+id/fanhui"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_centerVertical="true"
+	            android:layout_marginLeft="10dp"
+	            android:background="@drawable/huanhui" />
+	          
+	          <TextView
+	            android:id="@+id/ok"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_centerVertical="true"
+	            android:layout_marginRight="20dp"
+	            android:textSize="15sp"
+	            android:textColor="@color/white"
+	            android:text="确定" />
+
+   <!--   <ImageView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/console" 
-        android:textColor="@color/text_black"
+        android:background="@drawable/yemianzi"
         android:layout_alignParentLeft="true"
-        android:textSize="@dimen/console_size"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="@dimen/console_top"
         android:layout_marginLeft="@dimen/console_left"
         />
-
-
-    <ImageButton
-        android:id="@+id/information"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/warning"
-        android:layout_toLeftOf="@+id/warning"
-        android:layout_marginRight="@dimen/consulting_right"
-        android:background="@drawable/ic_launcher" />
-    
-    <ImageButton
-        android:id="@+id/warning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/menu"
-        android:layout_marginRight="@dimen/consulting_right"
-        android:layout_toLeftOf="@+id/menu"
-        android:background="@drawable/ic_launcher" />
 
     <ImageButton
         android:id="@+id/menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/console_right"
-        android:background="@drawable/ic_launcher" />
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/caidan" />
+
+    <ImageButton
+        android:id="@+id/warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/menu"
+        android:background="@drawable/jingshianniu" />
+
+    <ImageButton
+        android:id="@+id/information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/warning"
+        android:background="@drawable/shanganniu" /> -->
     
     </RelativeLayout>
+
+
+	 <ImageButton
+	     android:id="@+id/imageButton1"
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:layout_below="@+id/ll"
+	     android:layout_centerHorizontal="true"
+	     android:layout_marginTop="50dp"
+	     android:background="@drawable/shijiannn" />
+
+	 <SeekBar
+	     android:id="@+id/time_seekbar"
+	     android:layout_width="fill_parent"
+	     android:layout_height="wrap_content"
+	     android:layout_alignParentLeft="true"
+	     android:layout_marginLeft="20dp"
+	     android:layout_marginRight="20dp"
+	     android:layout_below="@+id/imageButton1"
+	     android:layout_marginTop="@dimen/top_two" />
+
+	 <TextView
+	     android:id="@+id/time_start"
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:layout_alignParentLeft="true"
+	     android:layout_below="@+id/time_seekbar"
+	     android:layout_marginLeft="@dimen/left_three"
+	     android:layout_marginTop="@dimen/top"
+	     android:textSize="@dimen/console_size"
+	     android:textColor="@color/black"
+	     android:text="1m" />
+
+	 <TextView
+	     android:id="@+id/time_end"
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:layout_alignBottom="@+id/time_start"
+	     android:layout_alignParentRight="true"
+	     android:textSize="@dimen/console_size"
+	     android:textColor="@color/black"
+	     android:layout_marginRight="@dimen/right_two"
+	     android:layout_marginTop="@dimen/top"
+	     android:text="60m" />
+	 
+	 <!-- <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/time_end"
+        android:layout_marginTop="20dp"
+         >
+	
+		<ImageButton
+        android:id="@+id/temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/wenduhui" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_temperature"
+        android:layout_alignBottom="@+id/tv_temperature"
+        android:layout_toRightOf="@+id/tv_temperature"
+		android:textColor="@color/white"
+        android:textSize="@dimen/temperature_size"
+        android:text="@string/temperature" />
+
+    <ImageButton
+        android:id="@+id/humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/shiduhui" />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_humidity"
+        android:layout_alignBottom="@+id/tv_humidity"
+        android:layout_toRightOf="@+id/tv_humidity"
+        android:textColor="@color/white"
+        android:textSize="@dimen/temperature_size"
+        android:text="@string/humidity" />
+
+    <ImageButton
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/shijianliang" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text2"
+        android:layout_alignBottom="@+id/text2"
+        android:layout_alignLeft="@+id/time"
+        android:layout_marginLeft="20dp"
+        android:gravity="center"
+        android:text="50"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
     
+     <TextView
+        android:id="@+id/text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_time"
+        android:layout_alignBottom="@+id/tv_time"
+        android:layout_toRightOf="@+id/tv_time"
+        android:textColor="@color/white"
+        android:textSize="@dimen/temperature_size"
+        android:text="@string/time" />
+
+    <TextView
+        android:id="@+id/tv_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/temperature"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="20"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text"
+        android:layout_alignBottom="@+id/text"
+        android:layout_alignLeft="@+id/humidity"
+        android:layout_marginLeft="20dp"
+        android:text="20"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+		
+	</RelativeLayout> -->
+
+	 <TextView
+	     android:id="@+id/time_show"
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:layout_alignBottom="@+id/imageButton1"
+	     android:layout_centerHorizontal="true"
+	     android:layout_marginBottom="25dp"
+	     android:textSize="20sp"
+	     android:text="15" />
+
+	 <TextView
+	     android:id="@+id/time_text"
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:layout_alignBaseline="@+id/time_show"
+	     android:layout_alignBottom="@+id/time_show"
+	     android:layout_toRightOf="@+id/time_show"
+	     android:textSize="20sp"
+	     android:text="m" />
+	
 </RelativeLayout>
