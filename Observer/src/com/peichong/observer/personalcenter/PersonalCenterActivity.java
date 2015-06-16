@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.Date;
 
 import org.apache.http.Header;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -54,8 +55,8 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 	/** 应用程序全局属性 */
 	private ObserverApplication app;
 	
-	/**点击保存 上传头像*/
-	private TextView ok;
+	/**点击保存 上传头像*//*
+	private TextView ok;*/
 	
 	/**用户id*/
 	private String uid;
@@ -110,7 +111,8 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 		initUi();
 		
 		//修改电话
-		show_phone.setText(app.getPhone());
+		String str=app.getPhone();
+		show_phone.setText(str.substring(0, 7)+"****");
 		
 		//修改姓名
 		show_name.setText(app.getName());
@@ -119,7 +121,7 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 		String s="http://218.244.135.148:8080"+app.getUrl().trim();
 		if (app.getUrl().equals("") ||app.getUrl()==null) {
 			Bitmap b=BitmapFactory.decodeResource(this.getResources(), R.drawable.touxiangthree);
-			show_touxiang.setImageBitmap(Utils.CutPicture(b, 40, 40));
+			show_touxiang.setImageBitmap(Utils.CutPicture(b, 60, 60));
 		}else{
 			new DownLoadImage(show_touxiang).execute(s);
 		}
@@ -149,8 +151,8 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 		show_name=(TextView) findViewById(R.id.show_name);
 		show_phone=(TextView) findViewById(R.id.show_phone);
 		show_touxiang=(ImageView) findViewById(R.id.show_touxiang);
-		ok=(TextView) findViewById(R.id.ok);
-		ok.setOnClickListener(this);
+		/*ok=(TextView) findViewById(R.id.ok);
+		ok.setOnClickListener(this);*/
 		
 	}
 
@@ -177,10 +179,10 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 		else if(v==tuichu){
 			Esc();
 		}
-		//上传头像
+		/*//上传头像
 		else if(v==ok){
-			upload();
-		}
+			//upload();
+		}*/
 	}
 	
 	/**退出当前帐号*/
@@ -243,7 +245,7 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 		//系统时间
 		Date d = new Date();
 		//文件名为uid+当前系统时间
-		String filename = Base64.encodeToString((uid + d.toString()).getBytes(), Base64.DEFAULT)+".png";
+		String filename = Base64.encodeToString((uid + d.toString()).getBytes(), Base64.DEFAULT).trim()+".png".trim();
 		
 		try {
 			if (bitmap==null) {
@@ -268,8 +270,7 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 			AsyncHttpClient client = new AsyncHttpClient();
 			client.post(url, params, new AsyncHttpResponseHandler() {
 				@Override
-				public void onSuccess(int statusCode, Header[] headers,
-						byte[] responseBody) {
+				public void onSuccess(int statusCode, Header[] headers,byte[] responseBody) {
 					try {
 						if (statusCode == 200) {
 
@@ -279,12 +280,17 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 							// Bitmap dBitmap = BitmapFactory.decodeFile(photo);  
 					        //BitmapDrawable drawable = new BitmapDrawable(dBitmap);
 					        //show_touxiang.setBackgroundDrawable(drawable);  
-					        // show_touxiang.setImageBitmap(dBitmap);  
+					        // show_touxiang.setImageBitmap(dBitmap); 
+							// 接口返回的数据
+							JSONObject comJson = new JSONObject(new String(responseBody));
+							String s = comJson.getString("pic_url");
+							app.setUrl(s);
+							String url="http://218.244.135.148:8080"+app.getUrl().trim();
+							new DownLoadImage(show_touxiang).execute(url);
 					         
 						} else {
 							Toast.makeText(PersonalCenterActivity.this,
 									"网络访问异常，错误码：" + statusCode, Toast.LENGTH_SHORT).show();
-
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -352,9 +358,10 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 			try {
 				bitmap = data.getParcelableExtra("data");
 				//修改头像
-				show_touxiang.setImageBitmap(bitmap);
+				//show_touxiang.setImageBitmap(bitmap);
 				//boolean delete = tempFile.delete();
 				//System.out.println("delete = " + delete);
+				upload();
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -376,8 +383,8 @@ public class PersonalCenterActivity extends BaseActivity implements OnClickListe
 		intent.putExtra("aspectX", 1);
 		intent.putExtra("aspectY", 1);
 		// 裁剪后输出图片的尺寸大小
-		intent.putExtra("outputX", 40);
-		intent.putExtra("outputY", 40);
+		intent.putExtra("outputX", 60);
+		intent.putExtra("outputY", 60);
 		// 图片格式
 		intent.putExtra("outputFormat", "PNG");
 		intent.putExtra("noFaceDetection", true);// 取消人脸识别

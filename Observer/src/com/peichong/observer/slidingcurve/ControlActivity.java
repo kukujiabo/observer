@@ -234,6 +234,14 @@ public class ControlActivity extends BaseActivity implements OnClickListener,
 		// TODO Auto-generated method stub
 		super.onResume();
 		menus.showContent();
+		//修改头像
+				String s="http://218.244.135.148:8080"+app.getUrl().trim();
+				if (app.getUrl().equals("") ||app.getUrl()==null) {
+					Bitmap b=BitmapFactory.decodeResource(this.getResources(), R.drawable.touxianggo);
+					user_icon.setImageBitmap(b);
+				}else{
+					new DownLoadImage(user_icon).execute(s);
+				}
 	}
 	/**
 	 * TODO :初始化

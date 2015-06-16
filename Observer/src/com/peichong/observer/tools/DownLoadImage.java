@@ -35,7 +35,7 @@ public class DownLoadImage extends AsyncTask<String, Void, Bitmap> {
         } catch (Exception e) {  
             e.printStackTrace();  
         }  
-        return Utils.CutPicture(tmpBitmap, 40, 40); 
+        return Utils.CutPicture(tmpBitmap, 60, 60); 
     }  
   
     @Override  
