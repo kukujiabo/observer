@@ -3,6 +3,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="slidingmenu_offset">100dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
 	
     <!--login图标上边距-->
     <dimen name="login">30dp</dimen>
@@ -15,6 +17,8 @@
     
      <!--  控制台字体大小-->
     <dimen name="console_size">20sp</dimen>
+    
+     <dimen name="menu_size">15sp</dimen>
     
      <!--  控制台上边距-->
     <dimen name="console_top">30dp</dimen>
@@ -40,10 +44,31 @@
      <!--  左边距-->
     <dimen name="left_two">5dp</dimen>
     
+     <!--  左边距-->
+    <dimen name="left_three">15dp</dimen>
+    
      <!--  右边距-->
     <dimen name="right">20dp</dimen>
     
+     <!--  右边距-->
+    <dimen name="right_two">15dp</dimen>
+    
+     <!--  右边距-->
+    <dimen name="right_three">10dp</dimen>
+    
      <!--  上边距-->
-    <dimen name="top">15dp</dimen>
+    <dimen name="top">10dp</dimen>
+    
+     <!--  上边距-->
+    <dimen name="top_two">20dp</dimen>
+    
+     <!--  下边距-->
+    <dimen name="bottom">10dp</dimen>
+    
+    <!--  时间字体大小-->
+    <dimen name="time_size">50sp</dimen>
+    
+     <!--  滑动抽屉的宽-->
+    <dimen name="wide">280dp</dimen>
     
 </resources>

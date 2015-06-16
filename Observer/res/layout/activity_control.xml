@@ -1,65 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bj"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bjtwo"
     >
+    
     <RelativeLayout
         android:id="@+id/ll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:background="@drawable/xinkongzhi">
         
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/console" 
-        android:textColor="@color/text_black"
-        android:layout_alignParentLeft="true"
-        android:textSize="@dimen/console_size"
-        android:layout_marginTop="@dimen/console_top"
-        android:layout_marginLeft="@dimen/console_left"
-        />
-
-
-    <ImageButton
-        android:id="@+id/information"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/warning"
-        android:layout_toLeftOf="@+id/warning"
-        android:layout_marginRight="@dimen/consulting_right"
-        android:background="@drawable/ic_launcher" />
-    
-    <ImageButton
-        android:id="@+id/warning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/menu"
-        android:layout_marginRight="@dimen/consulting_right"
-        android:layout_toLeftOf="@+id/menu"
-        android:background="@drawable/ic_launcher" />
 
     <ImageButton
         android:id="@+id/menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/caidaananniun" />
+
+    <ImageButton
+        android:id="@+id/warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/console_right"
-        android:background="@drawable/ic_launcher" />
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/menu"
+        android:background="@drawable/shaomaa" />
+
+    <ImageButton
+        android:id="@+id/information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/warning"
+        android:background="@drawable/liangdd" />
     
     </RelativeLayout>
     
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll2"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginTop="100dp"
         android:layout_below="@id/ll"
         >
-        
+	<!-- 曲线图
 	<com.peichong.observer.slidingcurve.MyHorizontalScrollView
         android:id="@+id/study_graph_layout"
         android:layout_width="wrap_content"
@@ -70,36 +60,56 @@
             android:id="@+id/study_graph"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </com.peichong.observer.slidingcurve.MyHorizontalScrollView>
-     
-	</LinearLayout>
-	
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
+    </com.peichong.observer.slidingcurve.MyHorizontalScrollView> -->
+
+    <ImageView
+        android:id="@+id/yuan"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll2"
-        >
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/kongwenyuan" />
+
+    <com.peichong.observer.slidingcurve.TemperatureHorizontalScrollView
+        android:id="@+id/horizontal_scrollview"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_weight="1"
+        android:fadingEdge="none"
+        android:scrollbars="none" >
+    </com.peichong.observer.slidingcurve.TemperatureHorizontalScrollView>
+    
+	</RelativeLayout>
+	
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/ll2"
+        android:layout_marginTop="20dp"
+         >
 	
 		<ImageButton
         android:id="@+id/temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/left"
-        android:background="@drawable/ic_launcher" />
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/wendunliang" />
 
-    <TextView
+		 <TextView
         android:id="@+id/tv_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/temperature"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/left"
-        android:layout_marginTop="@dimen/top"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/temperature_size"
-        android:text="20.0" />
-
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:text="20"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+		 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
@@ -107,8 +117,8 @@
         android:layout_alignBaseline="@+id/tv_temperature"
         android:layout_alignBottom="@+id/tv_temperature"
         android:layout_toRightOf="@+id/tv_temperature"
-		android:textColor="@color/text_black"
-        android:textSize="@dimen/temperature_size"
+		android:textColor="@color/white"
+        android:textSize="10sp"
         android:text="@string/temperature" />
 
     <ImageButton
@@ -116,9 +126,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/ic_launcher" />
-
+        android:layout_marginRight="50dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/shiduhui" />
+    
     <TextView
         android:id="@+id/tv_humidity"
         android:layout_width="wrap_content"
@@ -126,10 +137,10 @@
         android:layout_alignBaseline="@+id/text"
         android:layout_alignBottom="@+id/text"
         android:layout_alignLeft="@+id/humidity"
-        android:layout_marginLeft="@dimen/left_two"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/temperature_size"
-        android:text="20.0" />
+        android:layout_marginLeft="18dp"
+        android:text="20"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/text2"
@@ -138,42 +149,23 @@
         android:layout_alignBaseline="@+id/tv_humidity"
         android:layout_alignBottom="@+id/tv_humidity"
         android:layout_toRightOf="@+id/tv_humidity"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/temperature_size"
+        android:textColor="@color/white"
+        android:textSize="10sp"
         android:text="@string/humidity" />
 
-    <ImageButton
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="@dimen/right"
-        android:background="@drawable/ic_launcher" />
+  
 
     <TextView
-        android:id="@+id/tv_time"
+        android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/text2"
-        android:layout_alignBottom="@+id/text2"
-        android:layout_alignLeft="@+id/time"
-        android:layout_marginLeft="@dimen/time_left"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/temperature_size"
-        android:text="120" />
-
-    <TextView
-        android:id="@+id/text3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tv_time"
-        android:layout_alignBottom="@+id/tv_time"
-        android:layout_toRightOf="@+id/tv_time"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/temperature_size"
-        android:text="@string/time" />
+        android:layout_above="@+id/text"
+        android:layout_toRightOf="@+id/tv_temperature"
+        android:text="@string/temperature_two"
+        android:textColor="@color/white"
+        android:layout_marginLeft="-3dp"
+        android:layout_marginTop="16dp"
+        android:textSize="15sp" />
 		
 	</RelativeLayout>
-	
 </RelativeLayout>

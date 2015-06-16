@@ -1,9 +1,11 @@
 package com.peichong.observer.tools;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,6 +18,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 
@@ -351,5 +355,50 @@ public class HttpUtils {
 		return code;
 		
 	}
+	
+	/**通过url加载图片*/
+	public static Bitmap getBitmap(String path) throws IOException{
 
+	    URL url = new URL(path);
+	    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+	    conn.setConnectTimeout(5000);
+	    conn.setRequestMethod("GET");
+	    if(conn.getResponseCode() == 200){
+	    InputStream inputStream = conn.getInputStream();
+	    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+	    return bitmap;
+	    }
+	    return null;
+	    }
+	
+	/**通过url加载图片*/
+	public static Bitmap getHttpBitmap(String url)throws IOException{
+        URL myFileURL;
+        Bitmap bitmap=null;
+        try{
+            myFileURL = new URL(url);
+            //获得连接
+            HttpURLConnection conn=(HttpURLConnection)myFileURL.openConnection();
+            //设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
+            conn.setConnectTimeout(6000);
+            //连接设置获得数据流
+            conn.setDoInput(true);
+            //不使用缓存
+            conn.setUseCaches(false);
+            //这句可有可无，没有影响
+            //conn.connect();
+            //得到数据流
+            InputStream is = conn.getInputStream();
+            //解析得到图片
+            bitmap = BitmapFactory.decodeStream(is);
+            //关闭数据流
+            is.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+         
+        return bitmap;
+         
+	}
+	
 }

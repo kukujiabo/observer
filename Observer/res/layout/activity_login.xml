@@ -12,7 +12,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/login"
-        android:src="@drawable/ic_launcher" />
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/logoo" />
 
     <RelativeLayout 
         android:id="@+id/ll1"
@@ -20,25 +21,24 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView1"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
         >
         
         <ImageView
 	        android:id="@+id/imageView2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:src="@drawable/denglu02" />
+	        android:src="@drawable/yonghuming" />
         
-        <TextView
+        <ImageView
 	        android:id="@+id/name_show"
 	        android:layout_width="wrap_content"
-	        android:layout_height="fill_parent"
+	        android:layout_height="wrap_content"
 	        android:layout_centerVertical="true"
-	        android:gravity="left|center"
-	        android:text="@string/name_show"
-	        android:layout_alignTop="@+id/imageView2"
-	        android:layout_alignBottom="@+id/imageView2"
-	        android:textColor="@color/black"
-	        android:textSize="15sp" />
+	        android:gravity="center"
+	        android:layout_marginLeft="10dp"
+	        android:background="@drawable/renwu"
+	        />
         
         <EditText
 	        android:id="@+id/name"
@@ -71,19 +71,19 @@
 	        android:id="@+id/imageView3"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:src="@drawable/denglu02" />
+	        android:src="@drawable/mima" />
 	    
-	    <TextView
+	    <ImageView
 	        android:id="@+id/password_show"
 	        android:layout_width="wrap_content"
-	        android:layout_height="fill_parent"
-	        android:gravity="left|center"
-	        android:layout_alignTop="@+id/imageView3"
-	        android:layout_alignBottom="@+id/imageView3"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:layout_marginLeft="10dp"
 	        android:text="@string/password_show"
 	        android:layout_centerVertical="true"
 	        android:textColor="@color/black"
-	        android:textSize="15sp" />
+	        android:background="@drawable/suo"
+	         />
 
 	    <EditText
 	        android:id="@+id/password"
@@ -101,23 +101,24 @@
     	</EditText>
 	    
     </RelativeLayout>
-    
-    <CheckBox
-        android:id="@+id/checkBox1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ll2"
-        android:layout_alignRight="@+id/ll2"
-        android:layout_below="@+id/ll2"
-        android:layout_marginTop="@dimen/et"
-        android:button="@drawable/login_rememberpass" />
 
     <ImageButton
         android:id="@+id/ib_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBox1"
-        android:layout_below="@+id/checkBox1"
-        android:layout_marginTop="@dimen/et"
-        android:background="@drawable/denglu05" />
+        android:layout_alignLeft="@+id/ll2"
+        android:layout_below="@+id/ll2"
+       android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/dengluu" />
+
+    <ImageButton
+        android:id="@+id/forgotpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/ib_register"
+        android:layout_below="@+id/ib_register"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/wangjimima" />
+
 </RelativeLayout>

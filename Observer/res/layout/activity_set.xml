@@ -2,54 +2,233 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bj" >
+    android:background="@color/bjtwo"
+     >
     
-	    <RelativeLayout
+	<RelativeLayout
         android:id="@+id/ll"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/shezhiiiii"
         >
         
-    <TextView
+	     <ImageButton
+	            android:id="@+id/fanhui"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_centerVertical="true"
+	            android:layout_marginLeft="10dp"
+	            android:background="@drawable/huanhui" />
+
+	        
+   <!--  <ImageView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/set" 
-        android:textColor="@color/text_black"
+        android:background="@drawable/shezhishezhi"
         android:layout_alignParentLeft="true"
-        android:textSize="@dimen/console_size"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="@dimen/console_top"
         android:layout_marginLeft="@dimen/console_left"
         />
-
-
-    <ImageButton
-        android:id="@+id/information"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/warning"
-        android:layout_toLeftOf="@+id/warning"
-        android:layout_marginRight="@dimen/consulting_right"
-        android:background="@drawable/ic_launcher" />
-    
-    <ImageButton
-        android:id="@+id/warning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/menu"
-        android:layout_marginRight="@dimen/consulting_right"
-        android:layout_toLeftOf="@+id/menu"
-        android:background="@drawable/ic_launcher" />
 
     <ImageButton
         android:id="@+id/menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/console_right"
-        android:background="@drawable/ic_launcher" />
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/caidan" />
+
+    <ImageButton
+        android:id="@+id/warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/menu"
+        android:background="@drawable/jingshianniu" />
+
+    <ImageButton
+        android:id="@+id/information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/warning"
+        android:background="@drawable/shanganniu" /> -->
     
     </RelativeLayout>
     
+	    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/ll"
+        android:background="@color/white"
+        >
+
+	        <ImageButton
+	            android:id="@+id/ib1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_alignParentTop="true"
+	            android:background="@drawable/liebiao" />
+
+	        <CheckBox
+	            android:id="@+id/sethyperthermia"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_alignParentTop="true"
+	            android:layout_marginTop="10dp"
+	            android:layout_marginRight="20dp"
+	            android:button="@drawable/pictures_select_icon"
+	             />
+
+	        <ImageButton
+	            android:id="@+id/ib2"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@+id/ib1"
+	            android:background="@drawable/shezhi" />
+
+	        <TextView
+	            android:id="@+id/gethtem"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignTop="@+id/ib2"
+	            android:layout_toLeftOf="@+id/gethtem_two"
+	            android:layout_marginTop="15dp"
+	            android:text="15"
+	            android:textColor="@color/black"
+	            android:textSize="20sp" />
+	        
+	        <TextView
+	            android:id="@+id/gethtem_two"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBaseline="@+id/gethtem"
+	            android:layout_alignBottom="@+id/gethtem"
+	            android:layout_alignRight="@+id/sethyperthermia"
+	            android:textColor="@color/black"
+	            android:textSize="20sp"
+	            android:text="°C" />
+
+	        <ImageButton
+	            android:id="@+id/ib3"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@+id/ib2"
+	            android:background="@drawable/shezhii" />
+
+	        <TextView
+	            android:id="@+id/getltem"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBottom="@+id/ib3"
+	            android:layout_alignLeft="@+id/gethtem"
+	            android:layout_marginBottom="15dp"
+	            android:text="15"
+	            android:textColor="@color/black"
+	            android:textSize="20sp"
+	            />
+
+	        <TextView
+	            android:id="@+id/getltem_two"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBottom="@+id/getltem"
+	            android:layout_alignLeft="@+id/gethtem_two"
+	            android:layout_alignParentRight="true"
+	             android:textColor="@color/black"
+	            android:textSize="20sp"
+	            android:text="°C" />
+
+	        <ImageButton
+	            android:id="@+id/ib4"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@+id/ib3"
+	            android:background="@drawable/liebiaoc" />
+
+	        <CheckBox
+	            android:id="@+id/sethumidity"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignRight="@+id/gethtem_two"
+	            android:layout_alignTop="@+id/ib4"
+	            android:layout_marginTop="10dp"
+	             android:button="@drawable/pictures_select_icon" />
+
+	        <ImageButton
+	            android:id="@+id/ib5"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@+id/ib4"
+	            android:background="@drawable/liebiaod" />
+
+	        <TextView
+	            android:id="@+id/gethhum"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignLeft="@+id/getltem"
+	            android:layout_alignTop="@+id/ib5"
+	            android:layout_marginTop="15dp"
+	            android:text="15"
+	            android:textColor="@color/black"
+	            android:textSize="20sp" />
+
+	        <TextView
+	            android:id="@+id/gethhum_two"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBaseline="@+id/gethhum"
+	            android:layout_alignBottom="@+id/gethhum"
+	            android:layout_toRightOf="@+id/gethhum"
+	            android:text="%"
+	            android:textColor="@color/black"
+	            android:textSize="20sp" />
+
+
+	        <ImageButton
+	            android:id="@+id/ib6"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@+id/ib5"
+	            android:background="@drawable/liebiaoe" />
+
+	        <TextView
+	            android:id="@+id/getlhum"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBottom="@+id/ib6"
+	            android:layout_marginBottom="15dp"
+	            android:layout_toLeftOf="@+id/gethhum_two"
+	            android:text="15"
+	            android:textColor="@color/black"
+	            android:textSize="20sp" />
+
+	        <TextView
+	            android:id="@+id/getlhum_two"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignBaseline="@+id/getlhum"
+	            android:layout_alignBottom="@+id/getlhum"
+	            android:layout_toRightOf="@+id/gethhum"
+	            android:text="%"
+	            android:textColor="@color/black"
+	            android:textSize="20sp" />
+
+	        
+    </RelativeLayout>
 </RelativeLayout>

@@ -12,11 +12,12 @@ import android.content.SharedPreferences.Editor;
  * @version:  V1.0 
  */
 public class SharedPreferencesUtils {
-private static SharedPreferences mSharedPreferences;
+	
+	private static SharedPreferences mSharedPreferences;
 	
 	private static Editor mEditor;
 	
-	private final static String DATA_NAME = "cn.com.crc.cre.homeAndroid";
+	private final static String DATA_NAME = "com.peichong.observer";
 	
 	private final static String USER_NAME = "USER_NAME";
 	

@@ -7,6 +7,38 @@
 	<color name="graph_separate">#dee5e8</color>
 	<color name="graph_text">#5875AB</color>
 	<color name="text_black">#000000</color>
-	<color name="bj">#E2EAED</color>
+	<color name="bj">#61BCEB</color>
+	<color name="white">#ffffff</color>
+	<color name="beijing">#F1F1F1</color>
+	<color  name="one">#72C3F2</color>
+	<color  name="two">#83F2EC</color>
+	<color  name="three">#75EA72</color>
+	<color  name="four">#FAE064</color>
+	<color  name="five">#FCC15A</color>
+	<color  name="bjtwo">#F1F1F1</color>
+	<color  name="bjthe">#666666</color>
+	
+	<color  name="normal">#f2aa10</color>
+	<color  name="dangerous">#f86666</color>
+	
+	
+	
+	<color  name="budian">#666666</color>
+	<color  name="dian">#77CED8</color>
+	
+	<color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="possible_result_points">#c0ffbd21</color> <!-- Android standard ICS color -->
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c099cc00</color> <!-- Android standard ICS color -->
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="gray">#808080</color>
+    <color name="lightgreen">#99CC33</color>
+    <color name="green">#00CC00</color>
 	
 </resources>

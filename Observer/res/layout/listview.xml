@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+	    xmlns:pull="http://schemas.android.com/apk/res-auto"
+	    android:id="@+id/list"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:divider="@null"
+	    pull:ptrAnimationStyle="flip"
+	    pull:ptrHeaderBackground="@android:color/transparent"
+	    pull:ptrHeaderTextAppearance="@style/LoadingMoreTextAppearance"
+	    pull:ptrSubHeaderTextAppearance="@style/LoadingMoreTextAppearance"
+	    pull:ptrMode="pullFromEnd" >
+
+	</com.handmark.pulltorefresh.library.PullToRefreshListView>
+
+</RelativeLayout>

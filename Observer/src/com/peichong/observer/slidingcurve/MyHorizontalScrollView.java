@@ -1,4 +1,4 @@
-package com.peichong.observer.slidingcurve;
+/*package com.peichong.observer.slidingcurve;
 
 import java.util.ArrayList;
 
@@ -11,12 +11,12 @@ import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.widget.HorizontalScrollView;
 
-/**
+*//**
  * TODO: 	滑动
  * 
  * @author:	 wy
  * @version: V1.0
- */
+ *//*
 public class MyHorizontalScrollView extends HorizontalScrollView {
 
 	private StudyGraphView studyGraphView;
@@ -94,3 +94,4 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
 
 	}
 }
+*/

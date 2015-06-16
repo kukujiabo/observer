@@ -1,10 +1,11 @@
-package com.peichong.observer.slidingcurve;
+/*package com.peichong.observer.slidingcurve;
 
 import java.util.ArrayList;
 
 import com.peichong.observer.R;
 import com.peichong.observer.tools.Utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,52 +19,52 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
-/**
+*//**
  * TODO: 曲线图
  * 
  * @author: wy
  * @version: V1.0
- */
+ *//*
 public class StudyGraphView extends View {
 
 	// public static final float INTERVAL_X_DP=45f; //x坐标的单元间距
-	/** y坐标总的高度 */
+	*//** y坐标总的高度 *//*
 	public static float TOTAL_Y_DP;
 	
-	/** 坐标系距离顶部的高度 */
+	*//** 坐标系距离顶部的高度 *//*
 	public static final float COORDINATE_MARGIN_TOP_DP = 30f;
 	// public static final float COORDINATE_MARGIN_LEFT_DP = INTERVAL_X_DP;
 	// 坐标系距离左边的间距
 	// public static final float COORDINATE_MARGIN_RIGHT_DP = INTERVAL_X_DP;
-	/** 坐标系距离上边的间距 */
+	*//** 坐标系距离上边的间距 *//*
 	public static final float COORDINATE_MARGIN_BOTTOM_DP = 30f;
 
-	/** X轴分成几份 */
+	*//** X轴分成几份 *//*
 	public static final int SHOW_NUM = 3;
 
-	/** X轴长度（只是数据的宽度，不包括左边和右边的留空） */
+	*//** X轴长度（只是数据的宽度，不包括左边和右边的留空） *//*
 	private float mTotalWidth;
-	/** Y轴的长度（只是数据的高度，不包括上方和下方的留空） */
+	*//** Y轴的长度（只是数据的高度，不包括上方和下方的留空） *//*
 	private float mTotalHeight;
-	/** x坐标的单元间距(px) */
+	*//** x坐标的单元间距(px) *//*
 	private float spacingOfX;
-	/** y坐标的单元间距(px) */
+	*//** y坐标的单元间距(px) *//*
 	private float spacingOfY;
-	/** 坐标系距离顶部的距离(px) */
+	*//** 坐标系距离顶部的距离(px) *//*
 	private float coordinateMarginTop;
-	/** 坐标系距离左边的距离(px) */
+	*//** 坐标系距离左边的距离(px) *//*
 	private float coordinateMarginLeft;
-	/** 坐标系距离右边的距离(px) */
+	*//** 坐标系距离右边的距离(px) *//*
 	private float coordinateMarginRight;
-	/** 坐标系距离下方的高度(px) */
+	*//** 坐标系距离下方的高度(px) *//*
 	private float coordinateMarginBottom;
 
-	/** 曲线交点的小图标 */
+	*//** 曲线交点的小图标 *//*
 	private Bitmap mPointImage;
-	/** 上方文字说明背景 */
+	*//** 上方文字说明背景 *//*
 	private Bitmap mLevelShowImage;
 
-	/** 各个点 */
+	*//** 各个点 *//*
 	private ArrayList<PointF> points;
 	private ArrayList<StudyGraphItem> studyGraphItems;
 
@@ -89,12 +90,12 @@ public class StudyGraphView extends View {
 
 	}
 
-	/**
+	*//**
 	 * TODO :初始化
-	 * 
+	 * ss
 	 * @throw
 	 * @return :void
-	 */
+	 *//*
 	private void initParam() {
 		// x坐标间隔为定值，屏幕不够就左右滑动
 		// spacingOfX = Utils.dip2px(mContext, INTERVAL_X_DP);
@@ -112,6 +113,7 @@ public class StudyGraphView extends View {
 				COORDINATE_MARGIN_BOTTOM_DP);
 	}
 
+	@SuppressLint("DrawAllocation")
 	@Override
 	protected void onDraw(Canvas canvas) {
 
@@ -128,6 +130,7 @@ public class StudyGraphView extends View {
 				+ coordinateMarginTop, mTotalWidth + coordinateMarginLeft
 				+ coordinateMarginRight, mTotalHeight + coordinateMarginTop,
 				paint);
+		
 		for (int i = 0; i < studyGraphItems.size(); i++) {
 			StudyGraphItem energy = studyGraphItems.get(i);
 			PointF textPoint = points.get(i);
@@ -220,9 +223,9 @@ public class StudyGraphView extends View {
 				(int) (mTotalHeight + coordinateMarginTop + coordinateMarginBottom));
 	}
 
-	/**
+	*//**
 	 * 设置数据(初始化进行)
-	 */
+	 *//*
 	public void setData(ArrayList<StudyGraphItem> studyGraphItems) {
 
 		this.studyGraphItems = studyGraphItems;
@@ -251,12 +254,12 @@ public class StudyGraphView extends View {
 		currentIndex = studyGraphItems.size() - 1;
 	}
 
-	/**
+	*//**
 	 * 找到 数据集合中 最高能量 对应的脚标
 	 * 
 	 * @param powers
 	 * @return
-	 */
+	 *//*
 	private static StudyGraphItem findMaxPowers(
 			ArrayList<StudyGraphItem> energys) {
 		StudyGraphItem energy = new StudyGraphItem();
@@ -289,3 +292,4 @@ public class StudyGraphView extends View {
 		return currentIndex;
 	}
 }
+*/
